@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Proforma</title>
+	<meta charset="UTF-8">
+    <link rel="import" href="proforma-doc.html">
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+    <link rel="stylesheet" href="../css/speech-input.css">
+    <script src="../js/speech-input.js"></script>
+</head>
+<body>
+
+	<dom-module id="proforma-question">
+
+		<template>
+			<style type="text/css">
+				 div.InnerDiv{
+                padding: 5% 5% 5% 5%;
+            }
+            paper-fab.blue {
+                --paper-fab-background: var(--paper-indigo-500);
+                --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+            }
+			</style>
+			<div id="OutputDiv" style="float:left;width: 42%;padding-left: 2%;height: 550px;overflow-y: auto">
+            <paper-material elevation="3">
+                <div style="position: relative;margin-left: 92%">
+                    <paper-fab class="blue" icon="add" style="position: fixed;bottom: 19%" on-tap="ZoomIn" mini></paper-fab>
+                    <br><br><br>
+                    <paper-fab class="blue" icon="remove" style="position: fixed;bottom: 10%" on-tap="ZoomOut" mini></paper-fab>
+                </div>
+                <div>
+                    <proforma-doc data="{{data}}"></proforma-doc>
+                </div>
+            </paper-material>
+        </div>
+        <div id="InputDiv" style="float:left;width: 42%;padding-left: 1%;height: 550px;overflow-y: auto">
+        	<paper-material elevation="3">
+        		<div id="Case" class="forIndex">
+        			<div class="InnerDiv">
+        				<h1>Case Details</h1>
+        				<paper-input name="Case_CourtName" label="Name of the Court" on-keyup="HandleOnChange"></paper-input>
+                    	<paper-input name="Case_Jurisdiction" label="Jurisdiction" on-keyup="HandleOnChange"></paper-input>
+                    	<label id="number"><b>Select type:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="number">
+              	           <paper-listbox id="Case_Number_Lb" class="dropdown-content" attr-for-selected="name"  selected="Case">
+                                <paper-item name="Case">Case Number</paper-item>
+                                <paper-item name="Suit">Suit Number</paper-item>
+                                <paper-item name="Petition">Petition NUmber</paper-item>
+       	                        <paper-item name="WPN">Writ Petition Number</paper-item>
+                              	<paper-item name="Caveat">Caveat Number</paper-item>
+                                <paper-item name="Complaint">Complaint Number</paper-item>
+                                <paper-item name="Other">Add any other number</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <div id="Case_Number_Div">
+                            <paper-input name="Case_OtherNumber" label="Other" on-keyup="HandleOnChange"></paper-input>
+                         </div>
+                        <paper-input name="Case_No" label="Number" type="Number" on-keyup="HandleOnChange" ></paper-input>
+                    <br><b>Date</b><br>
+                    <paper-date-picker-item icon="icons:today" id="Case_Date" date-format="DD-MM-YYYY" on-keyup="HandleDate"></paper-date-picker-item>
+        			</div>
+        		</div>
+        		<div id="Petitioner" class="forIndex">
+        			
+        			<div class="InnerDiv">
+        				<h1>Petitioner Details</h1>
+        				<label id="name"><b>Select type:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="name">
+              	           <paper-listbox id="Petitioner_Select_Lb" class="dropdown-content" attr-for-selected="name"  selected="Petitioner">
+                                <paper-item name="Petitioner">Name of Petitioner</paper-item>
+                                <paper-item name="plaintiff">Name of plaintiff</paper-item>
+                                <paper-item name="Appellant">Name of Appellant</paper-item>
+       	                        <paper-item name="Complainant">Name of Complainant</paper-item>
+                              	<paper-item name="Claimant">Name of Claimant</paper-item>
+                                <paper-item name="Other">Add any other name</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <div id="Petitioner_Select_Div">
+                            <paper-input name="Petitioner_OtherSelect" label="Other" on-keyup="HandleOnChange"></paper-input>
+                         </div>
+                        <paper-input name="Petitioner_Name" label="Name" on-keyup="HandleOnChange" ></paper-input>
+                        <paper-input name="Petitioner_AttorneyName" label="Name of Attorney/Advocate of Petitioner" on-keyup="HandleOnChange"></paper-input>
+                    </div>
+
+        		</div>
+                <div id="Defendant" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Defendant Details</h1>
+                        <paper-input name="Defendant_Name" label="Name of Defendant/Respondant" on-keyup="HandleOnChange"></paper-input>
+                        <paper-input name="Defendant_AttorneyName" label="Name of Attorney/Advocate for defendant" on-keyup="HandleOnChange"></paper-input>
+                    </div>
+                </div>	
+        	</div>
+        	</paper-material>
+        </div>
+		</template>
+		<script>
+        Polymer({
+            is:'proforma-question',
+            observers:[
+                'DataChange(data.*)'
+            ],
+            listeners:{
+                'iron-select':'HandleIronSelect',
+                'iron-change':'HandleIronChange',
+                'paper-radio-group-changed':'HandleRadioButton'
+            },
+            behaviors:[SuperBehavior],
+            ready:function () {
+                //this.data=JSON.parse(object);
+            }
+
+        })
+    </script>
+
+	</dom-module>
+
+</body>
+</html>

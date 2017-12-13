@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="import" href="expulsion-of-partner-doc.html">
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+    <link rel="stylesheet" href="../css/speech-input.css">
+    <script src="../js/speech-input.js"></script>
+</head>
+<body>
+<dom-module id="expulsion-of-partner">
+    <template>
+        <style>
+            div.InnerDiv{
+                padding: 5% 5% 5% 5%;
+            }
+            paper-fab.blue {
+                --paper-fab-background: var(--paper-indigo-500);
+                --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+            }
+        </style>
+        <div id="OutputDiv" style="float:left;width:40% ;padding-left: 2%;height: 750px;overflow-y: auto">
+            <paper-material elevation="3">
+                <div style="...">
+                    <paper-fab class="blue" icon="add" style="position: fixed;bottom: 19%" on-tap="ZoomIn" mini></paper-fab>
+                    <br><br><br>
+                    <paper-fab class="blue" icon="remove" style="position: fixed;bottom: 10%" on-tap="ZoomOut" mini></paper-fab>
+                </div>
+                <div>
+                    <expulsion-of-partner-doc data="{{data}}"></expulsion-of-partner-doc>
+                </div>
+            </paper-material>
+        </div>
+        <div id="InputDiv" style="float:left;width:40% ;padding-left: 2%;height: 750px;overflow-y: auto">
+            <paper-material elevation="3">
+                <div id="Addressee">
+                    <div class="InnerDiv">
+                        <template is="dom-repeat" items="{{data.Addressee.AddOneAddressee}}">
+                            <div id="Addressee_{{_EntityNo(index)}}" class="forIndex">
+                                <h1>Addressee Details{{_EntityNo(index)}}</h1>
+                                <label id="remove-Addressee-button">Delete Addressee</label>
+                                <paper-icon-button  id="Addressee_OneAddressee_{{index}}" icon="delete" area-labeldby="remove-Addressee-button" on-tap="RemoveEntity"></paper-icon-button>
+                                <br>
+
+                                <paper-input class="speech-input" name="Addressee_Name_{{index}}" label="Name of the Addressee" on-change="HandleOnChange"></paper-input>
+                                <label id="Addressee-address-events_{{index}}">Address of the Addressee</label>
+                                <paper-radio-group id="Addressee_Address_Main_{{index}}" area-labeld-by="Addressee-address-events" selected="Residential" allowEmptySelection=false>
+                                    <<paper-radio-button name="Residential">Residential Address</paper-radio-button>
+                                    <paper-radio-button name="Office">Office Address</paper-radio-button>
+                                </paper-radio-group>
+                                <div id="Addressee_Address_Residential_{{index}}" name="Addressee_Address_All">
+                                    <paper-input name="Addressee_AddresseeAddr_{{index}}" label="Residential Address of the Addressee" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <div id="Addressee_Address_Office_{{index}}" name="Addressee_Address_All">
+                                    <paper-input name="Addressee_AddresseeAddr2_{{index}}" label="Office Address of the Addressee" on-change="HandleOnChange"></paper-input>
+                                </div>
+
+
+                                <br>
+                                <label id="Addressee-gender-events"><b>Title of Addressee:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="Addressee-gender-events">
+                                    <paper-listbox id="Addressee_Gender_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                        <paper-item name="Mr">Mr</paper-item>
+                                        <paper-item name="Ms">Ms</paper-item>
+                                        <paper-item name="Mrs">Mrs</paper-item>
+                                        <paper-item name="Shri">Shri</paper-item>
+                                        <paper-item name="Shrimati">Shrimati</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <br>
+                            </div>
+                        </template>
+                        <br>
+                        <label id="add-Addressee-button">
+                            Add Addressee
+                        </label>
+                        <paper-icon-button id="Addressee_AddOneAddressee" icon="add-circle" area-labeldby="add-Addressee-button" on-tap="AddEntity"></paper-icon-button>
+                        <br><br>
+
+
+                        <label id="Addressee-type-events">Type of address to the Addressee</label>
+                        <paper-radio-group id="Addressee_Type_Rb" area-labeld-by="Addressee-type-events" selected="Dear" >
+                            <<paper-radio-button name="Dear">Dear Sir/Mam</paper-radio-button>
+                            <paper-radio-button name="Respected">Respected Sir/Mam</paper-radio-button>
+                        </paper-radio-group>
+                    </div>
+                </div>
+
+                <div id="Sender">
+                    <div class="InnerDiv"class="forIndex">
+                        <h1><u>Notice Details</u></h1>
+                        <br><b>Partnership Deed Date</b><br>
+                        <paper-date-picker-item icon="icons:today" id="Sender_Date" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                        <paper-input name="Sender_Clause" label="Clause Number in the partnership deed" type="Number" on-change="HandleOnChange"></paper-input>
+                        <template is="dom-repeat" items="{{data.Sender.AddOneSender}}">
+                            <div id="Sender_{{_EntityNo(index)}}" class="forIndex">
+                                <h1>Sender Details{{_EntityNo(index)}}</h1>
+                                <label id="remove-Sender-button">Delete Sender</label>
+                                <paper-icon-button  id="Sender_OneSender_{{index}}" icon="delete" area-labeldby="remove-Sender-button" on-tap="RemoveEntity"></paper-icon-button>
+                                <br>
+
+                                <paper-input class="speech-input" name="Sender_Name_{{index}}" label="Name of the Sender" on-change="HandleOnChange"></paper-input>
+
+                                <br>
+                                <label id="Sender-post-events"><b>Post of Sender:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="Sender-post-events">
+                                    <paper-listbox id="Sender_Post_Main_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Partner">
+                                        <paper-item name="Partner">Partner</paper-item>
+                                        <paper-item name="Managing Partner">Managing Partner</paper-item>
+                                        <paper-item name="Senior Partner">Senior Partner</paper-item>
+                                        <paper-item name="Other">Other </paper-item>
+
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <div id="Sender_Post_Other_{{index}}" name="Sender_Post_All">
+                                    <paper-input name="Sender_OtherPost_{{index}}" label="Any other reason" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <br>
+                            </div>
+                        </template>
+                        <br>
+                        <label id="add-Sender-button">
+                            Add Sender
+                        </label>
+                        <paper-icon-button id="Sender_AddOneSender" icon="add-circle" area-labeldby="add-Sender-button" on-tap="AddEntity"></paper-icon-button>
+                        <br><br>
+                    </div>
+                </div>
+                <div id="Expulsion">
+                    <div class="InnerDiv" class="forIndex">
+                        <b>Date of expulsion of partner</b>
+                        <paper-date-picker-item icon="icons:today" id="Expulsion_Date" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                        <br>
+                        <label id="Expulsion-reason-events"><b>Reason for the expulsion:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="title-label">
+                            <paper-listbox id="Expulsion_Reason_Lb" class="dropdown-content" attr-for-selected="name"  selected="Breaching of partnership agreement">
+                                <paper-item  name="Breaching of partnership agreement">Breaching of partnership agreement </paper-item>
+                                <paper-item  name="Failing to carry out obligations under the partnership agreement">Failing to carry out obligations under the partnership agreement  </paper-item>
+                                <paper-item  name="Being charged or convicted of a crime">Being charged or convicted of a crime</paper-item>
+                                <paper-item  name="Professional Misconduct">Professional Misconduct</paper-item>
+                                <paper-item  name="Filing for bankruptcy">Filing for bankruptcy</paper-item>
+                                <paper-item  name="Other">Other</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <div id="Expulsion_Reason_Div" name="Expulsion_Reason_All" >
+                            <paper-input name="Expulsion_OtherReason" label="Any other reason" on-change="HandleOnChange"></paper-input>
+                        </div>
+                        <br>
+                        <b>Show the cause within </b>
+                        <br>
+                        <label id="Expulsion-cause-events">Enter days or months</label>
+                        <paper-radio-group id="Expulsion_Cause_Main" area-labeld-by="Expulsion-cause-events" selected="Days" allowEmptySelection=false>
+                            <<paper-radio-button name="Days">Days</paper-radio-button>
+                            <paper-radio-button name="Months">Months</paper-radio-button>
+                        </paper-radio-group>
+                        <div id="Expulsion_Cause_Days" name="Expulsion_Cause_All">
+                            <paper-input name="Expulsion_ExpulsionAddr" label="Days" on-change="HandleOnChange"></paper-input>
+                        </div>
+                        <div id="Expulsion_Cause_Months" name="Expulsion_Cause_All">
+                            <paper-input name="Expulsion_ExpulsionAddr2" label="Months" on-change="HandleOnChange"></paper-input>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div id="Notice">
+                    <div class="InnerDiv"class="forIndex">
+                        <b>Date of Notice</b>
+                        <paper-date-picker-item icon="icons:today" id="Notice_Date" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                        <br>
+
+                        <br>
+                    </div>
+                </div>
+
+
+
+            </paper-material>
+        </div>
+    </template>
+    <script type="text/javascript">
+        Polymer({
+            is:'expulsion-of-partner',
+            observers:[
+                'DataChange(data.*)'
+            ],
+            listeners:{
+                'iron-select':'HandleIronSelect',
+                'iron-change':'HandleIronChange',
+                'paper-radio-group-changed':'HandleRadioButton'
+            },
+            behaviors:[SuperBehavior],
+            ready:function () {
+                //this.data=JSON.parse(object);
+            }
+
+        })
+    </script>
+</dom-module>
+
+</body>
+</html>

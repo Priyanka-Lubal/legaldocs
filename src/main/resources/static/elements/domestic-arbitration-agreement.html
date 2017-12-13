@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="import" href="domestic-arbitration-agreement-doc.html">
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+    <link rel="stylesheet" href="../css/speech-input.css">
+    <script src="../js/speech-input.js"></script>
+</head>
+<body>
+
+<dom-module id="domestic-arbitration-agreement">
+    <template>
+        <style>
+            div.InnerDiv{
+                padding: 5% 5% 5% 5%;
+            }
+            paper-fab.blue {
+                --paper-fab-background: var(--paper-indigo-500);
+                --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+            }
+        </style>
+        <div id="OutputDiv" style="float:left;width: 42%;padding-left: 2%;height: 550px;overflow-y: auto">
+            <paper-material elevation="3">
+                <div style="position: relative;margin-left: 92%">
+                    <paper-fab class="blue" icon="add" style="position: fixed;bottom: 19%" on-tap="ZoomIn" mini></paper-fab>
+                    <br><br><br>
+                    <paper-fab class="blue" icon="remove" style="position: fixed;bottom: 10%" on-tap="ZoomOut" mini></paper-fab>
+                </div>
+                <div>
+                    <domestic-arbitration-agreement-doc data="{{data}}"></domestic-arbitration-agreement-doc>
+                </div>
+            </paper-material>
+        </div>
+        <div id="InputDiv" style="float:left;width: 42%;padding-left: 1%;height: 550px;overflow-y: auto">
+            <paper-material elevation="3">
+                <div id="Party" class="forIndex">
+                    <div class="InnerDiv">
+                        <template is="dom-repeat" items="{{data.Party.AddOneParty}}">
+                            <div id="Party_{{_EntityNo(index)}}" class="forIndex">
+                                <h1>Party-Details{{_EntityNo(index)}}</h1>
+                                <label id="remove-party-button">Delete Party</label>
+                                <paper-icon-button id="Party_OneParty_{{index}}" icon="delete" area-labeldby="remove-party-button" on-tap="RemoveEntity"></paper-icon-button>
+                                <br>
+
+                                <label id="type-of-party-label_{{index}}"><b>Select type of party:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="type-of-party-label">
+                                    <paper-listbox id="Party_PartyType_Main_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Individual">
+                                        <paper-item name="Individual">Individual</paper-item>
+                                        <paper-item name="Company">Company</paper-item>
+                                        <paper-item name="Partnershipfirm">Partnership firm</paper-item>
+                                        <paper-item name="Society">Society</paper-item>
+                                        <paper-item name="HUF">HUF</paper-item>
+                                        <paper-item name="SoleTraders">Sole Traders</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+
+                                <div id="Party_PartyType_Individual_{{index}}" name="Party_PartyType_All">
+                                    <paper-input name="Party_NameIndividual_{{index}}" label="Name of Individual" on-keyup="HandleOnChange"></paper-input>
+                                    <label id="title-label"><b>Title of first party:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="title-label">
+                                        <paper-listbox id="Party_Title_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                            <paper-item name="Mr">Mr</paper-item>
+                                            <paper-item name="Ms">Ms</paper-item>
+                                            <paper-item name="Mrs">Mrs</paper-item>
+                                            <paper-item name="Shri">Shri</paper-item>
+                                            <paper-item name="Shrimati">Shrimati</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <paper-textarea name="Party_PartyAddrFirstParty_{{index}}" label="Party address of first party" on-keyup="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Party_AgeIndividual_{{index}}" label="Age of Individual" type="Number" on-keyup="HandleOnChange"></paper-input>
+                                </div>
+
+                                <div id="Party_PartyType_Company_{{index}}" name="Party_PartyType_All">
+                                    <paper-input name="Party_NameCompany_{{index}}" label="Name of company " on-keyup="HandleOnChange"></paper-input>
+                                    <label id="type-of-company-label"><b>Select type of company:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="type-of-company-label">
+                                        <paper-listbox id="Party_CompanyType_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="PrivateLimited">
+                                            <paper-item name="PrivateLimited">Private Limited Company</paper-item>
+                                            <paper-item name="PublicLimited">Public Limited Company</paper-item>
+                                            <paper-item name="PublicSector">Public sector Company</paper-item>
+                                            <paper-item name="Other">Other</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <div id="Party_CompanyType_Div_{{index}}" name="Party_CompanyType_All">
+                                        <paper-input name="Party_OtherCompanyType_{{index}}" label="Other company type" on-keyup="HandleOnChange"></paper-input>
+                                    </div>
+                                    <br>
+                                    <label id="registered-act-label"><b>Act under which the company is registered:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="registered-act-label">
+                                        <paper-listbox id="Party_RegisteredAct_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="CompaniesAct1956">
+                                            <paper-item name="CompaniesAct1956">Companies Act, 1956</paper-item>
+                                            <paper-item name="CompaniesAct2013">Companies Act, 2013</paper-item>
+                                            <paper-item name="BankingRegulation1949">Banking Regulation, 1949</paper-item>
+                                            <paper-item name="Other">Other</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <div id="Party_RegisteredAct_Div_{{index}}">
+                                        <paper-input name="Party_OtherRegisteredAct_{{index}}" label="Other act" on-keyup="HandleOnChange"></paper-input>
+                                    </div>
+                                    <paper-textarea name="Party_AddrRegisteredOffice_{{index}}" label="Address of registered office" on-keyup="HandleOnChange"></paper-textarea>
+                                    <label id="registered-address"><b>The above address is of:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="registered-address">
+                                        <paper-listbox id="Party_RegisteredAddr_Main_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Registered Office">
+                                            <paper-item name="Registered Office">Registered Office</paper-item>
+                                            <paper-item name="Mailing Office">Mailing Office</paper-item>
+                                            <paper-item name="Corporate Office">Corporate Office</paper-item>
+                                            <paper-item name="Head Office">Head Office</paper-item>
+                                            <paper-item name="Regional Office">Regional Office</paper-item>
+                                            <paper-item name="Branch Office">Branch Office</paper-item>
+                                            <paper-item name="Add any other Office">Add any other Office</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <div id="Party_RegisteredAddr_Add any other Office_{{index}}" name="Party_RegisteredAddr_All">
+                                        <paper-input name="Party_OtherAddr_{{index}}"
+                                        label="Any other office" on-keyup="HandleOnChange"></paper-input>
+                                    </div>
+                                    <paper-input name="Party_CINCompany_{{index}}" label="CIN for the company" on-keyup="HandleOnChange"></paper-input>
+                                </div>
+
+                                <div id="Party_PartyType_Partnershipfirm_{{index}}" name="Party_PartyType_All">
+                                    <paper-input name="Party_Namepartnership_{{index}}" label="Name of the partnership firm" on-keyup="HandleOnChange"></paper-input>
+                                    <paper-textarea name="Party_AddrRegisteredOfficefirm_{{index}}" label="Address of registered office" on-keyup="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Party_RegistrationNo_{{index}}" label="Registration Number"
+                                                 type="Number" on-keyup="HandleOnChange"></paper-input>
+                                </div>
+                                <div id="Party_PartyType_Society_{{index}}" name="Party_PartyType_All">
+                                    <paper-input name="Party_Namesociety_{{index}}" label="Name of the society" on-keyup="HandleOnChange"></paper-input>
+                                    <label id="type-of-society-label"><b>Select type of society:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="type-of-society-label">
+                                        <paper-listbox id="Party_SocietyType_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="PrivateLimited">
+                                            <paper-item name="PrivateLimited">Private Limited Society</paper-item>
+                                            <paper-item name="PublicLimited">Public Limited Society</paper-item>
+                                            <paper-item name="PublicSector">Public sector Society</paper-item>
+                                            <paper-item name="Other">Other</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <div id="Party_SocietyType_Div_{{index}}">
+                                        <paper-input name="Party_OtherSocietyType_{{index}}" label="Other society type" on-keyup="HandleOnChange"></paper-input>
+                                    </div>
+                                    <br>
+                                    <paper-input name="Party_ActSocietyReg_{{index}}" label="Act under which society is registered" on-keyup="HandleOnChange"></paper-input>
+                                    <paper-textarea name="Party_AddrSociety_{{index}}" label="Address of the society" on-keyup="HandleOnChange"></paper-textarea>
+                                </div>
+                                <div id="Party_PartyType_HUF_{{index}}" name="Party_PartyType_All">
+                                    <paper-input name="Party_NameKartaManager_{{index}}" label="Name of karta or manager" on-keyup="HandleOnChange"></paper-input>
+                                    <label id="title-huf-label"><b>Title of first party:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="title-huf-label">
+                                        <paper-listbox id="Party_Title_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                            <paper-item name="Mr">Mr</paper-item>
+                                            <paper-item name="Ms">Ms</paper-item>
+                                            <paper-item name="Mrs">Mrs</paper-item>
+                                            <paper-item name="Shri">Shri</paper-item>
+                                            <paper-item name="Shrimati">Shrimati</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <br>
+                                    <paper-textarea  name="Party_AddrKartaManager_{{index}}" label="Address of karta or manager" on-keyup="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Party_AgeKartaManager_{{index}}" label="Age of karta or manager" type="Number" on-keyup="HandleOnChange"></paper-input>
+                                </div>
+                                <div id="Party_PartyType_SoleTraders_{{index}}" name="Party_PartyType_All">
+                                    <paper-input name="Party_Nameofsoletrader_{{index}}" label="Name of the sole trader" on-keyup="HandleOnChange"></paper-input>
+                                    <label id="title-soletrader-label"><b>Title of sole trader:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="title-soletrader-label">
+                                        <paper-listbox id="Party_Title_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                            <paper-item name="Mr">Mr</paper-item>
+                                            <paper-item name="Ms">Ms</paper-item>
+                                            <paper-item name="Mrs">Mrs</paper-item>
+                                            <paper-item name="Shri">Shri</paper-item>
+                                            <paper-item name="Shrimati">Shrimati</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <br>
+                                    <paper-input name="Party_NameoftheCompany_{{index}}" label="Name of the company" on-keyup="HandleOnChange"></paper-input>
+                                    <paper-textarea  name="Party_Addrparty_{{index}}" label=" Office Address of the party" on-keyup="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Party_Ageparty_{{index}}" label="Age of the party" type="Number" on-keyup="HandleOnChange"></paper-input>
+                                    <paper-input name="Party_PAN_{{index}}" label="PAN" type="Number" on-keyup="HandleOnChange"></paper-input>
+                                </div>
+                            </div>
+                        </template>
+                        <br>
+                        <label id="add-party-button">
+                            Add Party
+                        </label>
+                        <paper-icon-button id="Party_AddOneParty" icon="add-circle" area-labeldby="add-party-button" on-tap="AddEntity"></paper-icon-button>
+                    </div>
+                </div>
+
+                <div id="Contract" class="forIndex">
+                    <div class="InnerDiv">
+
+                        <h1>Contract Details</h1>
+                        <paper-input name="Contract_NameContract" label="Name of the Contract" on-keyup="HandleOnChange"></paper-input>
+                        <br><b>Date of the contract</b><br>
+                        <paper-date-picker-item icon="icons:today" id="Contract_Date" date-format="DD-MM-YYYY" on-keyup="HandleDate"></paper-date-picker-item>
+                        <br>The contract was entered within <paper-input name="Contract_DaysNo" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input> number of days of the dispute taking place.<br>
+                        <br>If the disputes between the parties in not settled through any amicable means within the period of <paper-input name="Contract_period" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input>days/months from the date of the dispute arising then the contract will be referred to arbitration.(Optional)<br>
+                        <br><span>The parties agree to submit to arbitration all the disputes which have arisen or may arise out of or in connection with the contract with the contract within <paper-input name="Contract_period1" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input> Number of days/months.</span><br>
+                    </div>
+                </div>
+
+                <div id="LimitCommencement" class="forIndex">
+                    <div class="InnerDiv">
+
+                        <h1>Limit: Commencement to Award</h1>
+                        <paper-input name="LimitCommencement_NoDays" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input>Number of days/months within which the arbitral tribunal must render its final award. Such time limit shall start to run from:<br>
+                        <label id="start-run-label"><b>Select:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="start-run-label">
+                            <paper-listbox id="LimitCommencement_Startrun" class="dropdown-content" attr-for-selected="name" selected="The date of commencement of the arbitral proceedings">
+                                <paper-item name="The date of commencement of the arbitral proceedings">The date of commencement of the arbitral proceedings</paper-item>
+                                <paper-item name="The date of notification to the arbitral tribunal to commence such proceedings">The date of notification to the arbitral tribunal to commence such proceedings</paper-item>
+                                <paper-item name="Date of arbitration invocation notice being served">Date of arbitration invocation notice being served</paper-item>
+                                <paper-item name="From arbitrator/Arbitral tribunal conducting its final hearing">From arbitrator/Arbitral tribunal conducting its final hearing</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu><br>
+                        <label id="Limit-modified">Such limit can be reasonably modified by the parties mutually as per their discretion by a written agreement:</label>
+                        <paper-radio-group id="LimitCommencement_Limit_Rb" area-labeld-by="Limit-modified" selected="Yes" >
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            <paper-radio-button name="No">No</paper-radio-button>
+                        </paper-radio-group>
+                        
+                    </div>
+                </div>
+
+                <div id="NewParties" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>New Parties</h1>
+                        <label id="new-parties"><b>Select:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="new-parties">
+                            <paper-listbox id="NewParties_PartyType_Main" class="dropdown-content" attr-for-selected="name" selected="Can be added after Mutual consent of Parties">
+                                <paper-item name="Can be added after Mutual consent of Parties">Can be added after Mutual consent of Parties</paper-item>
+                                <paper-item name="Can be added after the permission of arbitral tribunal">Can be added after the permission of arbitral tribunal</paper-item>
+                                <paper-item name="Cannot be added">Cannot be added</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <div id="NewParties_PartyType_Can be added after Mutual consent of Parties" name="NewParties_PartyType_All">
+                    <label id="written-consent">Written Consent required:</label>
+                            <paper-radio-group id="NewParties_Consent_Rb" area-labeld-by="written-consent" selected="Yes" >
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                <paper-radio-button name="No">No</paper-radio-button>
+                            </paper-radio-group>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="VenueSeat" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Venue and Seat details</h1>
+                        <label id="venue-arbitration"><b>Venue for the arbitration:</b></label>
+                        <paper-dropdown-menu area-labeldby="venue-arbitration">
+                            <paper-listbox id="VenueSeat_Venue_Main" class="dropdown-content" attr-for-selected="name" selected="Name the Indian city">
+                                <paper-item name="Name the Indian city">Name the Indian city</paper-item>
+                                <paper-item name="Where the following parties have their corporate office or place of residence">Where the following parties have their corporate office or place of residence</paper-item>
+                                <paper-item name="Shall be decided by the arbitral tribunal">Shall be decided by the arbitral tribunal</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu><br>
+
+                        <div id="VenueSeat_Venue_Name the Indian city" name="VenueSeat_Venue_All">
+                            <template is="dom-repeat" items="{{data.VenueSeat.AddCities}}" index-as="CitiesIndex">
+                              <paper-input name="VenueSeat_Cities_{{CitiesIndex}}" label="Name the Indian city " on-keyup="HandleOnChange">
+                              </paper-input>
+                              <label id="remove-cities-button">Remove</label>
+                              <paper-icon-button  suffix id="VenueSeat_Cities_{{CitiesIndex}}" icon="clear" area-labeldby="remove-cities-button" on-tap="RemoveMore"></paper-icon-button>
+                          </template>
+                          <br>
+                          <label id="add-cities-button">Add Cities</label>
+                          <paper-icon-button id="VenueSeat_AddCities" icon="add-circle" area-labeldby="add-cities-button" on-tap="AddMore"></paper-icon-button>
+                        </div>
+
+                        <div id="VenueSeat_Venue_Where the following parties have their corporate office or place of residence" name="VenueSeat_Venue_All">
+                            <label id="party-select"><b>Select:</b></label>
+                            <paper-dropdown-menu area-labeldby="party-select">
+                                <paper-listbox id="VenueSeat_PartySelect" class="dropdown-content" attr-for-selected="name" selected="1">
+                                    <template is="dom-repeat" items="{{data.Party.AddOneParty}}">
+                                    <paper-item name="{{_EntityNo(index)}}">Party {{_EntityNo(index)}}</paper-item>
+                                    </template>
+                                </paper-listbox>
+                            </paper-dropdown-menu><br>
+                            <label id="venue-select"><b>Select:</b></label>
+                            <paper-dropdown-menu area-labeldby="venue-select">
+                                <paper-listbox id="VenueSeat_VenueSelect" class="dropdown-content" attr-for-selected="name" selected="Corporate Office">
+                                    <paper-item name="Corporate Office">Corporate Office</paper-item>
+                                    <paper-item name="City of residenceCity of residence">City of residence</paper-item>
+                                    <paper-item name="City of business for the above selected parties">City of business for the above selected parties</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu><br>
+                        </div>
+
+                        <label id="legal-seats"><b>Legal Seats for the arbitration:</b></label>
+                        <paper-dropdown-menu area-labeldby="legal-seats">
+                            <paper-listbox id="VenueSeat_legalseats_Main" class="dropdown-content" attr-for-selected="name" selected="Same as the venue">
+                                <paper-item name="Same as the venue">Same as the venue</paper-item>
+                                <paper-item name="Different than the venue">Different than the venue</paper-item>
+                                <paper-item name="Shall be decided by the arbitral tribunal">Shall be decided by the arbitral tribunal</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <div id="VenueSeat_legalseats_Different than the venue" name="VenueSeat_legalseats_All">
+                            <paper-input name="VenueSeat_NameCity" label="Name the Indian City" on-keyup="HandleOnChange"></paper-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Law" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Law</h1>
+                        <paper-input name="Law_NameInstitution" label="Name the institution for arbitration" on-keyup="HandleOnChange"></paper-input>
+                    </div>
+                </div>
+
+                <div id="Language" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Language</h1>
+                        <template is="dom-repeat" items="{{data.Language.AddLanguage}}" index-as="LanguageIndex">
+                            <paper-input name="Language_Language_{{LanguageIndex}}" label="Language of proceedings" on-keyup="HandleOnChange">
+                            </paper-input>
+                            <label id="remove-language-button">Remove</label>
+                            <paper-icon-button  suffix id="Language_Language_{{LanguageIndex}}" icon="clear" area-labeldby="remove-language-button" on-tap="RemoveMore"></paper-icon-button>
+                        </template>
+                        <br>
+                        <label id="add-language-button">Add Language</label>
+                        <paper-icon-button id="Language_AddLanguage" icon="add-circle" area-labeldby="add-language-button" on-tap="AddMore"></paper-icon-button>
+                    </div>
+                </div>
+
+                <div id="Expenses" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Expenses</h1>
+                        <label id="expense"><b>Expenses:</b></label>
+                        <paper-dropdown-menu area-labeldby="expense">
+                            <paper-listbox id="Expenses_ExpenseSelect_Main" class="dropdown-content" attr-for-selected="name" selected="Shared equally">
+                                <paper-item name="Shared equally">Shared equally</paper-item>
+                                <paper-item name="Specific ratio">Specific ratio </paper-item>
+                                <paper-item hidden="{{_TwoInArray(data.Party.*,'AddOneParty')}}" name="One arbitrators and one arbitration">One arbitrators and one arbitration</paper-item>
+                                <paper-item name="List view of each expenses">List view of each expenses</paper-item>
+                                <paper-item name="The parties will incur all the cost for the arbitrator nominated by the party">The parties will incur all the cost for the arbitrator nominated by the party</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu><br>
+
+                        <div id="Expenses_ExpenseSelect_Specific ratio" name="Expenses_ExpenseSelect_All">
+                            <template is="dom-repeat" items="{{data.Party.AddOneParty}}">
+                                <paper-input name="Expenses_Ratio_{{index}}" label="Party {{_EntityNo(index)}} ratio" on-keyup="HandleOnChange"></paper-input> 
+                            </template>
+                        </div><br>
+
+                        <div id="Expenses_ExpenseSelect_One arbitrators and one arbitration" name="Expenses_ExpenseSelect_All">
+                            <label id="related-costs">Select party which will incur cost for the arbitrators and all related costs:</label>
+                            <paper-radio-group id="Expenses_RelatedCosts_Rb" area-labeld-by="related-costs" selected="1" >
+                                <template is="dom-repeat" items="{{data.Party.AddOneParty}}">
+                                <paper-radio-button name="{{_EntityNo(index)}}">Party {{_EntityNo(index)}}</paper-radio-button>
+                                </template>
+                            </paper-radio-group><br>
+
+                            <label id="arbitral-proceedings">Select party which will incur cost for the arbitrators and all related costs:</label>
+                            <paper-radio-group id="Expenses_ProceedingsCosts_Rb" area-labeld-by="arbitral-proceedings" selected="1" >
+                                <template is="dom-repeat" items="{{data.Party.AddOneParty}}">
+                                <paper-radio-button name="{{_EntityNo(index)}}">Party {{_EntityNo(index)}}</paper-radio-button>
+                                </template>
+                            </paper-radio-group><br>
+                        </div>
+
+                        While all the cost for presiding arbitrator will be divided among the parties in the ratio
+                        <paper-input name="Expenses_CostRatio" label="Ratio" on-keyup="HandleOnChange"></paper-input>
+                    </div>
+                </div>
+
+                <div id="Appointingarbitrator" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Appointing the Arbitrator</h1>
+                        <label id="tribunal"><b>Composition of the tribunal:</b></label>
+                        <paper-dropdown-menu area-labeldby="tribunal">
+                            <paper-listbox id="Appointingarbitrator_Tribunal_Main" class="dropdown-content" attr-for-selected="name" selected="Ad-hoc arbitration">
+                                <paper-item name="Ad-hoc arbitration">Ad-hoc arbitration</paper-item>
+                                <paper-item name="Institutional arbitration">Institutional arbitration</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <div id="Appointingarbitrator_Tribunal_Ad-hoc arbitration" name="Appointingarbitrator_Tribunal_All">
+                            <label id="ad-hoc"><b>Select:</b></label>
+                            <paper-dropdown-menu area-labeldby="ad-hoc">
+                                <paper-listbox id="Appointingarbitrator_ADhoc_Main" class="dropdown-content" attr-for-selected="name" selected="Mutually appoint arbitrators">
+                                    <paper-item name="Mutually appoint arbitrators">Mutually appoint arbitrators</paper-item>
+                                    <paper-item name="Respectively appoint arbitrators">Respectively appoint arbitrators</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+
+                            <div id="Appointingarbitrator_ADhoc_Mutually appoint arbitrators" name="Appointingarbitrator_ADhoc_All">
+                                <label id="mutual"><b>Select:</b></label>
+                                <paper-dropdown-menu area-labeldby="ad-hoc">
+                                <paper-listbox id="Appointingarbitrator_Mutual_Main" class="dropdown-content" attr-for-selected="name" selected="In case the arbitrator is pre-appointed">
+                                    <paper-item name="In case the arbitrator is pre-appointed">In case the arbitrator is pre-appointed</paper-item>
+                                    <paper-item name="In case the arbitrator is not already appointed">In case the arbitrator is not already appointed</paper-item>
+                                </paper-listbox>
+                                </paper-dropdown-menu>
+
+                                <div id="Appointingarbitrator_Mutual_In case the arbitrator is pre-appointed" name="Appointingarbitrator_Mutual_All">
+                                    <template is="dom-repeat" items="{{data.Appointingarbitrator.AddArbitrator}}" index-as="ArbitratorIndex">
+                                        <div id="Appointingarbitrator_Arbitrator">
+                                            <label id="remove-arbitrator-button">Delete Arbitrator</label>
+                                            <paper-icon-button id="Appointingarbitrator_Arbitrator_{{ArbitratorIndex}}" icon="delete" area-labeldby="remove-arbitrator-button" on-tap="RemoveEntity"></paper-icon-button>
+                                            <br>
+                                            <paper-input name="Appointingarbitrator_NameArbitrator_{{ArbitratorIndex}}" label="Name of the arbitrator" on-keyup="HandleOnChange"></paper-input>
+                                            <label id="title-arbitrator-label"><b>Title of arbitrator:&nbsp</b></label>
+                                            <paper-dropdown-menu area-labeldby="title-arbitrator-label">
+                                                <paper-listbox id="Appointingarbitrator_arbitratortitle_{{ArbitratorIndex}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                                    <paper-item name="Mr">Mr</paper-item>
+                                                    <paper-item name="Ms">Ms</paper-item>
+                                                    <paper-item name="Mrs">Mrs</paper-item>
+                                                    <paper-item name="Shri">Shri</paper-item>
+                                                    <paper-item name="Shrimati">Shrimati</paper-item>
+                                                </paper-listbox>
+                                            </paper-dropdown-menu><br>
+                                            <paper-textarea name="Appointingarbitrator_ArbitratorAddr_{{ArbitratorIndex}}" label="Address of the arbitrator" on-keyup="HandleOnChange"></paper-textarea>
+                                        </div>
+                                    </template><br>
+                                    <label id="add-arbitrator-button">Add Arbitrator</label>
+                                    <paper-icon-button id="Appointingarbitrator_AddArbitrator" icon="add-circle" area-labeldby="add-arbitrator-button" on-tap="AddEntity"></paper-icon-button>
+                                    <h3>Umpire Clause</h3>
+                                    <label id="umpire-clause4">If any difference should arise between said arbitrators, then the said arbitrators shall select an umpire and an award given by such umpire shall be final.:</label>
+                                    <paper-radio-group id="Appointingarbitrator_UmpireClause4_Rb" area-labeld-by="umpire-clause4" selected="Yes">
+                                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                        <paper-radio-button name="No">No</paper-radio-button>
+                                    </paper-radio-group><br>
+                                </div>
+
+                                <div id="Appointingarbitrator_Mutual_In case the arbitrator is not already appointed" name="Appointingarbitrator_Mutual_All">
+                                    <label id="appoint"><b>Select:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="appoint">
+                                        <paper-listbox id="Appointingarbitrator_Appoint" class="dropdown-content" attr-for-selected="name" selected="Sole arbitrator">
+                                            <paper-item name="Sole arbitrator">Sole arbitrator</paper-item>
+                                            <paper-item name="Multiple arbitrator">Multiple arbitrator</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu><br>
+                                    The arbitrator/s will be appointed by the parties within
+                                    <paper-input name="Appointingarbitrator_AppointDays" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input>
+                                    Number of days from the<br>
+                                    <label id="appointstart"><b>Select:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="appointstart">
+                                        <paper-listbox id="Appointingarbitrator_AppointStart" class="dropdown-content" attr-for-selected="name" selected="Notification of the arbitration request to the defendant/s">
+                                            <paper-item name="Notification of the arbitration request to the defendant/s">Notification of the arbitration request to the defendant/s</paper-item>
+                                            <paper-item name="Service of recall notice">Service of recall notice</paper-item>
+                                            <paper-item name="Service of Arbitration invocation notice">Service of Arbitration invocation notice</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu><br>
+                                    <h3>Umpire Clause</h3>
+                                    <label id="umpire-clause">If any difference should arise between said arbitrators, then the said arbitrators shall select an umpire and an award given by such umpire shall be final.:</label>
+                                    <paper-radio-group id="Appointingarbitrator_UmpireClause1_Rb" area-labeld-by="umpire-clause" selected="Yes">
+                                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                        <paper-radio-button name="No">No</paper-radio-button>
+                                    </paper-radio-group><br>
+                                </div>
+
+                            </div>
+
+                            <div id="Appointingarbitrator_ADhoc_Respectively appoint arbitrators" name="Appointingarbitrator_ADhoc_All">
+                                <label id="mutual"><b>Select:</b></label>
+                                <paper-dropdown-menu area-labeldby="ad-hoc">
+                                <paper-listbox id="Appointingarbitrator_Respectively_Main" class="dropdown-content" attr-for-selected="name" selected="In case the arbitrator is pre-appointed">
+                                    <paper-item name="In case the arbitrator is pre-appointed">In case the arbitrator is pre-appointed</paper-item>
+                                    <paper-item name="In case the arbitrator is not already appointed">In case the arbitrator is not already appointed</paper-item>
+                                </paper-listbox>
+                                </paper-dropdown-menu>
+
+                                <div id="Appointingarbitrator_Respectively_In case the arbitrator is pre-appointed" name="Appointingarbitrator_Respectively_All">
+                                    <paper-input name="Appointingarbitrator_ArbitratorName" label="Name of the Arbitrator" on-keyup="HandleOnChange"></paper-input>
+                                    <paper-textarea name="Appointingarbitrator_AddrArbitrator" label="Address of the arbitrator" on-keyup="HandleOnChange"></paper-textarea>
+                                    <label id="nominated"><b>Nominated by Party:</b></label>
+                                    <paper-dropdown-menu area-labeldby="nominated">
+                                        <paper-listbox id="VenueSeat_PartySelect" class="dropdown-content" attr-for-selected="name" selected="Party 1">
+                                            <template is="dom-repeat" items="{{data.Party.AddOneParty}}">
+                                                <paper-item name="Party {{_EntityNo(index)}}">Party {{_EntityNo(index)}}</paper-item>
+                                            </template>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu><br>
+                                    <h3>Tie breaker clause</h3>
+                                    Presiding not yet arbitrator appointed 
+                                    The same will be appointed by the arbitrators within
+                                    <paper-input name="Appointingarbitrator_arbitratorappoint1" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input>
+                                    Days.<br>
+                                    Presiding arbitrator appointed:<br>
+                                    <paper-input name="Appointingarbitrator_Presidingname1" label="Name" on-keyup="HandleOnChange"></paper-input>
+                                    <label id="title-presiding-label"><b>Title of arbitrator:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="title-presiding-label">
+                                        <paper-listbox id="Appointingarbitrator_presidingtitle1" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                            <paper-item name="Mr">Mr</paper-item>
+                                            <paper-item name="Ms">Ms</paper-item>
+                                            <paper-item name="Mrs">Mrs</paper-item>
+                                            <paper-item name="Shri">Shri</paper-item>
+                                            <paper-item name="Shrimati">Shrimati</paper-item>
+                                            </paper-listbox>
+                                    </paper-dropdown-menu><br>
+                                    <paper-textarea name="Appointingarbitrator_PresidingAddr1" label="Address" type="Number" on-keyup="HandleOnChange"></paper-textarea>
+                                    <h3>Umpire Clause</h3>
+                                    <label id="umpire-clause3">If any difference should arise between said arbitrators, then the said arbitrators shall select an umpire and an award given by such umpire shall be final.:</label>
+                                    <paper-radio-group id="Appointingarbitrator_UmpireClause3_Rb" area-labeld-by="umpire-clause3" selected="Yes">
+                                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                        <paper-radio-button name="No">No</paper-radio-button>
+                                    </paper-radio-group><br>
+                                </div>
+
+                                <div id="Appointingarbitrator_Respectively_In case the arbitrator is not already appointed" name="Appointingarbitrator_Respectively_All">
+                                    <label id="2Aii"><b>Select:</b></label>
+                                    <paper-dropdown-menu area-labeldby="2Aii">
+                                        <paper-listbox id="Appointingarbitrator_2Aii" class="dropdown-content" attr-for-selected="name" selected="Three arbitrator">
+                                            <paper-item name="Three arbitrator">Three arbitrator</paper-item>
+                                            <paper-item name="More than three arbitrator">More than three arbitrator</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu><br>
+                                    <h3>Tie breaker clause</h3>
+                                    Presiding not yet arbitrator appointed 
+                                    The same will be appointed by the arbitrators within
+                                    <paper-input name="Appointingarbitrator_arbitratorappoint" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input>
+                                    Days.<br>
+                                    Presiding arbitrator appointed:<br>
+                                    <paper-input name="Appointingarbitrator_Presidingname" label="Name" on-keyup="HandleOnChange"></paper-input>
+                                    <label id="title-presiding-label"><b>Title of arbitrator:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="title-presiding-label">
+                                        <paper-listbox id="Appointingarbitrator_presidingtitle" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                            <paper-item name="Mr">Mr</paper-item>
+                                            <paper-item name="Ms">Ms</paper-item>
+                                            <paper-item name="Mrs">Mrs</paper-item>
+                                            <paper-item name="Shri">Shri</paper-item>
+                                            <paper-item name="Shrimati">Shrimati</paper-item>
+                                            </paper-listbox>
+                                    </paper-dropdown-menu><br>
+                                    <paper-textarea name="Appointingarbitrator_PresidingAddr" label="Address" type="Number" on-keyup="HandleOnChange"></paper-textarea>
+                                    <h3>Umpire Clause</h3>
+                                    <label id="umpire-clause2">If any difference should arise between said arbitrators, then the said arbitrators shall select an umpire and an award given by such umpire shall be final.:</label>
+                                    <paper-radio-group id="Appointingarbitrator_UmpireClause2_Rb" area-labeld-by="umpire-clause2" selected="Yes">
+                                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                        <paper-radio-button name="No">No</paper-radio-button>
+                                    </paper-radio-group><br>
+ 
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="Appointingarbitrator_Tribunal_Institutional arbitration" name="Appointingarbitrator_Tribunal_All">
+                            <label id="institutional"><b>Select:</b></label>
+                            <paper-dropdown-menu area-labeldby="institutional">
+                                <paper-listbox id="Appointingarbitrator_Institutional_Main" class="dropdown-content" attr-for-selected="name" selected="When the institution is not pre-decided">
+                                    <paper-item name="When the institution is not pre-decided">When the institution is not pre-decided</paper-item>
+                                    <paper-item name="When the institution is pre-decided">When the institution is pre-decided</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+
+                            <div id="Appointingarbitrator_Institutional_When the institution is pre-decided" name="Appointingarbitrator_Institutional_All">
+                                <paper-input name="Appointingarbitrator_NameInstitution" label="Name of the Institution" on-keyup="HandleOnChange"></paper-input> 
+                                <paper-textarea name="Appointingarbitrator_AddrInstitution" label="Address of the Institution" on-keyup="HandleOnChange"></paper-textarea>
+                                <paper-input  name="Appointingarbitrator_arbitratorsappointed" label="Number of arbitrators appointed by the parties" type="Number" on-keyup="HandleOnChange"></paper-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="QualificationDuties" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Qualification and duties of Arbitrators</h1>
+                        <paper-input name="QualificationDuties_Nationality" label="Nationality of the arbitrator" on-keyup="HandleOnChange"></paper-input>
+
+                        <template is="dom-repeat" items="{{data.QualificationDuties.AddExpertise}}" index-as="ExpertiseIndex">
+                            <paper-input name="QualificationDuties_Expertise_{{ExpertiseIndex}}" label="Arbitrator’s area of expertise" on-keyup="HandleOnChange">
+                            </paper-input>
+                            <label id="remove-expertise-button">Remove</label>
+                            <paper-icon-button  suffix id="QualificationDuties_Expertise_{{ExpertiseIndex}}" icon="clear" area-labeldby="remove-expertise-button" on-tap="RemoveMore"></paper-icon-button>
+                        </template>
+                        <br>
+                        <label id="add-expertise-button">Add Expertise</label>
+                        <paper-icon-button id="QualificationDuties_AddExpertise" icon="add-circle" area-labeldby="add-expertise-button" on-tap="AddMore"></paper-icon-button>
+
+                        <paper-input name="QualificationDuties_NoYears" label="Arbitrators shall have a minimum number of years of experience" type="Number" on-keyup="HandleOnChange"></paper-input>
+                        <paper-input name="QualificationDuties_Field" label="Experienced in which field of practice" on-keyup="HandleOnChange"></paper-input>
+
+                        <template is="dom-repeat" items="{{data.QualificationDuties.AddConcept}}" index-as="ConceptIndex">
+                            <paper-input name="QualificationDuties_Concept_{{ConceptIndex}}" label="Arbitrator should be well versed with the Basic concept of" on-keyup="HandleOnChange">
+                            </paper-input>
+                            <label id="remove-concept-button">Remove</label>
+                            <paper-icon-button  suffix id="QualificationDuties_Concept_{{ConceptIndex}}" icon="clear" area-labeldby="remove-concept-button" on-tap="RemoveMore"></paper-icon-button>
+                        </template>
+                        <br>
+                        <label id="add-concept-button">Add Concept</label>
+                        <paper-icon-button id="QualificationDuties_AddConcept" icon="add-circle" area-labeldby="add-concept-button" on-tap="AddMore"></paper-icon-button>
+
+                        <template is="dom-repeat" items="{{data.QualificationDuties.AddLanguage}}" index-as="LanguageIndex">
+                            <paper-input name="QualificationDuties_Language_{{LanguageIndex}}" label="Arbitrator should be well acquainted with languages" on-keyup="HandleOnChange">
+                            </paper-input>
+                            <label id="remove-language-button">Remove</label>
+                            <paper-icon-button  suffix id="QualificationDuties_Language_{{LanguageIndex}}" icon="clear" area-labeldby="remove-language-button" on-tap="RemoveMore"></paper-icon-button>
+                        </template>
+                        <br>
+                        <label id="add-language-button">Add Language</label>
+                        <paper-icon-button id="QualificationDuties_AddLanguage" icon="add-circle" area-labeldby="add-language-button" on-tap="AddMore"></paper-icon-button><br>
+
+                        The arbitrator should compulsorily belong to profession 
+                        <paper-input name="QualificationDuties_Profession" label="Profession" on-keyup="HandleOnChange"></paper-input>With
+                        <paper-input name="QualificationDuties_Years" label="Experience(No. of Years)" on-keyup="HandleOnChange"></paper-input>
+                        Number of years of experience.
+
+                        <template is="dom-repeat" items="{{data.QualificationDuties.AddDuties}}" index-as="DutiesIndex">
+                            <paper-input name="QualificationDuties_Duties_{{DutiesIndex}}" label="Basic duties already mentioned" on-keyup="HandleOnChange">
+                            </paper-input>
+                            <label id="remove-duty-button">Remove</label>
+                            <paper-icon-button  suffix id="QualificationDuties_Duties_{{DutiesIndex}}" icon="clear" area-labeldby="remove-duty-button" on-tap="RemoveMore"></paper-icon-button>
+                        </template>
+                        <br>
+                        <label id="add-duty-button">Add Duties</label>
+                        <paper-icon-button id="QualificationDuties_AddDuties" icon="add-circle" area-labeldby="add-duty-button" on-tap="AddMore"></paper-icon-button><br>
+                    </div>
+                </div>
+
+                <div id="ExtraClauses" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Extra Clauses</h1>
+                        <paper-checkbox id="ExtraClauses_Re-appointment of arbitrators_Cb"><b>Re-appointment of arbitrators</b></paper-checkbox><br><br>
+                        <div hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'Tribunal','Ad-hoc arbitration',-1)}}">
+                            The parties can mutually decide to revoke such arbitrator’s appointment after serving him/her a notice 
+                            <paper-input name="ExtraClauses_DaysNo" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input>
+                            Number of days for the notice.<br>
+                            The parties can proceed to appoint another arbitrator within
+                            <paper-input name="ExtraClauses_NoDays" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input>
+                            number of days of such revocation taking place.<br>
+                            <label id="written-consent">Written Consent required:</label>
+                            <paper-radio-group id="ExtraClauses_Consent_Rb" area-labeld-by="written-consent" selected="Yes" >
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                <paper-radio-button name="No">No</paper-radio-button>
+                            </paper-radio-group><br>
+                        </div>
+                        
+                        <paper-checkbox id="ExtraClauses_Waiver_Cb"><b>Waiver</b></paper-checkbox><br><br>
+
+                        <paper-checkbox id="ExtraClauses_Deposit_Cb"><b>Deposit</b></paper-checkbox><br><br>
+
+                        <paper-checkbox id="ExtraClauses_Indemnification_Cb"><b>Indemnification</b></paper-checkbox><br><br>
+
+                        <paper-checkbox id="ExtraClauses_Objection to appointment of arbitrators_Cb"><b>Objection to appointment of arbitrators</b></paper-checkbox><br><br>
+                        Objection can be raised by either parties within
+                        <paper-input name="ExtraClauses_ObjectionDays" label="Number of days" type="Number" on-keyup="HandleOnChange"></paper-input>
+                        Number of days of receiving an intimation regarding the evocation of arbitral proceedings.<br>
+
+                        <paper-checkbox id="ExtraClauses_Confidentiality Clause_Cb"><b>Confidentiality Clause</b></paper-checkbox><br><br>
+
+                        <paper-checkbox id="ExtraClauses_Binding Clause_Cb"><b>Binding Clause</b></paper-checkbox><br><br>
+
+                            <div hidden="{{_IsIndividual(data.Party.*,'PartyType')}}">
+                            <paper-checkbox id="ExtraClauses_Death_Cb"><b>Death of the individual or sole proprietor party</b></paper-checkbox><br><br>
+                            </div>
+
+                    </div>
+                </div>
+                
+
+            </paper-material>
+        </div>
+    </template>
+    <script type="text/javascript">
+        Polymer({
+            is:'domestic-arbitration-agreement',
+            observers:[
+                'DataChange(data.*)'
+            ],
+            listeners:{
+                'iron-select':'HandleIronSelect',
+                'iron-keyup':'HandleIronChange',
+                'paper-radio-group-changed':'HandleRadioButton'
+            },
+            behaviors:[SuperBehavior],
+            _IsIndividual:function (x,a) {
+                var t=x.path.split(".")[1];
+                var d;
+                if(this.data[t][a]){
+                    d=this.data[t][a];
+                    for(var i in d)
+                    {
+                        if(d[i]=="individual")
+                        {
+                            return false;
+                            break;
+                        }
+                    }
+                }
+                return true;
+            },
+
+            _TwoInArray:function(x,p){
+
+            var t=x.path.split(".")[1];
+            if(this.data[t][p].length == 2) return false;
+            return true;
+        }
+
+        });
+    </script>
+</dom-module>
+
+</body>
+</html>

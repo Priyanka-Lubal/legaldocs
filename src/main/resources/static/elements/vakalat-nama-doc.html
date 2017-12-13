@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+</head>
+<body>
+<dom-module id="vakalat-nama-doc">
+    <style>
+        span{
+            pointer-events: none;
+        }
+    </style>
+    <template>
+
+        <!--<paper-dialog id="PreviewDialog" entry-animation="scale-up-animation"  with-backdrop>-->
+
+        <!--<paper-dialog-scrollable id="PreviewDoc">-->
+
+        <div id="EntireDoc" class="InnerDiv">
+            <p align="center"><strong>VAKALATNAMA</strong></p>
+            <p align="center">&nbsp;</p>
+            <pre style="color:red">                     In the court of <span title="Case_Name_{{-1}}_Span">{{_Format(data.Case.*,'Name',-1)}}</span>
+                          <span title="Case_jurisdiction_{{-1}}_Span">{{_Format(data.Case.*,'jurisdiction',-1)}}</span>
+                <span title="Case_Reason_{{-1}}_Span">{{_Format(data.Case.*,'Reason',-1)}}</span>-<span title="Case_No_{{-1}}_Span">{{_Format(data.Case.*,'No',-1)}}</span> ,{{_Format(data.Case.*,'DateDDMMYY',-1)}} </pre>
+            <pre style="color:red"><span title="Petitioner_Reason_{{-1}}_Span">{{_Format(data.Petitioner.*,'Reason',-1)}}</span>:<span title="Petitioner_Name_{{-1}}_Span">{{_Format(data.Petitioner.*,'Name',-1)}}</span><br><span title="Petitioner_Name1_{{-1}}_Span">{{_Format(data.Petitioner.*,'Name1',-1)}}</span></pre>
+            <p><b>V/S</b></p>
+            <br><pre style="color:red"><span title="Defendant_Namedef_{{-1}}_Span">{{_Format(data.Defendant.*,'Namedef',-1)}}</span><br><span title="Defendant_Nameadv_{{-1}}_Span">{{_Format(data.Defendant.*,'Nameadv',-1)}}</span></pre>
+
+            <br> <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span>  <span title="Granter_Name_{{-1}}_Span">{{_Format(data.Granter.*,'Name',-1)}}</span> Being the official relations-<span title="Granter_Reason4_{{-1}}_Span">{{_Format(data.Granter.*,'Reason4',-1)}}</span> of <span title="Defendant_Reason3_{{-1}}_Span">{{_Format(data.Defendant.*,'Reason3',-1)}}</span> or Personal Relations- <span title="Granter_Reason5_{{-1}}_Span">{{_Format(data.Granter.*,'Reason5',-1)}}</span> do hereby appoint & retain <span title="Attorney_Name_{{-1}}_Span">{{_Format(data.Attorney.*,'Name',-1)}}</span> (hereinafter called as “the  <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span> <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> Optional – for appointing law firm – represented by <span title="Attorney_Name_{{-1}}_Span">{{_Format(data.Attorney.*,'Name',-1)}}</span> being <span title="Defendant_Reason3_{{-1}}_Span">{{_Format(data.Defendant.*,'Reason3',-1)}}</span>to be in the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">my</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">our</span> in the said <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> <span title="Attorney_Name_{{-1}}_Span">{{_Format(data.Attorney.*,'Name',-1)}}</span> in the said <span title="Case_Reason_{{-1}}_Span">{{_Format(data.Case.*,'Reason',-1)}}</span></p>
+
+            <br><p>1.	<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span> authorize the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> to do any or all of the following on <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">my</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">our</span> behalf:
+<br>
+            <br>   i.	to represent, act and appear for <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">me</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">us</span>;
+            <br>   ii.	to conduct and prosecute or defend the same and all proceedings that may be taken in respect of any application connected with the same or any decree of order passed therein;
+            <br>   iii.	to sign, file, verify, present, and receive all types of documents including plaints, statements, pleadings, appeals, cross objections, petitions, applications, revision, withdrawal, compromise or affidavits;
+            <br>   iv.	to withdraw or compromise or submit to arbitration any differences or disputes that may arise touching or in any manner relating to the said case;
+            <br>    v.	to deposit, draw and receive money, cheques, cash and grant receipts thereof;
+            <br>    vi.	to do all other acts and things which may be necessary or expedient, in the opinion of the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span>, to be done.
+
+            <br><p>
+            2.	<span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span> do hereby agree to ratify and confirm all acts done by the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> or <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">their</span> substitute in the matter as <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">my</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">our</span> own acts, as if done by <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">me</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">us</span> to all intents and purposes.
+            <br><p>3.	Optional - <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span> undertake that <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span> will or <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">my</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">our</span> duly authorised agent will appear in the Court on all hearings and will inform the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> for appearance when the <span title="Petitioner_Reason1_{{-1}}_Span">{{_Format(data.Petitioner.*,'Reason1',-1)}}</span> is called.
+            <br>4.	Optional - <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span>, the undersigned do hereby agree not to hold the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> or <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">his</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">her</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">their</span> substitute(s) responsible for the result of the said case.
+            <br>5.	Optional - The adjournment costs whenever ordered by the Court shall be of the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> which <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">he</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">she</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">they</span> shall receive duly. And <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span>, the undersigned do hereby agree that in the event of the whole or part of the fees agreed by <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">me</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">us</span> to be paid to the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> remaining unpaid <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">he</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">she</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">they</span> shall be entitled to withdraw from the prosecution of the said case until the same is paid up. The fee settled is only for the above case and above Court.<span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span> hereby agree that once the fee is paid, <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span> will not be entitled for the refund of the same in any case whatsoever. If the case lasts for more than {{_Format(data.Undertaking.*,'DateDayN',-1)}} <span title="Undertaking_Reason_{{-1}}_Span">{{_Format(data.Undertaking.*,'Reason',-1)}}</span>, the <span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocate</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">Advocates</span> shall be entitled for additional fee.
+
+            <br><p>IN WITHNESS WHEREOF, <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">I</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">We</span> do hereunto set <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">my</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">our</span> <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">hand</span><span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">hands</span> to these presents the contents of which have been understood by <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">me</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">us</span> on this {{_Format(data.Case.*,'DateDayN',-1)}} of {{_Format(data.Case.*,'DateMonthW',-1)}} in the year {{_Format(data.Case.*,'DateYear',-1)}}.                              .
+            <p>Signatures of <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">person</span><span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">persons</span> Appointing the <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">advocate</span><span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">advocates</span>
+
+        </p>
+            <p style="color:red">Accepted, identified and certified by me,
+
+                <br>Advocate Name:<span title="Attorney_Name_{{-1}}_Span">{{_Format(data.Attorney.*,'Name',-1)}}</span>
+                <br>Enrolment No:<span title="Attorney_Enroll_{{-1}}_Span">{{_Format(data.Attorney.*,'Enroll',-1)}}</span>
+                <br>Mobile No:<span title="Attorney_Mobile_{{-1}}_Span">{{_Format(data.Attorney.*,'Mobile',-1)}}</span>
+                <br>Signature of Advocate:
+
+                <br><p>Date .....................................
+            <br>Place .......................................
+             
+            <br><p>
+
+            [To be filed along with Vakalatnama by Advocates to be taken on record]
+
+            <p>To,
+                <br>The  <span title="Attorney_Reason_{{-1}}_Span">{{_Format(data.Attorney.*,'Reason',-1)}}</span>,
+                <br><span title="Case_Name_{{-1}}_Span">{{_Format(data.Case.*,'Name',-1)}}</span>
+                <br>Mumbai, India.
+
+                <br>Sir/Madam,
+
+                <br>Please enter <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">my</span>/<span hidden="{{!_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">our</span> <span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">appearance</span><span hidden="{{_OneOrMoreInArray(data.Attorney.,'AddOneAttorney')}}">apperances</span> on behalf of the <span title="Petitioner_Reason1_{{-1}}_Span">{{_Format(data.Petitioner.*,'Reason1',-1)}}</span> in the matter mentioned.
+
+                <br>Dated this {{_Format(data.Case.*,'DateDayN',-1)}} of {{_Format(data.Case.*,'DateMonthW',-1)}} ,{{_Format(data.Case.*,'DateYear',-1)}}.
+
+                <br>Yours Faithfully,
+
+                <br><span title="Attorney_Name_{{-1}}_Span">{{_Format(data.Attorney.*,'Name',-1)}}</span>
+                <br>Advocate for the <span title="Petitioner_Reason1_{{-1}}_Span">{{_Format(data.Petitioner.*,'Reason1',-1)}}</span>
+            <p style="color:red">
+                <br>Code No.-
+                <br>Office:
+                <br>Address:
+                <br>Mobile No.:
+                <br>Telephone No.:
+                <br>Email Address:
+
+            </p>
+
+
+
+
+        </div>
+        <!--</paper-dialog-scrollable>-->
+
+        <!--</paper-dialog>-->
+    </template>
+    <script>
+        Polymer({
+            is: "vakalat-nama-doc",
+            behaviors: [SuperBehavior]
+        })
+    </script>
+</dom-module>
+</body>
+</html>

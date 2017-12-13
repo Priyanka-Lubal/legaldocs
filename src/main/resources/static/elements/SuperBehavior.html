@@ -1,0 +1,404 @@
+<script>
+    SuperBehavior={
+        properties:{
+
+            one_to_nineteen:{
+                type:Array,
+                value:[
+                    "one", "two", "three", "four", "five",
+                    "six", "seven", "eight", "nine", "ten",
+                    "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+                    "sixteen", "seventeen", "eighteen", "nineteen"
+                ],
+
+            },
+            number_units:{
+                type:Array,
+                value:["thousand","lakh","crore","arab","kharab","neel","padm","shankh"],
+
+            },
+            tens:{
+                type:Array,
+                value:["twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"],
+
+            }
+        },
+        HandleIronSelect:function (e) {
+            var x=e.target.id.split('_');
+            var myid = x[1];
+            var index=-1;
+            if(x.length>=4)
+                index=x[3];
+            this.UpdateData(x[0],myid,index,e.target.selected);
+            if(x[2]=="Main") {
+
+                var list=document.getElementsByName(x[0]+"_"+x[1]+"_All");
+                if(index>=0){
+                    for(var i in list){
+                        if(list.hasOwnProperty(i) && list[i].id.split("_")[3]==index){
+                            list[i].hidden=true;
+                        }
+                    }
+                    myid=x[0]+"_"+x[1]+"_"+e.target.selected+"_"+x[3];
+                }
+                else{
+                    for(var i in list){
+                        if(list.hasOwnProperty(i)){
+                            list[i].hidden=true;
+                        }
+                    }
+                    myid=x[0]+"_"+x[1]+"_"+e.target.selected;
+                }
+
+                var ele=document.getElementById(myid);
+                if(ele){
+                    ele.hidden=false;
+                }
+
+            }
+            else if(x[2]=="Lb"){
+
+                var id=x[0]+"_"+x[1]+"_Div";
+                if(index>=0)id=id+"_"+index;
+                var ele=document.getElementById(id);
+                if(ele){
+                    if(e.target.selected=="Other"){
+                        ele.hidden=false;
+                    }
+                    else ele.hidden=true;
+                }
+            }
+            else if(x[2]=="Gender"){
+
+                var gender=this.GetGender(e.target.selected);
+                this.UpdateData(x[0],"Gender"+myid,index,gender);
+
+            }
+            this.fire('iron-signal',{name:'docindex'});
+        },
+        HandleIronChange:function (e) {
+            var x=e.target.id.split('_');
+            if(x.length<=1)return;
+            var pre=x[0]+"_"+x[1];
+            var myid = x[1];
+            var index=-1;
+            if(x.length>=4)
+                index=x[3];
+
+            this.UpdateData(x[0],myid,index,""+e.target.checked);
+        },
+        HandleRadioButton: function(e){
+
+            var x=e.target.id.split('_');
+            if(x.length<=1)return;
+            var pre=x[0]+"_"+x[1];
+            var myid = x[1];
+            var index=-1;
+            if(x.length>=4)
+                index=x[3];
+            var id=pre+"_Div";
+            if(index>=0)id=id+"_"+index;
+            var ele=document.getElementById(id)
+            if(ele){
+                if(e.target.selected=="Yes"){
+                    ele.hidden=false;
+                }
+                else if(e.target.selected=="Other"){
+                    ele.hidden=false;
+                }
+                else ele.hidden=true;
+            }
+            this.UpdateData(x[0],myid,index,e.target.selected);
+        },
+        HandleOnChange:function (e) {
+            var x=e.target.name;
+            x=x.split("_");
+            var myid=x[1];
+            var index=-1;
+            if(x.length>=3)
+                index=x[2];
+            this.UpdateData(x[0],myid,index,e.target.value);
+            if(index>=0)
+                this.notifyPath("data."+x[0]+"."+myid+"."+index);
+
+        },
+
+        HandleDate:function (e) {
+            var date=e.detail.value;
+            if(!date)return;
+
+            var days=['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+            var day=days[date.getDay()];
+            var month=months[date.getMonth()];
+            var x=e.target.id;
+            x=x.split("_");
+            var myid=x[1];
+            var index=-1;
+            if(x.length>=3)
+                index=x[2];
+            this.UpdateData(x[0],myid,index,e.target.date);
+            this.UpdateData(x[0],myid+'DDMMYY',index,e.target.innerText);
+            this.UpdateData(x[0],myid+'DayW',index,day);
+            this.UpdateData(x[0],myid+'MonthW',index,month);
+            this.UpdateData(x[0],myid+'DayN',index,e.target.innerText.split("-")[0]);
+            this.UpdateData(x[0],myid+'MonthN',index,date.getMonth());
+            this.UpdateData(x[0],myid+'Year',index,date.getFullYear());
+        },
+        HandleAmount:function (e) {
+            var x=e.target.name;
+            x=x.split("_");
+            var myid=x[1];
+            var index=-1;
+            if(x.length>=3)
+                index=x[2];
+            this.UpdateData(x[0],myid,index,e.target.value);
+            var words=this.convertToWords(e.target.value);
+            this.UpdateData(x[0],myid+'AmountWords',index,words);
+        },
+        UpdateData:function (t,id,index,value) {
+            if(typeof value === 'string' || value instanceof String){
+                value=value.toLowerCase();
+            }
+
+            if(!this.data[t][id]) {
+                if(index>=0)
+                    this.data[t][id] = [];
+                else this.data[t][id]="";
+            }
+            //this.Highlight(t,id,index);
+            if(index>=0)
+            {
+                this.data[t][id][index]=value;
+                this.notifyPath("data."+t+"."+id+"."+index);
+                this.notifyPath("data."+t+"."+id);
+            }
+            else
+            {
+                this.data[t][id]=value;
+                this.notifyPath("data."+t+"."+id);
+            }
+
+        },
+        convertToWords:function (value) {
+            var words=this.twoDigitToWord(value);
+            value=Math.floor(value/100);
+
+            var hundred="";
+            if(value>0){
+                var hun=value%10;
+                value=Math.floor(value/10);
+                if(hun>0)
+                    hundred=this.one_to_nineteen[hun-1]+" "+"hundred";
+            }
+            var rem=[];
+            var i=0;
+            while(value>0){
+                rem.push(value%100);
+                value=Math.floor(value/100);
+                i++;
+            }
+            var AW="";
+            while(--i>=0){
+                if(rem[i]==0)continue;
+                var Awords=this.twoDigitToWord(rem[i]);
+                AW+=Awords+" "+this.number_units[i]+" ";
+            }
+
+            if(AW==""&&hundred=="")AW=words;
+            else if(AW==""&&words=="")AW=hundred
+            else if(words==""&& hundred!==""&&AW!=="")
+                AW+="and"+" "+hundred;
+            else if(words!=="")AW+=hundred+" and "+words;
+
+
+            return AW;
+        },
+        twoDigitToWord:function (value) {
+            var unitp,tenp;
+            var first_two=value%100;
+            if(value>0)
+                unitp=value%10;
+            value=Math.floor(value/10);
+            if(value>0)
+                tenp=value%10;
+            value=Math.floor(value/10);
+            var words="";
+            if(first_two==0)words="";
+            else if(first_two>0&&first_two<20)words=this.one_to_nineteen[first_two-1];
+            else if(unitp==0)words=this.tens[tenp-2];
+            else{
+                words=this.tens[tenp-2]+" "+this.one_to_nineteen[unitp-1];
+            }
+            return words;
+        },
+        AddMore:function (e) {
+            var id=e.target.parentElement.id.split("_");
+            this.push("data."+id[0]+"."+id[1],1);
+
+        },
+        RemoveMore:function (e) {
+            var id=e.target.parentElement.id.split("_");
+            this.splice("data."+id[0]+".Add"+id[1],id[2],1);
+            if(this.data[id[0]][id[1]]){
+                this.splice("data."+id[0]+"."+id[1],id[2],1);
+            }
+
+        },
+        AddEntity:function (e) {
+            var id=e.target.parentElement.id.split("_");
+            this.push("data."+id[0]+"."+id[1],1);
+
+            this.fire('iron-signal',{name:'docindex'});
+            document.getElementById("NotificationToast").text=id[0]+" Added Successfully";
+            document.getElementById("NotificationToast").open();
+        },
+        RemoveEntity:function (e) {
+            var id=e.target.parentElement.id.split("_");
+            if(this.data[id[0]]["Add"+id[1]].length>1){
+
+                //var index=e.target.parentElement.name.split("_")[1];
+                for(var key in this.data[id[0]]){
+                    if(this.data[id[0]].hasOwnProperty(key)){
+
+                        if(!(this.data[id[0]][key] instanceof Array)) continue;
+                        this.splice("data."+id[0]+"."+key,id[2],1);
+
+                    }
+                }
+
+                this.fire('iron-signal',{name:'docindex'});
+                document.getElementById("NotificationToast").text=id[0]+" Removed Successfully";
+                document.getElementById("NotificationToast").open();
+            }
+        },
+        _EntityNo:function(i) {
+            return i+1;
+        },
+        _OptionalDiv:function(x,a,b,c){
+
+            var t=x.path.split(".")[1];
+            var d;
+            if(this.data[t][a]){
+                d=this.data[t][a];
+                if(c>=0)d=d[c];
+                if(d==b.toLowerCase())return false;
+            }
+            return true;
+        },
+        DataChange:function (e) {
+
+            console.log(this.data);
+        },
+        GetGender:function (t) {
+            var male=['Mr','Shri'];
+            var female=['Ms','Mrs','Shrimati'];
+            for(var m in male){
+                if(t.toUpperCase()==male[m].toUpperCase())return "Male";
+            }
+            for(var f in female){
+                if(t.toUpperCase()==female[f].toUpperCase())return "Female";
+            }
+        },
+        Highlight:function(t,a,b){
+            var tags=document.querySelectorAll("span.highlight");
+            for(var i=0;i<tags.length;i++){
+                tags[i].classList.remove("highlight");
+            }
+            var name=t+"_"+a+"_";
+            if(b>=0)name=name+b;
+            else name=name+"\\{\\{"+b+"\\}\\}";
+            name=name+"_Span";
+            tags=document.querySelectorAll("span[title="+name+"]");
+            for(var i=0;i<tags.length;i++){
+                if(i==0){
+                    tags[i].scrollIntoView();
+                    document.getElementById("OutputDiv").scrollTop-=100;
+                }
+                tags[i].classList.add("highlight");
+            }
+
+        },
+        DoFormat:function(t,a,b){
+            if (this.data[t][a]) {
+                if(b>=0)
+                    return this.data[t][a][b];
+                else return this.data[t][a];
+            }
+        },
+        _Format:function (x,a,b) {
+            var path=x.path.split(".")[1];
+            var val=this.DoFormat(path,a,b);
+            if(val=="other"){
+                return this.DoFormat(path,"Other"+a,b);
+            }
+            else return val;
+
+        },
+        _FormatString:function (x,s1,s2,a,b) {
+            var val=this._Format(x,a,b);
+            if(val)
+                return s1+val+s2;
+        },
+        _FormatReplace:function (x,y,s1,s2,a,b,rep,fun) {
+            var val=this._FormatString(x,s1,s2,a,b)
+            if(val)
+            {
+                var ret=this[fun](x);
+                if(ret){
+                    return val.replace(rep,ret);
+                }
+                return val;
+            }
+
+        },
+        _IsProperty:function (x,p,i) {
+            var t=x.path.split(".")[1];
+            if(i && this.data[t][p] && this.data[t][p].length>i)return true;
+            else if(!i && this.data[t][p])return true;
+
+            return false;
+        },
+        _OneOrMoreInArray:function(x,p){
+
+            var t=x.path.split(".")[1];
+            if(this.data[t][p].length>1)return false;
+            return true;
+        },
+        _IsEqual:function (x,p,i,v) {
+            var t=x.path.split(".")[1];
+            if(i>=0){
+                if(this.data[t][p][i]==v+1)return true;
+                else return false;
+            }
+            else{
+                if(this.data[t][p]==v+1)return true;
+                else return false;
+            }
+        },
+        ZoomIn:function (e) {
+
+            var val=document.getElementById("EntireDoc").style.zoom;
+            if(val){
+                val=val.split("%")[0];
+                val=parseInt(val);
+                val+=25;
+            }
+            else val=125;
+            if(val>300)val=300;
+            document.getElementById("EntireDoc").style.zoom=val+"%";
+        },
+        ZoomOut:function (e) {
+            var val=document.getElementById("EntireDoc").style.zoom;
+            if(val){
+                val=val.split("%")[0];
+                val=parseInt(val);
+                val-=25;
+            }
+            else val=75;
+            if(val<25)val=25;
+            document.getElementById("EntireDoc").style.zoom=val+"%";
+        }
+
+    }
+</script>

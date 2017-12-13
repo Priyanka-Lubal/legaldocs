@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="import" href="power-of-attorney-doc.html">
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+    <link rel="stylesheet" href="../css/speech-input.css">
+    <script src="../js/speech-input.js"></script>
+</head>
+<body>
+<dom-module id="power-of-attorney">
+    <template>
+        <style>
+            div.InnerDiv{
+                padding: 5% 5% 5% 5%;
+            }
+            paper-fab.blue {
+                --paper-fab-background: var(--paper-indigo-500);
+                --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+            }
+        </style>
+        <div id="OutputDiv" style="float:left;width: 42%;padding-left: 2%;height: 550px;overflow-y: auto">
+            <paper-material elevation="3">
+                <div style="position: relative;margin-left: 92%">
+                    <paper-fab class="blue" icon="add" style="position: fixed;bottom: 19%" on-tap="ZoomIn" mini></paper-fab>
+                    <br><br><br>
+                    <paper-fab class="blue" icon="remove" style="position: fixed;bottom: 10%" on-tap="ZoomOut" mini></paper-fab>
+                </div>
+                <div>
+                    <power-of-attorney-doc data="{{data}}"></power-of-attorney-doc>
+                </div>
+            </paper-material>
+        </div>
+        <div id="InputDiv" style="float:left;width: 42%;padding-left: 1%;height: 550px;overflow-y: auto">
+        <paper-material elevation="3">
+            <div id="Granter" class="forIndex">
+                <div class="InnerDiv">
+                    <h1>Granter Details</h1>
+
+                    <paper-input class="speech-input" name="Granter_Name" label="Name of the Granter" on-change="HandleOnChange"></paper-input>
+                    <paper-input name="Granter_Age" label="Age in Years" type="Number" on-change="HandleOnChange"></paper-input>
+                    <paper-textarea name="Granter_Address" label="Address of the Granter" on-change="HandleOnChange"></paper-textarea>
+                    <label id="Granter-gender-events">Gender of the Granter</label>
+                    <paper-radio-group id="Granter_Gender_Rb" area-labeld-by="Granter-gender-events" selected="Mr" >
+                        <<paper-radio-button name="Mr">Mr</paper-radio-button>
+                        <paper-radio-button name="Ms">Ms</paper-radio-button>
+                        <paper-radio-button name="Mrs">Mrs</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <label id="Granter-reason-events"><b>Reason for Granting the Power of Attorney:&nbsp</b></label>
+                    <paper-dropdown-menu area-labeldby="title-label">
+                        <paper-listbox id="Granter_Reason_Lb" class="dropdown-content" attr-for-selected="name"  selected="Old age">
+                            <paper-item  name="Old age">Old age</paper-item>
+                            <paper-item  name="Disability ">Disability </paper-item>
+                            <paper-item  name="Busy Schedule">Busy Schedule</paper-item>
+                            <paper-item  name="Residing abroad">Residing abroad</paper-item>
+                            <paper-item  name="Other">Other</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <div id="Granter_Reason_Div" >
+                        <paper-input name="Granter_OtherReason" label="Any other reason" on-change="HandleOnChange"></paper-input>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div id="Attorney" >
+                <div class="InnerDiv">
+                    <template is="dom-repeat" items="{{data.Attorney.AddOneAttorney}}">
+                        <div id="Attorney_{{index}}" class="forIndex">
+                            <h1>Attorney Details {{_EntityNo(index)}}</h1>
+                            <label id="remove-Attorney-button">Delete Attorney</label>
+                            <paper-icon-button  id="Attorney_OneAttorney_{{index}}" icon="delete" area-labeldby="remove-Attorney-button" on-tap="RemoveEntity"></paper-icon-button>
+                            <br>
+                            <paper-input name="Attorney_Name_{{index}}" label="Name of the Attorney" on-change="HandleOnChange"></paper-input>
+                            <paper-input name="Attorney_Age_{{index}}" label="Age in Years" type="Number" on-change="HandleOnChange"></paper-input>
+                            <paper-textarea name="Attorney_Address_{{index}}" label="Address of the Attorney" on-change="HandleOnChange"></paper-textarea>
+                            <br>
+                            <label id="Attorney-gender-events">Gender of the Attorney</label>
+                            <paper-radio-group id="Attorney_Gender_Rb_{{index}}" area-labeld-by="Attorney-gender-events" selected="Mr" >
+                                <paper-radio-button name="Mr">Mr</paper-radio-button>
+                                <paper-radio-button name="Ms">Ms</paper-radio-button>
+                                <paper-radio-button name="Mrs">Mrs</paper-radio-button>
+                            </paper-radio-group>
+                            <br>
+                        </div>
+                    </template>
+                    <br>
+                    <label id="add-Attorney-button">Add Attorney</label>
+                    <paper-icon-button id="Attorney_AddOneAttorney" icon="add-circle" area-labeldby="add-Attorney-button" on-tap="AddEntity"></paper-icon-button>
+                    <br><br>
+
+                    <div hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">
+                    <label id="Attorney-independent-events">Can they act independently?</label>
+                    <paper-radio-group id="Attorney_Independent_Rb" area-labeld-by="Attorney-independent-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    </div>
+                    <label id="Attorney-AuthorizedToCollect-events">The Attorney is authorized to collect all the debts</label>
+                    <paper-radio-group id="Attorney_AuthorizedToCollect_Rb" area-labeld-by="Attorney-AuthorizedToCollect-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToCollect','No')}}">
+                        <paper-input name="Attorney_ParticularDebt" label="Mention the debt that the attorney is authorized to collect" on-change="HandleOnChange"></paper-input>
+                    </div>
+                    <label id="Attorney-Authorized-events">Attorney is authorized to accept security for payments of debts</label>
+                    <paper-radio-group id="Attorney_Authorized_Rb" area-labeld-by="Attorney-Authorized-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <label id="Attorney-remuneration-events">Attorney will receive remuneration</label>
+                    <paper-radio-group id="Attorney_Remuneration_Rb" area-labeld-by="Attorney-remuneration-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                        <paper-radio-button name="Only with granter’s approval">Only with granter’s approval</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <label id="Attorney-AuthorizedToHire-events">Authorized to hire substitute</label>
+                    <paper-radio-group id="Attorney_AuthorizedToHire_Rb" area-labeld-by="Attorney-AuthorizedToHire-events" selected="No" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <div id="Attorney_AuthorizedToHire_Div" hidden>
+                        <label id="Attorney-SuchSubstitute-events">Such substitute will receive payment</label>
+                        <paper-radio-group id="Attorney_SuchSubstitute_Rb" area-labeld-by="Attorney-SuchSubstitute-events" selected="Yes" >
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Only with Granters approval">Only with Granters approval</paper-radio-button>
+                        </paper-radio-group>
+                        <br>
+                    </div>
+                    <label id="Attorney-AuthorizedForAppointing-events">Authorization for appointing Advocates</label>
+                    <paper-radio-group id="Attorney_AuthorizedForAppointing_Rb" area-labeld-by="Attorney-AuthorizedForAppointing-events" selected="Authorized" >
+                        <paper-radio-button name="Authorized">Authorized</paper-radio-button>
+                        <paper-radio-button name="Not Authorized">Not Authorized</paper-radio-button>
+                        <paper-radio-button name="Authorized only with granter’s consent">Authorized only with granter’s consent</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <label id="Attorney-AuthorizedToRefer-events">Authorized to refer any disputes regarding any debts</label>
+                    <paper-radio-group id="Attorney_AuthorizedToRefer_Rb" area-labeld-by="Attorney-AuthorizedToRefer-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <label id="Attorney-CanFileSuits-events">Can file suits, petitions, or take any other legal action, against any such person as aforesaid to recover the debts or other amounts due and payable by to me</label>
+                    <paper-radio-group id="Attorney_CanFileSuits_Rb" area-labeld-by="Attorney-CanFileSuits-events" selected="In any Court of law" >
+                        <paper-radio-button name="In any Court of law">In any Court of law</paper-radio-button>
+                        <paper-radio-button name="Tribunal/ Debt Recovery Tribunal of the concerned city or state">Tribunal/ Debt Recovery Tribunal of the concerned city or state</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                </div>
+            </div>
+            <div id="Debtor" class="forIndex">
+                <div class="InnerDiv">
+                    <h1>Debtor Details</h1>
+                    <paper-input name="Debtor_Name" label="Name of the Debtor" on-change="HandleOnChange"></paper-input>
+                    <paper-input name="Debtor_Age" label="Age in Years" type="Number" on-change="HandleOnChange"></paper-input>
+                    <paper-textarea name="Debtor_Address" label="Address of the Debtor" on-change="HandleOnChange"></paper-textarea>
+                    <label id="Debtor-gender-events">Gender of the Debtor</label>
+                    <paper-radio-group id="Debtor_Gender_Rb" area-labeld-by="Debtor-gender-events" selected="Mr" >
+                        <paper-radio-button name="Mr">Mr</paper-radio-button>
+                        <paper-radio-button name="Ms">Ms</paper-radio-button>
+                        <paper-radio-button name="Mrs">Mrs</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <paper-input name="Debtor_AmountDue" label="Amount Due" type="Number" on-change="HandleOnChange"></paper-input>
+                    <br><b>Date of repayment</b><br>
+                    <paper-date-picker-item icon="icons:today" id="Debtor_RepaymentDate" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                    <paper-input name="Debtor_InterestRate" label="Interest Rate%" type="Number" on-change="HandleOnChange"></paper-input>
+                    <paper-input name="Debtor_Penalty" label="Penalty for late payment" on-change="HandleOnChange"></paper-input>
+                </div>
+            </div>
+            <div id="Debt" class="forIndex">
+                <div class="InnerDiv">
+                    <h1>Debt Details</h1>
+                    <label id="Debt-collected-events">Debt is collected</label>
+                    <paper-radio-group id="Debt_Collected_Rb" area-labeld-by="Debt-collected-events" selected="Partially" >
+                        <paper-radio-button name="Partially">Partially</paper-radio-button>
+                        <paper-radio-button name="Fully">Fully</paper-radio-button>
+                        <paper-radio-button name="In lump sum">In lump sum</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                    <label id="Debt-includeInterest-events">Debt includes interest</label>
+                    <paper-radio-group id="Debt_IncludeInterest_Rb" area-labeld-by="Debt-includeInterest-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+                    <br>
+                </div>
+            </div>
+            <div id="DateOfAttorney">
+                <div class="InnerDiv">
+                    <br><b>Date of the power of attorney</b><br>
+                    <paper-date-picker-item icon="icons:today" id="DateOfAttorney_Date" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                </div>
+            </div>
+
+            <div id="Witness1" class="forIndex">
+                <div class="InnerDiv">
+                    <h1>Witness Details 1</h1>
+                    <paper-input name="Witness1_Name" label="Name" on-change="HandleOnChange"></paper-input>
+                    <paper-textarea name="Witness1_Address" label="Address" on-change="HandleOnChange"></paper-textarea>
+                </div>
+            </div>
+            <div id="Witness2" class="forIndex">
+                <div class="InnerDiv">
+                    <h1>Witness Details 2</h1>
+                    <paper-input name="Witness2_Name" label="Name" on-change="HandleOnChange"></paper-input>
+                    <paper-textarea name="Witness2_Address" label="Address" on-change="HandleOnChange"></paper-textarea>
+                </div>
+            </div>
+
+
+        </paper-material>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is:'power-of-attorney',
+            observers:[
+                'DataChange(data.*)'
+            ],
+            listeners:{
+                'iron-select':'HandleIronSelect',
+                'iron-change':'HandleIronChange',
+                'paper-radio-group-changed':'HandleRadioButton'
+            },
+            behaviors:[SuperBehavior],
+            ready:function () {
+                //this.data=JSON.parse(object);
+            }
+
+        })
+    </script>
+</dom-module>
+</body>
+</html>

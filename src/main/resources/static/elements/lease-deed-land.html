@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="import" href="lease-deed-land-doc.html">
+    <link rel="import" href="SuperBehavior.html">
+</head>
+<body>
+<dom-module id="lease-deed-land">
+    <template>
+        <style>
+            div.InnerDiv{
+                padding: 5% 5% 5% 5%;
+            }
+        </style>
+
+
+        <paper-material elevation="3">
+
+                <div id="Lessee">
+
+                    <div class="InnerDiv">
+
+                            <template is="dom-repeat" items="{{data.Lessee.AddOneLessee}}">
+                                <div id="Lessee_{{_EntityNo(index)}}" class="forIndex">
+                                <h1>lessee-details {{_EntityNo(index)}}</h1>
+                                <label id="remove-lessee-button">Delete Lessee</label>
+                                <paper-icon-button  id="Lessee_OneLessee_{{index}}" icon="delete" area-labeldby="remove-lessee-button" on-tap="RemoveEntity"></paper-icon-button>
+                                <br>
+
+                                <label id="type-of-lessee-label_{{index}}"><b>Select type of lessee:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="type-of-lessee-label">
+                                    <paper-listbox id="Lessee_LesseeType_Main_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Individual">
+                                        <paper-item name="Individual">Individual</paper-item>
+                                        <paper-item name="SoleProprietorship">SoleProprietorship</paper-item>
+                                        <paper-item name="Company">Company</paper-item>
+                                        <paper-item name="HUF">HUF</paper-item>
+                                        <paper-item name="Trust">Trust</paper-item>
+                                        <paper-item name="Partnership">Partnership</paper-item>
+                                        <paper-item name="LLP">LLP</paper-item>
+                                        <paper-item name="Other">Other</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <div id="Lessee_LesseeType_Other_{{index}}" name="Lessee_LesseeType_All">
+                                    <paper-input name="Lessee_NewName_{{index}}" label="Name" on-change="HandleOnChange"></paper-input>
+                                    <paper-input name="Lessee_NewTitle_{{index}}" label="Title" on-change="HandleOnChange"></paper-input>
+                                    <paper-input name="Lessee_NewType_{{index}}" label="type of entity" on-change="HandleOnChange"></paper-input>
+                                    <paper-input name="Lessee_NewRegisteredAct_{{index}}" label="Register Under Act" on-change="HandleOnChange"></paper-input>
+
+                                    <paper-dropdown-menu>
+                                        <paper-listbox id="Lessee_NewOfficeType_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="registered office">
+                                            <paper-item name="registered office">registered office</paper-item>
+                                            <paper-item name="office">office</paper-item>
+                                            <paper-item name="residence">residence</paper-item>
+                                            <paper-item name="branch">branch</paper-item>
+                                            <paper-item name="head office">head office</paper-item>
+                                            <paper-item name="principal place of bussiness">principal place of bussiness</paper-item>
+                                            <paper-item name="Other">Other</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <div id="Lessee_NewOfficeType_Div_{{index}}">
+                                        <paper-input name="Lessee_OtherNewOfficeType_{{index}}" label="Other" on-change="HandleOnChange"></paper-input>
+                                    </div>
+                                    <paper-input name="Lessee_NewAddress_{{index}}" label="Address" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <div id="Lessee_LesseeType_Individual_{{index}}" name="Lessee_LesseeType_All">
+                                    <paper-input name="Lessee_NameIndividual_{{index}}" label="Name of individual" on-change="HandleOnChange" ></paper-input>
+                                    <paper-input name="Lessee_AgeIndividual_{{index}}" label="Age of individual" type="Number" on-change="HandleOnChange"></paper-input>
+                                    <label id="title-label"><b>Title of first party:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="title-label">
+                                        <paper-listbox id="Lessee_IndividualTitle_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                            <paper-item name="Mr">Mr</paper-item>
+                                            <paper-item name="Ms">Ms</paper-item>
+                                            <paper-item name="Mrs">Mrs</paper-item>
+                                            <paper-item name="Shri">Shri</paper-item>
+                                            <paper-item name="Shrimati">Shrimati</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <paper-input name="Lessee_PanFirstParty_{{index}}" label="PAN number of first party (optional)" on-change="HandleOnChange"></paper-input>
+                                    <paper-textarea name="Lessee_PartyAddrFirstParty_{{index}}" label="Party address of first party" on-change="HandleOnChange"></paper-textarea>
+                                </div>
+                                <div id="Lessee_LesseeType_SoleProprietorship_{{index}}" name="Lessee_LesseeType_All">
+                                    <paper-input name="Lessee_NameParty_{{index}}" label="Name of party" on-change="HandleOnChange"></paper-input>
+                                    <paper-input name="Lessee_NameCompany_{{index}}" label="Name of company" on-change="HandleOnChange"></paper-input>
+                                    <label id="title-sole-label"><b>Title of first party:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="title-sole-label">
+                                        <paper-listbox id="Lessee_SoleProprietorshipTitle_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                            <paper-item name="Mr">Mr</paper-item>
+                                            <paper-item name="Ms">Ms</paper-item>
+                                            <paper-item name="Mrs">Mrs</paper-item>
+                                            <paper-item name="Shri">Shri</paper-item>
+                                            <paper-item name="Shrimati">Shrimati</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <paper-input name="Lessee_AgeFirstParty_{{index}}" label="Age of first party" type="Number" on-change="HandleOnChange"></paper-input>
+                                    <paper-textarea value='' name="Lessee_AddrFirstParty_{{index}}" label="Address of first party" on-change="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Lessee_PanFirstParty_{{index}}" label="PAN number of first party optional" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <div id="Lessee_LesseeType_Company_{{index}}" name="Lessee_LesseeType_All">
+                                    <paper-input name="Lessee_NameCompany_{{index}}" label="Name of company " on-change="HandleOnChange"></paper-input>
+
+                                    <label id="type-of-company-label"><b>Select type of company:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="type-of-company-label">
+                                        <paper-listbox id="Lessee_CompanyType_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="PrivateLimited">
+                                            <paper-item name="PrivateLimited">Private Limited Company</paper-item>
+                                            <paper-item name="PublicLimited">Public Limited Company</paper-item>
+                                            <paper-item name="PublicSector">Public sector Company</paper-item>
+                                            <paper-item name="Other">Other</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <div id="Lessee_CompanyType_Div_{{index}}">
+                                        <paper-input name="Lessee_OtherCompanyType_{{index}}" label="Other company type" on-change="HandleOnChange"></paper-input>
+                                    </div>
+                                    <br>
+                                    <label id="registered-act-label"><b>Act under which the company is registered:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="registered-act-label">
+                                        <paper-listbox id="Lessee_RegisteredAct_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="CompaniesAct1956">
+                                            <paper-item name="CompaniesAct1956">Companies Act, 1956</paper-item>
+                                            <paper-item name="CompaniesAct2013">Companies Act, 2013</paper-item>
+                                            <paper-item name="BankingRegulation1949">Banking Regulation, 1949</paper-item>
+                                            <paper-item name="Other">Other</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <div id="Lessee_RegisteredAct_Div_{{index}}">
+                                        <paper-input name="Lessee_OtherRegisteredAct_{{index}}" label="Other act" on-change="HandleOnChange"></paper-input>
+                                    </div>
+
+                                    <paper-textarea name="Lessee_AddrRegisteredOffice_{{index}}" label="Address of registered officce" on-change="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Lessee_CINCompany_{{index}}" label="CIN for the company" on-change="HandleOnChange"></paper-input>
+
+                                </div>
+
+                                <div id="Lessee_LesseeType_HUF_{{index}}" name="Lessee_LesseeType_All">
+                                    <paper-input name="Lessee_NameKartaManager_{{index}}" label="Name of karta or manager" on-change="HandleOnChange"></paper-input>
+                                    <label id="title-huf-label"><b>Title of first party:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="title-huf-label">
+                                        <paper-listbox id="Lessee_HUFTitle_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                            <paper-item name="Mr">Mr</paper-item>
+                                            <paper-item name="Ms">Ms</paper-item>
+                                            <paper-item name="Mrs">Mrs</paper-item>
+                                            <paper-item name="Shri">Shri</paper-item>
+                                            <paper-item name="Shrimati">Shrimati</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                    <br>
+                                    <label id="karta-gender-label-lessee"><b>Gender of karta or manager:&nbsp</b></label>
+                                    <paper-radio-group id="Lessee_KartaGender_Rb_{{index}}"area-labeld-by="karta-gender-label-lessee" selected="Male">
+                                        <paper-radio-button name="Male">Male</paper-radio-button>
+                                        <paper-radio-button name="Female">Female</paper-radio-button>
+                                    </paper-radio-group>
+
+                                    <paper-input name="Lessee_AgeKartaManager_{{index}}" label="Age of karta or manager" type="Number" on-change="HandleOnChange"></paper-input>
+                                    <paper-input name="Lessee_PANKartaManager_{{index}}" label="PAN number of karta or manager (optional)" on-change="HandleOnChange"></paper-input>
+                                    <paper-textarea  name="Lessee_AddrKartaManager_{{index}}" label="Address of karta or manager" on-change="HandleOnChange"></paper-textarea>
+
+                                </div>
+                                <div id="Lessee_LesseeType_Trust_{{index}}" name="Lessee_LesseeType_All">
+                                    <paper-input name="Lessee_NameTrust_{{index}}" label="Name of trust" on-change="HandleOnChange"></paper-input>
+                                    <paper-input name="Lessee_RegisteredActTrust_{{index}}" label="Act under which trust is registered" on-change="HandleOnChange"></paper-input>
+                                    <paper-textarea name="Lessee_AddrRegOfficeTrust_{{index}}" label="Address of registered officce" on-change="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Lessee_RegNoTrust_{{index}}" label="Registration number of trust" type="Number" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <div id="Lessee_LesseeType_Partnership_{{index}}" name="Lessee_LesseeType_All">
+                                    <paper-input name="Lessee_NamePartnership_{{index}}" label="Name of firm" on-change="HandleOnChange"></paper-input>
+                                    <paper-textarea name="Lessee_AddrRegOfficePartnership_{{index}}" label="Address of registered officce" on-change="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Lessee_RegNoPartnership_{{index}}" label="Registration number " type="Number" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <div id="Lessee_LesseeType_LLP_{{index}}" name="Lessee_LesseeType_All">
+                                    <paper-input name="Lessee_NameLLP_{{index}}" label="Name" on-change="HandleOnChange"></paper-input>
+                                    <paper-textarea name="Lessee_AddrRegOfficeLLP_{{index}}" label="Address of registered officce" on-change="HandleOnChange"></paper-textarea>
+                                    <paper-input name="Lessee_LLPIN_{{index}}" label="LLPIN" type="Number" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                </div>
+                            </template>
+
+                          <br>
+                          <label id="add-lessee-button">Add Lessee</label>
+                          <paper-icon-button id="Lessee_AddOneLessee" icon="add-circle" area-labeldby="add-lessee-button" on-tap="AddEntity"></paper-icon-button>
+                      </div>
+
+                  </div>
+                  <div id="Lessor" class="forIndex">
+                      <div class="InnerDiv">
+                          <h1>lessor-details</h1>
+                         <template is="dom-repeat" items="{{data.Lessor.NoOfLessor}}">
+                              <label id="type-of-Lessor-label_{{index}}"><b>Select type of Lessor:&nbsp</b></label>
+                              <paper-dropdown-menu area-labeldby="type-of-Lessor-label">
+                                  <paper-listbox id="Lessor_LessorType_Main_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Individual">
+                                      <paper-item name="Individual" value="Individual">Individual</paper-item>
+                                      <paper-item name="SoleProprietorship">SoleProprietorship</paper-item>
+                                      <paper-item name="Company">Company</paper-item>
+                                      <paper-item name="HUF">HUF</paper-item>
+                                      <paper-item name="Trust">Trust</paper-item>
+                                      <paper-item name="Partnership">Partnership</paper-item>
+                                      <paper-item name="LLP">LLP</paper-item>
+                                      <paper-item name="Other">Other</paper-item>
+                                  </paper-listbox>
+                              </paper-dropdown-menu>
+                              <div id="Lessor_LessorType_Other_{{index}}" name="Lessor_LessorType_All">
+                                  <paper-input name="Lessor_NewName_{{index}}" label="Name" on-change="HandleOnChange"></paper-input>
+                                  <paper-input name="Lessor_NewTitle_{{index}}" label="Title" on-change="HandleOnChange"></paper-input>
+                                  <paper-input name="Lessor_NewType_{{index}}" label="type of entity" on-change="HandleOnChange"></paper-input>
+                                  <paper-input name="Lessor_NewRegisteredAct_{{index}}" label="Register Under Act" on-change="HandleOnChange"></paper-input>
+
+                                  <paper-dropdown-menu>
+                                      <paper-listbox id="Lessor_NewOfficeType_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="registered office">
+                                          <paper-item name="registered office">registered office</paper-item>
+                                          <paper-item name="office">office</paper-item>
+                                          <paper-item name="residence">residence</paper-item>
+                                          <paper-item name="branch">branch</paper-item>
+                                          <paper-item name="head office">head office</paper-item>
+                                          <paper-item name="principal place of bussiness">principal place of bussiness</paper-item>
+                                          <paper-item name="Other">Other</paper-item>
+                                      </paper-listbox>
+                                  </paper-dropdown-menu>
+                                  <div id="Lessor_NewOfficeType_Div_{{index}}">
+                                      <paper-input name="Lessor_OtherNewOfficeType_{{index}}" label="Other" on-change="HandleOnChange"></paper-input>
+                                  </div>
+                                  <paper-input name="Lessor_NewAddress_{{index}}" label="Address" on-change="HandleOnChange"></paper-input>
+                              </div>
+                              <div id="Lessor_LessorType_Individual_{{index}}" name="Lessor_LessorType_All">
+                                  <paper-input name="Lessor_NameIndividual_{{index}}" label="Name of individual" on-change="HandleOnChange"></paper-input>
+                                  <paper-input name="Lessor_AgeIndividual_{{index}}" label="Age of individual" type="Number" on-change="HandleOnChange"></paper-input>
+                                  <label id="title-lessor-label"><b>Title of first party:&nbsp</b></label>
+                                  <paper-dropdown-menu area-labeldby="title-lessor-label">
+                                      <paper-listbox id="Lessor_IndividualTitle_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                          <paper-item name="Mr">Mr</paper-item>
+                                          <paper-item name="Ms">Ms</paper-item>
+                                          <paper-item name="Mrs">Mrs</paper-item>
+                                          <paper-item name="Shri">Shri</paper-item>
+                                          <paper-item name="Shrimati">Shrimati</paper-item>
+                                      </paper-listbox>
+                                  </paper-dropdown-menu>
+                                  <paper-input name="Lessor_PanFirstParty_{{index}}" label="PAN number of first party (optional)" on-change="HandleOnChange"></paper-input>
+                                  <paper-textarea name="Lessor_PartyAddrFirstParty_{{index}}" label="Party address of first party" on-change="HandleOnChange"></paper-textarea>
+                              </div>
+                              <div id="Lessor_LessorType_SoleProprietorship_{{index}}" name="Lessor_LessorType_All">
+                                  <paper-input name="Lessor_NameParty_{{index}}" label="Name of party" on-change="HandleOnChange"></paper-input>
+                                  <paper-input name="Lessor_NameCompany_{{index}}" label="Name of company" on-change="HandleOnChange"></paper-input>
+                                  <label id="title-solelessor-label"><b>Title of first party:&nbsp</b></label>
+                                  <paper-dropdown-menu area-labeldby="title-solelessor-label">
+                                      <paper-listbox id="Lessor_SoleProprietorshipTitle_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                          <paper-item name="Mr">Mr</paper-item>
+                                          <paper-item name="Ms">Ms</paper-item>
+                                          <paper-item name="Mrs">Mrs</paper-item>
+                                          <paper-item name="Shri">Shri</paper-item>
+                                          <paper-item name="Shrimati">Shrimati</paper-item>
+                                      </paper-listbox>
+                                  </paper-dropdown-menu>
+                                  <paper-input name="Lessor_AgeFirstParty_{{index}}" label="Age of first party" type="Number" on-change="HandleOnChange"></paper-input>
+                                  <paper-textarea value='' name="Lessor_AddrFirstParty_{{index}}" label="Address of first party" on-change="HandleOnChange"></paper-textarea>
+                                  <paper-input name="Lessor_PanFirstParty_{{index}}" label="PAN number of first party optional" on-change="HandleOnChange"></paper-input>
+                              </div>
+                              <div id="Lessor_LessorType_Company_{{index}}" name="Lessor_LessorType_All">
+                                  <paper-input name="Lessor_NameCompany_{{index}}" label="Name of company " on-change="HandleOnChange"></paper-input>
+
+                                  <label id="type-of-company-label-Lessor"><b>Select type of company:&nbsp</b></label>
+                                  <paper-dropdown-menu area-labeldby="type-of-company-label">
+                                      <paper-listbox id="Lessor_CompanyType_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="PrivateLimited">
+                                          <paper-item name="PrivateLimited">Private Limited Company</paper-item>
+                                          <paper-item name="PublicLimited">Public Limited Company</paper-item>
+                                          <paper-item name="PublicSector">Public sector Company</paper-item>
+                                          <paper-item name="Other">Other</paper-item>
+                                      </paper-listbox>
+                                  </paper-dropdown-menu>
+                                  <div id="Lessor_CompanyType_Div_{{index}}">
+                                      <paper-input name="Lessor_OtherCompanyType_{{index}}" label="Other company type" on-change="HandleOnChange" ></paper-input>
+                                  </div>
+                                  <br>
+                                  <label id="Lessorregistered-act-label"><b>Act under which the company is registered:&nbsp</b></label>
+                                  <paper-dropdown-menu area-labeldby="registered-act-label">
+                                      <paper-listbox id="Lessor_RegisteredAct_Lb_{{index}}" class="dropdown-content" attr-for-selected="name" selected="CompaniesAct1956">
+                                          <paper-item name="CompaniesAct1956">Companies Act, 1956</paper-item>
+                                          <paper-item name="CompaniesAct2013">Companies Act, 2013</paper-item>
+                                          <paper-item name="BankingRegulation1949">Banking Regulation, 1949</paper-item>
+                                          <paper-item name="Other">Other</paper-item>
+                                      </paper-listbox>
+                                  </paper-dropdown-menu>
+                                  <div id="Lessor_RegisteredAct_Div_{{index}}">
+                                      <paper-input name="Lessor_OtherRegisteredAct_{{index}}" label="Other act" on-change="HandleOnChange"></paper-input>
+                                  </div>
+
+                                  <paper-textarea name="Lessor_AddrRegisteredOffice_{{index}}" label="Address of registered officce" on-change="HandleOnChange"></paper-textarea>
+                                  <paper-input name="Lessor_CINCompany_{{index}}" label="CIN for the company" on-change="HandleOnChange"></paper-input>
+
+                              </div>
+                              <div id="Lessor_LessorType_HUF_{{index}}" name="Lessor_LessorType_All">
+                                  <paper-input name="Lessor_NameKartaManager_{{index}}" label="Name of karta or manager" on-change="HandleOnChange"></paper-input>
+                                  <label id="title-huflessor-label"><b>Title of first party:&nbsp</b></label>
+                                  <paper-dropdown-menu area-labeldby="title-huflessor-label">
+                                      <paper-listbox id="Lessor_HUFTitle_Gender_{{index}}" class="dropdown-content" attr-for-selected="name" selected="Mr">
+                                          <paper-item name="Mr">Mr</paper-item>
+                                          <paper-item name="Ms">Ms</paper-item>
+                                          <paper-item name="Mrs">Mrs</paper-item>
+                                          <paper-item name="Shri">Shri</paper-item>
+                                          <paper-item name="Shrimati">Shrimati</paper-item>
+                                      </paper-listbox>
+                                  </paper-dropdown-menu>
+                                  <label id="karta-gender-label-Lessor"><b>Gender of karta or manager:&nbsp</b></label>
+                                  <paper-radio-group id="Lessor_KartaGender_Rb_{{index}}"area-labeld-by="karta-gender-label-Lessor" selected="Male">
+                                      <paper-radio-button name="Male">Male</paper-radio-button>
+                                      <paper-radio-button name="Female">Female</paper-radio-button>
+                                  </paper-radio-group>
+
+                                  <paper-input name="Lessor_AgeKartaManager_{{index}}" label="Age of karta or manager" type="Number" on-change="HandleOnChange"></paper-input>
+                                  <paper-input name="Lessor_PANKartaManager_{{index}}" label="PAN number of karta or manager (optional)" on-change="HandleOnChange"></paper-input>
+                                  <paper-textarea  name="Lessor_AddrKartaManager_{{index}}" label="Address of karta or manager" on-change="HandleOnChange"></paper-textarea>
+
+                              </div>
+                              <div id="Lessor_LessorType_Trust_{{index}}" name="Lessor_LessorType_All">
+                                  <paper-input name="Lessor_NameTrust_{{index}}" label="Name of trust" on-change="HandleOnChange"></paper-input>
+                                  <paper-input name="Lessor_RegisteredActTrust_{{index}}" label="Act under which trust is registered" on-change="HandleOnChange"></paper-input>
+                                  <paper-textarea name="Lessor_AddrRegOfficeTrust_{{index}}" label="Address of registered officce" on-change="HandleOnChange"></paper-textarea>
+                                  <paper-input name="Lessor_RegNoTrust_{{index}}" label="Registration number of trust" type="Number" on-change="HandleOnChange"></paper-input>
+                              </div>
+                              <div id="Lessor_LessorType_Partnership_{{index}}" name="Lessor_LessorType_All">
+                                  <paper-input name="Lessor_NamePartnership_{{index}}" label="Name of firm" on-change="HandleOnChange"></paper-input>
+                                  <paper-textarea name="Lessor_AddrRegOfficePartnership_{{index}}" label="Address of registered officce" on-change="HandleOnChange"></paper-textarea>
+                                  <paper-input name="Lessor_RegNoPartnership_{{index}}" label="Registration number " type="Number" on-change="HandleOnChange"></paper-input>
+                              </div>
+                              <div id="Lessor_LessorType_LLP_{{index}}" name="Lessor_LessorType_All">
+                                  <paper-input name="Lessor_NameLLP_{{index}}" label="Name" on-change="HandleOnChange"></paper-input>
+                                  <paper-textarea name="Lessor_AddrRegOfficeLLP_{{index}}" label="Address of registered officce" on-change="HandleOnChange"></paper-textarea>
+                                  <paper-input name="Lessor_LLPIN_{{index}}" label="LLPIN" type="Number" on-change="HandleOnChange"></paper-input>
+                              </div>
+                          </template>
+                      </div>
+                  </div>
+                  <div id="Property" class="forIndex">
+                      <div class="InnerDiv">
+                          <h1>Property-details</h1>
+                          <paper-textarea name="Property_Desc" label="Description of property" on-change="HandleOnChange"></paper-textarea>
+                          <label id="property-type-label"><b>Type of property:&nbsp</b></label>
+                          <paper-dropdown-menu area-labeldby="property-type-label">
+                              <paper-listbox id="Property_Type_Lb" class="dropdown-content" attr-for-selected="name" selected="Land">
+                                  <paper-item name="Land">Land</paper-item>
+                                  <paper-item name="Plot of land">Plot of land</paper-item>
+                                  <paper-item name="Agricultural Land">Agricultural Land</paper-item>
+                                  <paper-item name="Industrial Land">Industrial Land</paper-item>
+                                  <paper-item name="Other">Other</paper-item>
+                              </paper-listbox>
+                          </paper-dropdown-menu>
+                          <div id="Property_Type_Div">
+                              <paper-input name="Property_OtherType" label="Other type" on-change="HandleOnChange"></paper-input>
+                          </div>
+                          <paper-textarea name="Property_Addr" label="Address of Property" on-change="HandleOnChange"></paper-textarea>
+                          <paper-input name="Property_AddrState" label="State" on-change="HandleOnChange"></paper-input>
+                          <paper-input name="Property_AddrCity" label="City" on-change="HandleOnChange"></paper-input>
+                          <paper-input name="Property_AddrDistrict" label="District" on-change="HandleOnChange"></paper-input>
+                          <paper-input name="Property_AddrTaluka" label="Taluka" on-change="HandleOnChange"></paper-input>
+                          <paper-input name="Property_AddrVillage" label="Village" on-change="HandleOnChange"></paper-input>
+
+                          <paper-input name="Property_AddrCTS" label="CTS number" on-change="HandleOnChange"></paper-input>
+                          <paper-input name="Property_AddrSurvey" label="Survey number" on-change="HandleOnChange"></paper-input>
+                          <paper-input name="Property_AddrHissa" label="Hissa number" on-change="HandleOnChange"></paper-input>
+                          <paper-input name="Property_AddrOther" label="Other" on-change="HandleOnChange"></paper-input>
+
+                          <paper-input name="Property_Area" label="Area of property" type="Number" on-change="HandleOnChange"></paper-input>
+
+                          <label id="property-area-unit"><b>Area unit:&nbsp</b></label>
+                          <paper-dropdown-menu area-labeldby="property-area-unit">
+                              <paper-listbox id="Property_AreaUnit_Lb" class="dropdown-content" attr-for-selected="name" selected="Sq ft">
+                                  <paper-item name="Sq ft">Sq ft</paper-item>
+                                  <paper-item name="Sq mtrs">Sq mtrs</paper-item>
+                                  <paper-item name="Yards">Yards</paper-item>
+                                  <paper-item name="Hectares">Hectares</paper-item>
+                                  <paper-item name="Other">Other</paper-item>
+                              </paper-listbox>
+                          </paper-dropdown-menu>
+                          <div id="Property_AreaUnit_Div">
+                              <paper-input name="Property_OtherAreaUnit" label="Other" on-change="HandleOnChange"></paper-input>
+                          </div>
+                          <br>
+                          <label id="property-right-cons"><b>Right to construct:&nbsp</b></label>
+                          <paper-dropdown-menu area-labeldby="property-right-cons">
+                              <paper-listbox id="Property_RightCons_Lb" class="dropdown-content" attr-for-selected="name" selected="Allowed">
+                                  <paper-item name="Allowed">Allowed</paper-item>
+                                  <paper-item name="NotAllowed">NotAllowed</paper-item>
+                                  <paper-item name="AllowedWithPerm">Allowed with written permission of lessor</paper-item>
+                              </paper-listbox>
+                          </paper-dropdown-menu>
+                          <br>
+                          <label id="property-cons"><b>Construction on land:&nbsp</b></label>
+                          <paper-dropdown-menu area-labeldby="property-cons">
+                              <paper-listbox id="Property_Cons_Lb" class="dropdown-content" attr-for-selected="name" selected="Building">
+                                  <paper-item name="Building">Building</paper-item>
+                                  <paper-item name="Other">Other</paper-item>
+                              </paper-listbox>
+                          </paper-dropdown-menu>
+                          <div id="Property_Cons_Div">
+                              <paper-input name="Property_OtherCons" label="Other" on-change="HandleOnChange"></paper-input>
+                          </div>
+                          <paper-input name="Property_LocalGovName" label="Name of the local governing body under which the property is subjected " on-change="HandleOnChange"></paper-input>
+                          <br>
+                          <label id="Property-Spec-Auth">Was the property acquired from a specific authority?</label>
+                          <paper-radio-group id="Property_SpecAuth_Rb" area-labeld-by="Property-Spec-Auth" selected="No" allowEmptySelection=false>
+                              <paper-radio-button name="No">No</paper-radio-button>
+                              <paper-radio-button name="Yes">Yes</paper-radio-button>
+                          </paper-radio-group>
+                          <div id="Property_SpecAuth_Div" hidden>
+                              <paper-input name="Property_NameAuth" label="Name of Authority" on-change="HandleOnChange"></paper-input>
+                              <paper-input name="Property_YearAq" label="Year of Aquisition" type="Number" on-change="HandleOnChange"></paper-input>
+                              <paper-input name="Property_AqScheme" label="Name of the Scheme under which the property was acquired" on-change="HandleOnChange"></paper-input>
+                          </div>
+
+                          <template is="dom-repeat" items="{{data.Property.AddPoints}}" index-as="PointsIndex">
+                              <paper-textarea name="Property_Points_{{PointsIndex}}" label="Additional Points" on-change="HandleOnChange">
+                              </paper-textarea>
+                              <label id="remove-points-button">Remove</label>
+                              <paper-icon-button  suffix id="Property_Points_{{PointsIndex}}" icon="clear" area-labeldby="remove-points-button" on-tap="RemoveMore"></paper-icon-button>
+                          </template>
+                          <br>
+                          <label id="add-points-button">Add More Points</label>
+                          <paper-icon-button id="Property_AddPoints" icon="add-circle" area-labeldby="add-points-button" on-tap="AddMore"></paper-icon-button>
+
+
+                      </div>
+                  </div>
+
+                  <div id="Agreement" class="forIndex">
+                      <div class="InnerDiv">
+                          <h1>Agreement To Lease</h1>
+                          <label id="Agreement-prior-Agr">Was there an Agreement to Lease prior to this Lease deed?</label>
+                          <paper-radio-group id="Agreement_PriorAgr_Rb" area-labeld-by="Agreement-prior-Agr" selected="No" allowEmptySelection=false>
+                              <paper-radio-button name="No">No</paper-radio-button>
+                              <paper-radio-button name="Yes">Yes</paper-radio-button>
+                          </paper-radio-group>
+                          <div id="Agreement_PriorAgr_Div" hidden>
+
+                              <paper-input name="Agreement_PriorPeriod" label="Period of Lease" on-change="HandleOnChange"></paper-input>
+                              <paper-date-picker-item icon="icons:today" id="Agreement_Date" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                              <paper-input name="Agreement_RentPeriodicity" label="Periodicity of rent" on-change="HandleOnChange"></paper-input>
+                              <paper-input name="Agreement_RentAmt" label="Rent Amount" type="Number" on-change="HandleOnChange"></paper-input>
+
+                              <label id="Agreement-lease-events">Was the lease to be granted on happening of certain events?</label>
+                              <paper-radio-group id="Agreement_AgrEvents_Rb" area-labeld-by="Agreement-lease-events" selected="No" allowEmptySelection=false>
+                                  <paper-radio-button name="No">No</paper-radio-button>
+                                  <paper-radio-button name="Yes">Yes</paper-radio-button>
+                              </paper-radio-group>
+                              <div id="Agreement_AgrEvents_Div" hidden>
+                                  <paper-dropdown-menu area-labeldby="Agreement-lease-events" style="width: auto">
+                                      <paper-listbox id="Agreement_LeaseEvent_Lb" class="dropdown-content" attr-for-selected="name" selected="On the completion of the construction of the property">
+                                          <paper-item name="On the completion of the construction of the property">On the completion of the construction of the property </paper-item>
+                                          <paper-item name="After acquiring such title as may allow the Lessor to lease out the said property to the Lessee">After acquiring such title as may allow the Lessor to lease out the said property to the Lessee</paper-item>
+                                          <paper-item name="After the said property gets ready for occupation">After the said property gets ready for occupation </paper-item>
+                                          <paper-item name="Other">Other</paper-item>
+                                      </paper-listbox>
+                                  </paper-dropdown-menu>
+                                  <div id="Agreement_LeaseEvent_Div">
+                                      <paper-textarea name="Agreement_OtherLeaseEvent" label="Other" on-change="HandleOnChange"></paper-textarea>
+                                  </div>
+                              </div>
+
+                          </div>
+
+
+                      </div>
+
+                  </div>
+
+                  <div id="LeaseD" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Lease Details</h1>
+                        <paper-input name="LeaseD_Period" label="Period of lease" on-change="HandleOnChange"></paper-input>
+                        <paper-date-picker-item icon="icons:today" id="LeaseD_Date" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                        <template is="dom-repeat" items="{{data.LeaseD.AddPurpose}}" index-as="PurposeIndex">
+                            <paper-input name="LeaseD_Purpose_{{PurposeIndex}}" label="Purpose/Usage of property" on-change="HandleOnChange">
+                                <paper-icon-button  suffix id="LeaseD_Purpose_{{PurposeIndex}}" icon="clear" on-tap="RemoveMore"></paper-icon-button>
+                            </paper-input>
+                        </template>
+                        <br>
+                        <label id="add-lease-purpose-button">Add Purpose/Usage</label>
+                        <paper-icon-button id="LeaseD_AddPurpose" icon="add-circle" area-labeldby="add-lease-purpose-button" on-tap="AddMore"></paper-icon-button>
+
+                    </div>
+                  </div>
+                <div id="RentD" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Rent Details</h1>
+
+                        <paper-input name="RentD_Amount" label="Rent Amount" type="Number" on-change="HandleAmount"></paper-input>
+                       <!-- <paper-input name="RentD_AmountWords" label="Rent Amount in words" on-change="HandleOnChange"></paper-input>-->
+                        <label id="RentD-lumpsum">is rent type lump sum?</label>
+                        <paper-radio-group id="RentD_LumpSum_Rb" area-labeld-by="RentD-lumpsum" selected="No">
+                            <paper-radio-button name="Yes">No</paper-radio-button>
+                            <paper-radio-button name="No">Yes</paper-radio-button>/
+                        </paper-radio-group>
+                        <div id="RentD_LumpSum_Div" hidden>
+                            <label id="rent-type"><b>Rent type:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="rent-type">
+                                <paper-listbox id="RentD_Type_Main" class="dropdown-content" attr-for-selected="name" selected="Month">
+                                    <paper-item name="Month">Monthly</paper-item>
+                                    <paper-item name="Quarter">Quarterly</paper-item>
+                                    <paper-item name="Half year">Half yearly</paper-item>
+                                    <paper-item name="Year">Yearly</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <paper-input name="RentD_Schedule" label="Payment schedule [By/before/on ___/___/___ every mont/year/quarter]"  on-change="HandleOnChange"></paper-input>
+                            <br>
+                            <label id="RentD-IsIncr">Increment of rent?</label>
+                            <paper-radio-group id="RentD_IsIncr_Rb" area-labeld-by="RentD-IsIncr" selected="No">
+                                <paper-radio-button name="No">No</paper-radio-button>
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            </paper-radio-group>
+                            <div id="RentD_IsIncr_Div" hidden>
+
+                                <template is="dom-repeat" items="{{data.RentD.AddIncrement}}" index-as="IncrIndex">
+                                    <paper-input name="RentD_Increment_{{IncrIndex}}" label="Shall increase every _______ period by ________ % / ________ amount" on-change="HandleOnChange">
+                                        <paper-icon-button  suffix id="RentD_Increment_{{IncrIndex}}" icon="clear" on-tap="RemoveMore"></paper-icon-button>
+                                    </paper-input>
+                                </template>
+                                <br>
+                                <label id="RentD-increment-button">Add More</label>
+                                <paper-icon-button id="RentD_AddIncrement" icon="add-circle" area-labeldby="RentD-increment-button" on-tap="AddMore"></paper-icon-button>
+
+                            </div>
+                            <br>
+                            <label id="RentD-delay">Interest present if delay in payment?</label>
+                            <paper-radio-group id="RentD_Delay_Rb" area-labeld-by="RentD-delay" selected="No">
+                                <paper-radio-button name="No">No</paper-radio-button>
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            </paper-radio-group>
+                            <div id="RentD_Delay_Div" hidden>
+
+                                ROI- <paper-input name="RentD_DelayRoi" style="width:10%;display: inline-block;" on-change="HandleOnChange"></paper-input> per annum from the due date till the date of payment.
+                                <br>After a grace period of
+                                <paper-input name="RentD_DelayPeriod" style="width:10%;display: inline-block;" on-change="HandleOnChange"></paper-input>
+                                <paper-dropdown-menu area-labeldby="RentD-gracep" style="width:10%">
+                                    <paper-listbox id="RentD_GraceP_Lb" class="dropdown-content" attr-for-selected="name">
+                                        <paper-item></paper-item>
+                                        <paper-item name="Days">Days</paper-item>
+                                        <paper-item name="Months">Months</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <br>
+                                <label id="RentD-recover">Recovered interest as if it is a part of the rent?</label>
+                                <paper-radio-group id="RentD_Recover_Rb" area-labeld-by="RentD-recover" selected="No">
+                                    <paper-radio-button name="No">No</paper-radio-button>
+                                    <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                </paper-radio-group>
+                                <br>
+                                <label id="rent-futurep"><b>All the future payments, late fees will be allocated as per:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="rent-futurep">
+                                    <paper-listbox id="RentD_FutureP_Main" class="dropdown-content" attr-for-selected="name" selected="To any outstanding balance other than rent">
+                                        <paper-item name="To any outstanding balance other than rent">To any outstanding balance other than rent</paper-item>
+                                        <paper-item name="To the rent ">To the rent </paper-item>
+                                        <paper-item name="As per the lessee">As per the lessee</paper-item>
+                                        <paper-item name="As per the lessor">As per the lessor</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <br><br>
+                                <label id="RentD-latefee">Late Fees?</label>
+                                <paper-radio-group id="RentD_LateFee_Rb" area-labeld-by="RentD-latefee" selected="No">
+                                    <paper-radio-button name="No">No</paper-radio-button>
+                                    <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                </paper-radio-group>
+
+                                <div id="RentD_LateFee_Div" hidden>
+                                    <paper-input name="RentD_LateAmount" style="width:10%;display: inline-block;" on-change="HandleOnChange" label="Amount"></paper-input>
+                                    of rent to be charged after a grace period of <paper-input name="RentD_LateDays" type="Number" style="width:10%;display: inline-block;" label="Grace Period" on-change="HandleOnChange"></paper-input> days
+
+                                    Further, a subsequent late fee of <paper-input name="RentD_FurtherAmount" style="width:10%;display: inline-block;" label="Amount" on-change="HandleOnChange"></paper-input> per <paper-input name="RentD_FurtherPeriod" style="width:10%;display: inline-block;" label="Period" on-change="HandleOnChange"></paper-input> will be incurred by the [Lessee/Lessees] for every <paper-input name="RentD_FutherPeriod1" style="width:10%;display: inline-block;" label="Period" on-change="HandleOnChange"></paper-input> the payment is delayed after <paper-input name="RentD_FurtherGPeriod" style="width:10%;display: inline-block;" label=" GracePeriod" on-change="HandleOnChange"></paper-input>.
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <br>
+                        <div hidden="{{_OptionalDiv(data.RentD.*,'LumpSum','No')}}">
+                            <label id="RentD-LumpSum-Cond">Is there any condition for Lump Sum paymnet?</label>
+                            <paper-radio-group id="RentD_LumpSumCond_Rb" area-labeld-by="RenntD-LumpSum-Cond" selected="No">
+                                <paper-radio-button name="No">No</paper-radio-button>
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            </paper-radio-group>
+                            <div id="RentD_LumpSumCond_Div" hidden>
+                                <paper-input name="RentD_LumpSumCond" label="Condition for Lump Sum payment" on-change="HandleOnChange"></paper-input>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div hidden="{{_OptionalDiv(data.RentD.*,'LumpSum','Yes')}}">
+                    <div id="AdvRentD" class="forIndex">
+                        <div class="InnerDiv">
+                            <h1>Advanced Rent Details</h1>
+                            <label id="AdvRentD-AdvRent">Advance Rent?</label>
+                            <paper-radio-group id="AdvRentD_AdvRent_Rb" area-labeld-by="AdvRentD-AdvRent" selected="No">
+                                <paper-radio-button name="No">No</paper-radio-button>
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            </paper-radio-group>
+                            <div id="AdvRentD_AdvRent_Div" hidden>
+                                <label id="AdvRentD-PaymentType"><b>Advance rent will be paid:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="AdvRentD-PaymentType">
+                                    <paper-listbox id="AdvRentD_PaymentType_Lb" class="dropdown-content" attr-for-selected="name" selected="Prior to the transfer of possession of the demised premises">
+                                        <paper-item name="Prior to the transfer of possession of the demised premises">Prior to the transfer of possession of the demised premises</paper-item>
+                                        <paper-item name="Immediately after the transfer of the possession of the demised premises">Immediately after the transfer of the possession of the demised premises</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <br><br>
+                                Amount of rent paid in advance will be equivalent to the rent of
+                                <paper-input name="AdvRentD_Period" label="Enter Period" type="Number" on-change="HandleOnChange"></paper-input>
+                                <label id="AdvRentD-PeriodType"><b>Period Type:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="AdvRentD-PeriodType">
+                                    <paper-listbox id="AdvRentD_PeriodType_Lb" class="dropdown-content" attr-for-selected="name" selected="Months">
+                                        <paper-item name="Months">Months</paper-item>
+                                        <paper-item name="Years">Years</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <br><br>
+                                Or Amount of rent paid in advance will be equivalent to sum of
+                                <paper-input name="AdvRentD_Amount" label="Enter Amount" type="Number" on-change="HandleOnChange"></paper-input>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <div id="Deposit">
+                <div class="InnerDiv">
+                    <h1>Deposit</h1>
+                    <br>
+                    <label id="Deposit-IsDep">Deposit?</label>
+
+                    <paper-radio-group id="Deposit_IsDep_Rb" area-labeld-by="Deposit-IsDep" selected="No">
+                        <paper-radio-button name="No">No</paper-radio-button>
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                    </paper-radio-group><br>
+                    <div id="Deposit_IsDep_Div" hidden>
+                        <paper-dropdown-menu area-labeldby="Deposit-Options">
+                            <paper-listbox id="Deposit_Options_Main" class="dropdown-content" attr-for-selected="name" selected="To be Paid">
+                                <paper-item name="To be Paid">To be Paid</paper-item>
+                                <paper-item name="Already Paid">Already Paid</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <div id="Deposit_Options_To be Paid" name="Deposit_Options_All">
+                            <paper-input name="Deposit_AmountToBePaid" label="Amount of Deposit " type="Number" on-change="HandleOnChange"></paper-input>
+                            <label id="Deposit-PaymentType"><b>Deposit will be paid:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="Deposit-PaymentType">
+                                <paper-listbox id="Deposit_PaymentType_Lb" class="dropdown-content" attr-for-selected="name" selected="Prior to the transfer of possession of the demised premises">
+                                    <paper-item name="Prior to the transfer of possession of the demised premises">Prior to the transfer of possession of the demised premises</paper-item>
+                                    <paper-item name="Immediately after the transfer of the possession of the demised premises">Immediately after the transfer of the possession of the demised premises</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <br>
+                            <label id="Deposit-PaymentVia"><b>Deposit will be paid Via:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="Deposit-PaymentTypeVia">
+                                <paper-listbox id="Deposit_PaymentTypeVia_Lb" class="dropdown-content" attr-for-selected="name" selected="Cash">
+                                    <paper-item name="Cash">Cash</paper-item>
+                                    <paper-item name="Bank Transfer">Bank Transfer</paper-item>
+                                    <paper-item name="Demand Draft">Demand Draft</paper-item>
+                                    <paper-item name="Other">Other</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="Deposit_PaymentTypeVia_Div">
+                                <paper-input name="Deposit_OtherPaymentTypeVia" label="Other" on-change="HandleOnChange"></paper-input>
+                            </div>
+                            <br>
+                            <label id="Deposit-Refund">Deposit is</label>
+                            <paper-dropdown-menu area-labeldby="Deposit-Refund">
+                                <paper-listbox id="Deposit_Refund_Main" class="dropdown-content" attr-for-selected="name" selected="Refundable">
+                                    <paper-item name="Refundable">Refundable</paper-item>
+                                    <paper-item name="Non-Refundable">Non-Refundable</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+
+                            <div id="Deposit_Refund_Refundable" name="Deposit_Refund_All">
+                                <label id="Deposit-refund-roi">Penal interest present for delay in refunding the deposit?</label>
+                                <paper-radio-group id="Deposit_RefundRoi_Rb" area-labeld-by="Deposit-refund-roi" selected="No">
+                                    <paper-radio-button name="No">No</paper-radio-button>
+                                    <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                </paper-radio-group>
+                                <div id="Deposit_RefundRoi_Div" hidden>
+                                    <paper-input name="Deposit_RefundRoiInput" label="Rate of interest" on-change="HandleOnChange" ></paper-input>
+                                    <label id="Deposit-grace-period">Grace Period</label>
+                                    <paper-radio-group id="Deposit_GracePeriod_Rb" area-labeld-by="Deposit-grace-period" selected="No">
+                                        <paper-radio-button name="No">No</paper-radio-button>
+                                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                    </paper-radio-group>
+
+                                </div>
+                                <div id="Deposit_GracePeriod_Div" hidden>
+                                    <paper-input name="Deposit_GracePeriodValue" label="Grace Period" type="Number"  on-change="HandleOnChange" ></paper-input>
+                                    <paper-dropdown-menu area-labeldby="deposit-grace-period">
+                                        <paper-listbox id="Deposit_GracePeriodUnit_Main" class="dropdown-content" attr-for-selected="name" selected="Days">
+                                            <paper-item name="Days">Days</paper-item>
+                                            <paper-item name="Months">Months</paper-item>
+                                            <paper-item name="Years">Years</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                </div>
+                            </div>
+                            <br>
+                            <label id="Deposit-lessee-roi-refund">Lessee will bear the interest?</label>
+                            <paper-radio-group id="Deposit_LesseeRoi_Rb" area-labeld-by="Deposit-lessee-roi-refund" selected="No">
+                                <paper-radio-button name="No">No</paper-radio-button>
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            </paper-radio-group>
+                            <div id="Deposit_LesseeRoi_Div" hidden>
+                                <paper-input name="Deposit_Roi" label="Rate of interest" type="Number" on-change="HandleOnChange"></paper-input>
+                            </div>
+
+                        </div>
+
+                        <div id="Deposit_Options_Already Paid" name="Deposit_Options_All">
+
+                            <paper-input name="Deposit_AmountPaid" label="Amount of Deposit made" type="Number" on-change="HandleOnChange"></paper-input>
+                            <label id="Deposit-PaidVia"><b>Deposit was paid Via:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="Deposit-PaymentTypeVia">
+                                <paper-listbox id="Deposit_PaidTypeVia_Lb" class="dropdown-content" attr-for-selected="name" selected="Cash">
+                                    <paper-item name="Cash">Cash</paper-item>
+                                    <paper-item name="Bank Transfer">Bank Transfer</paper-item>
+                                    <paper-item name="Demand Draft">Demand Draft</paper-item>
+                                    <paper-item name="Other">Other</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="Deposit_PaidTypeVia_Div">
+                                <paper-input name="Deposit_OtherPaidTypeVia" label="Other" on-change="HandleOnChange"></paper-input>
+                            </div>
+                            <br>
+                            <label id="Deposit-PaidRefund">Deposit is</label>
+                            <paper-dropdown-menu area-labeldby="Deposit-PaidRefund">
+                                <paper-listbox id="Deposit_PaidRefund_Main" class="dropdown-content" attr-for-selected="name" selected="Refundable">
+                                    <paper-item name="Refundable">Refundable</paper-item>
+                                    <paper-item name="Non-Refundable">Non-Refundable</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="Deposit_PaidRefund_Refundable" name="Deposit_PaidRefund_All">
+                                <label id="Deposit-paidrefund-roi">Penal interest present for delay in refunding the deposit?</label>
+                                <paper-radio-group id="Deposit_PaidRefundRoi_Rb" area-labeld-by="Deposit-paidrefund-roi" selected="No">
+                                    <paper-radio-button name="No">No</paper-radio-button>
+                                    <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                </paper-radio-group>
+                                <div id="Deposit_PaidRefundRoi_Div" hidden>
+                                    <paper-input name="Deposit_PaidPenalRefundRoi" label="Rate of interest" on-change="HandleOnChange"></paper-input>
+                                </div>
+
+                            </div>
+                            <br>
+                            <label id="Deposit-lesseeroi-refund">Lessee will bear the interest?</label>
+                            <paper-radio-group id="Deposit_PaidLesseeRoi_Rb" area-labeld-by="Deposit-lesseeroi-refund" selected="No">
+                                <paper-radio-button name="No">No</paper-radio-button>
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            </paper-radio-group>
+                            <div id="Deposit_PaidLesseeRoi_Div" hidden>
+                                <paper-input name="Deposit_PaidRoi" label="Rate of interest" type="Number" on-change="HandleOnChange"></paper-input>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+                <div id="Charges" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Charges To Be Borne</h1>
+                    </div>
+                        <template is="dom-repeat" items="{{data.Charges.ChargesList}}">
+                            <paper-material  elevation="1">
+                                <div style="margin-left: 5%;margin-right: 5%;margin-top:1%;margin-bottom: 1%">
+                                    <h2>{{item}}</h2>
+                                    <paper-radio-group allow-empty-selection>
+                                        <paper-radio-button name="Charges_Lessee_{{item}}" on-change="UpdateCharges">Lessee</paper-radio-button>
+                                        <paper-radio-button name="Charges_Lessor_{{item}}" on-change="UpdateCharges">Lessor</paper-radio-button>
+                                        <paper-radio-button name="Charges_Shared_{{item}}" on-change="UpdateCharges">Share in Ratio</paper-radio-button>
+                                    </paper-radio-group>
+                                    <paper-input name="ChargesSLessee_{{item}}" type="Number" style="display: inline-block;width: 10%" label="Lessee" disabled={{_ShowRatio(data.Charges.*,item,'SLessee')}} on-change="HandleCharges" value="50" max=100 min=0><div suffix>%</div> </paper-input>
+                                    <paper-input name="ChargesSLessor_{{item}}"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor" disabled="{{_ShowRatio(data.Charges.*,item,'SLessor')}}" on-change="HandleCharges" value="50" max=100 min=0><div suffix>%</div> </paper-input>
+                                    <br><br><label id="Charges-remove-{{item}}">Remove</label>
+                                    <paper-icon-button id="Charges_Remove_{{item}}" icon="clear" area-labledby="Charges-remove-{{item}}" on-tap="RemoveCharges"></paper-icon-button>
+                                </div>
+                            </paper-material>
+                            <br>
+                        </template>
+
+                        <div class="InnerDiv">
+                            <paper-input name="Charges_AddCharge" label="Add more charges">
+                                <paper-icon-button  suffix id="Charges_Charge" icon="add-circle" on-tap="AddMoreCharges"></paper-icon-button>
+                            </paper-input>
+                            <br>
+                            <label id="Charges-lessor-lessee">Can the Lessor pay the charges payable by the Lessee, in case of default by the lessee and then claim the same?</label>
+                            <paper-radio-group id="Charges_LessorByLessee_Rb" area-labeld-by="Charges-lessor-lessee" selected="No">
+                                <paper-radio-button name="No">No</paper-radio-button>
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            </paper-radio-group>
+                            <div id="Charges_LessorByLessee_Div" hidden>
+                                <paper-input name="Charges_LessorByLesseeRoi" label="Rate of interest" type="Number" on-change="HandleOnChange"></paper-input>
+                            </div><br>
+                            <label id="Charges-lessee-lessor">Can the Lessee pay the charges payable by the Lessor, in case of default by the lessee and then claim the same?</label>
+                            <paper-radio-group id="Charges_LesseeByLessor_Rb" area-labeld-by="Charges-lessee-lessor" selected="No">
+                                <paper-radio-button name="No">No</paper-radio-button>
+                                <paper-radio-button name="Yes">Yes</paper-radio-button>
+                            </paper-radio-group>
+                            <div id="Charges_LesseeByLessor_Div" hidden>
+                                <paper-input name="Charges_LesseeByLessorRoi" label="Rate of interest" type="Number" on-change="HandleOnChange"></paper-input>
+                            </div><br>
+
+                        </div>
+                        <paper-material>
+                            <div class="InnerDiv" elevation="1">
+                                <label id="Charges-ll-shared">Include below part for shared charges?</label>
+                                <paper-radio-group id="Charges_LLShared_Rb" area-labeld-by="Charges-ll-shared" selected="No">
+                                    <paper-radio-button name="No">No</paper-radio-button>
+                                    <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                </paper-radio-group><br><br>
+                                The other party with respect to a certain charge shall be at liberty to pay the certain charge or other levy including penalties, if any,
+                                charged thereon in case of default or delay by the defaulting party with respect to a certain charge and demand the amount so paid together with
+                                other incidental expenses as reimbursement of all such amounts, costs, expenses, etc., or, if the defaulting party with respect to a certain
+                                charge is the Lessor and the other party, being the Lessee pays this certain charge, then the Lessee can adjust the amount thus paid, including
+                                other incidental charges from out of the rents in respect of the ‘demised premises’ becoming due immediately after the said payment, provided the
+                                Lessee is not a defaulting party with respect to any other charge, (together with interest at (number) per cent per annum from the date of such
+                                payments until realisation by the Lessor-optional)
+                                <br>
+                                <div id="Charges_LLShared_Div">
+                                    <paper-input name="Charges_LLSharedRoi" label="Rate of interest" type="Number" on-change="HandleOnChange"></paper-input>
+                                </div>
+                            </div>
+                        </paper-material>
+
+                        </div>
+
+
+
+                </div>
+
+            <!-- j section by abhishek--->
+
+            <div id="ConsRt" class="forIndex">
+
+                <div class="InnerDiv">
+                    <h1><b>Construction On the land:&nbsp</b></h1>
+                    <label id="building-right-cons"><b>Right to construct:&nbsp</b></label>
+                    <paper-dropdown-menu area-labeldby="building-right-cons">
+                        <paper-listbox id="ConsRt_RtToCons_Main" class="dropdown-content" attr-for-selected="name" selected="Allowed">
+                            <paper-item name="Allowed">Allowed</paper-item>
+                            <paper-item name="Not Allowed">Not Allowed</paper-item>
+                            <paper-item name="Allowed with written permission from lessor">Allowed with written permission of lessor</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                </div>
+            </div>
+            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed with written permission from lessor')}}">
+                <paper-material>
+                    <div class="InnerDiv" elevation="1">
+                        <label id="ConsRt-ll-includea">Include below part for Construction on land?</label>
+                        <paper-radio-group id="ConsRt_LLIncludea_Rb" area-labeld-by="ConsRt-ll-includea" selected="No">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group><br><br>
+                        The Lessor will not unreasonably withhold such permission and will give such
+                        permission provided such the Lessee proves beyond doubt, to the Lessor, that the
+                        building plan has been approved by the appropriate authority.
+                        <br>
+                    </div>
+                </paper-material>
+                <paper-material>
+                    <div class="InnerDiv" elevation="1">
+                        <label id="ConsRt-ll-includeb">Include below part for Construction on land?</label>
+                        <paper-radio-group id="ConsRt_LLIncludeb_Rb" area-labeld-by="ConsRt-ll-includeb" selected="No">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group><br><br>
+                        Such permission may be withheld if the Lessor does not approve of the building plan
+                        <br>
+                    </div>
+                </paper-material>
+                <div class="InnerDiv" elevation="1">
+                    <paper-input name="ConsRt_AWPSpecNote" label="ADD NOTE ABOUT SPECIFIC RIGHTS"  on-change="HandleOnChange"></paper-input>
+
+                </div>
+            </div>
+            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed')}}">
+                <div class="InnerDiv" elevation="1">
+                    <paper-input name="ConsRt_ASpecNote" label="ADD NOTE ABOUT SPECIFIC RIGHTS"  on-change="HandleOnChange"></paper-input>
+
+                </div>
+            </div>
+
+
+            <!-- k section by abhishek will come only if construction right is allowed --->
+            <div id="ConsRt_RtToCons_Not Allowed" name="ConsRt_RtToCons_All" class="forIndex">
+                <div class="InnerDiv">
+                    <h1><b>Assign:&nbsp</b></h1>
+                    <label id="assign-a-rights-n"><b>Assign rights:&nbsp</b></label>
+                    <paper-dropdown-menu area-labeldby="assign-a-rights-n">
+                        <paper-listbox id="AssignN_AssignRt_Main" class="dropdown-content" attr-for-selected="name" selected="Assign without permission">
+                            <paper-item name="Assign without permission">Assign without permission</paper-item>
+                            <paper-item name="Assign with permission">Assign with permission</paper-item>
+                            <paper-item name="Cannot Assign">Cannot Assign</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <paper-input name="AssignN_AreaPremise" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange"></paper-input>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <div id="ConsRt_RtToCons_Allowed" name="ConsRt_RtToCons_All">
+                <div id="SellRtA" class="forIndex">
+                    <div class="InnerDiv">
+
+                        <h1><b>Building Selling rights:&nbsp</b></h1>
+                        <label id="building-right-sell-a"><b>Building Selling rights:&nbsp</b></label>
+
+                        <paper-dropdown-menu area-labeldby="building-right-sell-a">
+                            <paper-listbox id="SellRtA_SellRt_Main" class="dropdown-content" attr-for-selected="name" selected="Selling rights present without permission">
+                                <paper-item name="Selling rights present without permission">Selling rights present without permission</paper-item>
+                                <paper-item name="Selling rights present with permission">Selling rights present with permission</paper-item>
+                                <paper-item name="Cannot Sell">Cannot Sell </paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <br>
+                        <br>
+                        <div id="SellRtA_SellRt_Selling rights present without permission" name="SellRtA_SellRt_All">
+
+                            <label id="building-right-sell-a-without-permission"><b>Building Selling rights without permission sharing benefits:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-sell-a-without-permission">
+                                <paper-listbox id="SellRtA_BuildingSellRtWtp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <paper-input name="SellRtA_AreaPremiseWTP" label="Area of premises which cant be sublet" on-change="HandleOnChange" ></paper-input>
+                            <div hidden="{{_OptionalDiv(data.SellRtA.*,'BuildingSellRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="SellRtA_RatioOne_One" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="SellRtA_RatioTwo_One"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+
+                        </div>
+                        <div id="SellRtA_SellRt_Selling rights present with permission" name="SellRtA_SellRt_All">
+
+                            <label id="building-right-sell-a-with-permission"><b>Building Selling rights with permission sharing benefits:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-sell-a-with-permission">
+                                <paper-listbox id="SellRtA_BuildingSellRtWp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+
+                            <!--- input box  --->
+                            <div hidden="{{_OptionalDiv(data.SellRtA.*,'BuildingSellRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="SellRtA_RatioOne_Two" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="SellRtA_RatioTwo_Two"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="SellRtA_AreaPremiseWP" label="Area of premises which cant be sublet" on-change="HandleOnChange"></paper-input>
+
+
+                        </div>
+                        <div id="SellRtA_SellRt_Cannot Sell" name="SellRtA_SellRt_All">
+
+                            <label id="building-right-cannot-sell-a"><b>Building sharing rights with can not sell:&nbsp</b></label>
+                            <!--- input box  --->
+                            <paper-input name="SellRtA_AreaPremiseCS" label="Area of premises which cant be sublet" on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- l section by abhishek Assign --->
+                <div id="AssignA" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1><b>Assign:&nbsp</b></h1>
+                        <label id="assign-a-rights"><b>Assign rights:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="assign-a-rights">
+                            <paper-listbox id="AssignA_AssignRt_Main" class="dropdown-content" attr-for-selected="name" selected="Assign without permission">
+                                <paper-item name="Assign without permission">Assign without permission</paper-item>
+                                <paper-item name="Assign with permission">Assign with permission</paper-item>
+                                <paper-item name="Cannot Assign">Cannot Assign</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <paper-input name="AssignA_AreaPremise" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange"></paper-input>
+                        <br>
+                        <br>
+                        <div id="AssignA_AssignRt_Assign without permission" name="AssignA_AssignRt_All">
+
+                            <label id="building-right-assign-a-without-permission"><b>Assign the building without permission Exclusive benefits goes to:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-assign-a-without-permission">
+                                <paper-listbox id="AssignA_BuildingAssignRtWtp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.AssignA.*,'BuildingAssignRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="AssignA_RatioOne_One" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="AssignA_RatioTwo_One"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="AssignA_AreaPremiseWtp" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                        <div id="AssignA_AssignRt_Assign with permission" name="AssignA_AssignRt_All">
+
+                            <label id="building-right-assign-a-with-permission"><b>Assign the building with permission Exclusive benefits goes to:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-assign-a-with-permission">
+                                <paper-listbox id="AssignA_BuildingAssignRtWp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.AssignA.*,'BuildingAssignRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="AssignA_RatioOne_Two" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="AssignA_RatioTwo_Two"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="AssignA_AreaPremiseWp" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange"></paper-input>
+
+
+                        </div>
+                        <div id="AssignA_AssignRt_Cannot Assign" name="SellRtA_SellRt_All">
+
+                            <label id="building-right-cannot-assign-a"><b> Cant Assign Buildings Rights:&nbsp</b></label>
+                            <!--- input box  --->
+                            <paper-input name="AssignA_AreaPremiseCS" label="Enter Premises that can be an exception for above selected option" on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- o section by abhishek Mortgage --->
+                <div id="MortgageA" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1><b>Mortgage:&nbsp</b></h1>
+                        <label id="Mortgage-a-rights"><b>Mortgage rights:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="MortgageA-rights">
+                            <paper-listbox id="MortgageA_MortgageRt_Main" class="dropdown-content" attr-for-selected="name" selected="Mortgage without permission">
+                                <paper-item name="Mortgage without permission">Mortgage without permission</paper-item>
+                                <paper-item name="Mortgage with permission">Mortgage with permission</paper-item>
+                                <paper-item name="Cannot Mortgage">Cannot Mortgage</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <paper-input name="MortgageA_AreaPremise" label="Enter Premises that can be an exception for above selected option:" on-change="HandleOnChange"></paper-input>
+                        <br>
+                        <br>
+                        <div id="MortgageA_MortgageRt_Mortgage without permission" name="MortgageA_MortgageRt_All">
+
+                            <label id="building-right-mortgage-a-without-permission"><b>Mortgage the building without permission Exclusive benefits goes to:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-mortgage-a-without-permission">
+                                <paper-listbox id="MortgageA_buildingRtWtp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.MortgageA.*,'buildingRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="MortgageA_RatioOne_One" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="MortgageA_RatioTwo_One"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="MortgageA_AreaPremiseWtp" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                        <div id="MortgageA_MortgageRt_Mortgage with permission" name="MortgageA_MortgageRt_All">
+
+                            <label id="building-right-mortgage-a-with-permission"><b>Mortgage the building with permission Exclusive benefits goes to:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-mortgage-a-with-permission">
+                                <paper-listbox id="MortgageA_buildingRtWp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.MortgageA.*,'buildingRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="MortgageA_RatioOne_Two" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="MortgageA_RatioTwo_Two"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="MortgageA_AreaPremiseWp" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange" ></paper-input>
+
+
+                        </div>
+                        <div id="MortgageA_MortgageRt_Cannot Mortgage" name="MortgageA_MortgageRt_All">
+
+                            <label id="building-right-cannot-Mortgage-a"><b> Cant Mortgage:&nbsp</b></label>
+                            <!--- input box  --->
+                            <paper-input name="MortgageA_AreaPremiseCS" label="Enter Premises that can be an exception for above selected option" on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- k section AWP by abhishek will come only if construction right is allowed --->
+            <div id="ConsRt_RtToCons_Allowed with written permission from lessor" name="ConsRt_RtToCons_All">
+                <div id="SellRtAWP" class="forIndex">
+                    <div class="InnerDiv">
+
+                        <h1><b>Building Selling rights:&nbsp</b></h1>
+                        <label id="building-right-sell-awp"><b>Building Selling rights:&nbsp</b></label>
+
+                        <paper-dropdown-menu area-labeldby="building-right-sell-awp">
+                            <paper-listbox id="SellRtAWP_SellRt_Main" class="dropdown-content" attr-for-selected="name" selected="Selling rights present without permission">
+                                <paper-item name="Selling rights present without permission">Selling rights present without permission</paper-item>
+                                <paper-item name="Selling rights present with permission">Selling rights present with permission</paper-item>
+                                <paper-item name="Cannot Sell">Cannot Sell </paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <br>
+                        <br>
+                        <div id="SellRtAWP_SellRt_Selling rights present without permission" name="SellRtAWP_SellRt_All">
+
+                            <label id="building-right-sell-awp-without-permission"><b>Building Selling rights without permission sharing benefits:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-sell-aWP-without-permission">
+                                <paper-listbox id="SellRtAWP_BuildingSellRtWtp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.SellRtAWP.*,'BuildingSellRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="SellRtAWP_RatioOne_One" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="SellRtAWP_RatioTwo_One"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="SellRtAWP_AreaPremiseWTP" label="Area of premises which cant be sublet" on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                        <div id="SellRtAWP_SellRt_Selling rights present with permission" name="SellRtAWP_SellRt_All">
+
+                            <label id="building-right-sell-awp-with-permission"><b>Building Selling rights with permission sharing benefits:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-sell-awp-with-permission">
+                                <paper-listbox id="SellRtAWP_BuildingSellRtWp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.SellRtAWP.*,'BuildingSellRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="SellRtAWP_RatioOne_Two" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="SellRtAWP_RatioTwo_Two"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+
+                            <!--- input box  --->
+                            <paper-input name="SellRtAWP_AreaPremiseWP" label="Area of premises which cant be sublet" on-change="HandleOnChange"></paper-input>
+
+
+                        </div>
+                        <div id="SellRtAWP_SellRt_Cannot Sell" name="SellRtAWP_SellRt_All">
+
+                            <label id="building-right-cannot-sell-awp"><b>Building sharing rights with can not sell:&nbsp</b></label>
+                            <!--- input box  --->
+                            <paper-input name="SellRtAWP_AreaPremiseCS" label="Area of premises which cant be sublet" on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- l section by abhishek Assign AWP --->
+                <div id="AssignAWP" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1><b>Assign:&nbsp</b></h1>
+                        <label id="assign-awp-rights"><b>Assign rights:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="assign-a-rights">
+                            <paper-listbox id="AssignAWP_AssignRt_Main" class="dropdown-content" attr-for-selected="name" selected="Assign without permission">
+                                <paper-item name="Assign without permission">Assign without permission</paper-item>
+                                <paper-item name="Assign with permission">Assign with permission</paper-item>
+                                <paper-item name="Cannot Assign">Cannot Assign</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <paper-input name="AssignAWP_AreaPremise" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange"></paper-input>
+                        <br>
+                        <br>
+                        <div id="AssignAWP_AssignRt_Assign without permission" name="AssignAWP_AssignRt_All">
+
+                            <label id="building-right-assign-awp-without-permission"><b>Assign the building without permission Exclusive benefits goes to:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-assign-awp-without-permission">
+                                <paper-listbox id="AssignAWP_BuildingAssignRtWtp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.AssignAWP.*,'BuildingAssignRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="AssignAWP_RatioOne_One" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="AssignAWP_RatioTwo_One" type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="AssignAWP_AreaPremiseWtp" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                        <div id="AssignAWP_AssignRt_Assign with permission" name="AssignAWP_AssignRt_All">
+
+                            <label id="building-right-assign-awp-with-permission"><b>Assign the building with permission Exclusive benefits goes to:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-assign-a-with-permission">
+                                <paper-listbox id="AssignAWP_BuildingAssignRtWp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.AssignAWP.*,'BuildingAssignRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="AssignAWP_RatioOne_Two" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name=AssignAWP_RatioTwo_Two" type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="AssignAWP_AreaPremiseWp" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange" ></paper-input>
+
+
+
+                        </div>
+                        <div id="AssignAWP_AssignRt_Cannot Assign" name="SellRtAWP_SellRt_All">
+
+                            <label id="building-right-cannot-assign-awp"><b> Cant Assign Buildings Rights:&nbsp</b></label>
+                            <!--- input box  --->
+                            <paper-input name="AssignAWP_AreaPremiseCS" label="Enter Premises that can be an exception for above selected option" on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- o section by abhishek Mortgage --->
+                <div id="MortgageAWP" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1><b>Mortgage:&nbsp</b></h1>
+                        <label id="Mortgage-awp-rights"><b>Mortgage rights:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="Mortgage-awp-rights">
+                            <paper-listbox id="MortgageAWP_MortgageRt_Main" class="dropdown-content" attr-for-selected="name" selected="Mortgage without permission">
+                                <paper-item name="Mortgage without permission">Mortgage without permission</paper-item>
+                                <paper-item name="Mortgage with permission">Mortgage with permission</paper-item>
+                                <paper-item name="Cannot Mortgage">Cannot Mortgage</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <paper-input name="MortgageAWP_AreaPremise" label="Enter Premises that can be an exception for above selected option:" on-change="HandleOnChange"></paper-input>
+                        <br>
+                        <br>
+                        <div id="MortgageAWP_MortgageRt_Mortgage without permission" name="MortgageAWP_MortgageRt_All">
+
+                            <label id="building-right-mortgage-awp-without-permission"><b>Mortgage the building without permission Exclusive benefits goes to:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-mortgage-awp-without-permission">
+                                <paper-listbox id="MortgageAWP_buildingRtWtp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.MortgageAWP.*,'buildingRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="MortgageAWP_RatioOne_One" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="MortgageAWP_RatioTwo_One"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="MortgageAWP_AreaPremiseWtp" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                        <div id="MortgageAWP_MortgageRt_Mortgage with permission" name="MortgageAWP_MortgageRt_All">
+
+                            <label id="building-right-mortgage-awp-with-permission"><b>Mortgage the building with permission Exclusive benefits goes to:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="building-right-mortgage-a-with-permission">
+                                <paper-listbox id="MortgageAWP_buildingRtWp_Main" class="dropdown-content" attr-for-selected="name" selected="exclusive benefit of the [Lessee/Lessees]">
+                                    <paper-item name="exclusive benefit of the [Lessee/Lessees]">All by lessee</paper-item>
+                                    <paper-item name="exclusive benefit of the Lessor">All by lessor</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits equally">Equally</paper-item>
+                                    <paper-item name="mutual benefit of both, the [Lessee/Lessees] and the Lessor, sharing profits as decided among the parties to this Deed"> As decided by the parties</paper-item>
+                                    <paper-item name="the  [Lessee/Lessees] and the Lessor sharing profits in the ratio">By Ratio</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div hidden="{{_OptionalDiv(data.MortgageAWP.*,'buildingRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                <paper-input name="MortgageAWP_RatioOne_Two" type="Number" style="display: inline-block;width: 10%" label="Lessee"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                                <paper-input name="MortgageAWP_RatioTwo_Two"type="Number" style="display: inline-block;width: 10%;margin-left: 5%;" label="Lessor"  on-change="HandleRatio" value="" max=100 min=0><div suffix>%</div> </paper-input>
+                            </div>
+                            <paper-input name="MortgageAWP_AreaPremiseWp" label="Enter Premises that can be an exception for above selected option:"  on-change="HandleOnChange" ></paper-input>
+
+
+
+                        </div>
+                        <div id="MortgageAWP_MortgageRt_Cannot Mortgage" name="MortgageAWP_MortgageRt_All">
+
+                            <label id="building-right-cannot-Mortgage-awp"><b> Cant Mortgage:&nbsp</b></label>
+                            <!--- input box  --->
+                            <paper-input name="MortgageAWP_AreaPremiseCS" label="Enter Premises that can be an exception for above selected option" on-change="HandleOnChange" ></paper-input>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- m section by abhishek--->
+            <div id="SpecialActParty">
+                <div class="InnerDiv">
+                    <h1><b>Special activities allowed by any party:&nbsp</b></h1>
+                    <div id="SpecialActLessor">
+                        <label id="special-act-lessor"><b>Special activity by Lessor Add own:&nbsp:&nbsp</b></label>
+                        <paper-radio-group id="SpecialActLessor_SpecialAct_Rb" area-labeld-by="special-act-lessor" selected="Yes">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <br>
+
+                        <div id="SpecialActLessor_SpecialAct_Div">
+
+                            <template is="dom-repeat" items="{{data.SpecialActLessor.AddLessorAct}}" index-as="LessorActIndex">
+                                <paper-textarea name="SpecialActLessor_LessorAct_{{LessorActIndex}}" label="Activity" on-change="HandleOnChange">
+                                </paper-textarea>
+                                <label id="remove-Special-Act-Lessor-button">Remove</label>
+                                <paper-icon-button  suffix id="SpecialActLessor_LessorAct_{{LessorActIndex}}" icon="clear" area-labeldby="remove-Special-Act-Lessor-button" on-tap="RemoveMore"></paper-icon-button>
+                            </template>
+
+                            <br>
+                            <label id="add-Special-Act-Lessor-button">Add More Activities</label>
+                            <paper-icon-button id="SpecialActLessor_AddLessorAct" icon="add-circle" area-labeldby="add-Special-Act-Lessor-button" on-tap="AddMore"></paper-icon-button>
+
+                            <paper-input name="SpecialActLessor_Period" label="Should be completed with in" type="Number"  on-change="HandleOnChange" ></paper-input>
+                            <paper-dropdown-menu area-labeldby="special-act-lessor">
+                                <paper-listbox id="SpecialActLessor_PeriodUnit_Main" class="dropdown-content" attr-for-selected="name" selected="Month">
+                                    <paper-item name="Month">Month</paper-item>
+                                    <paper-item name="Year">Year</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <br>
+                            <br>
+                            <label id="special-act-lessor-interest"><b>Lessee has the right to claim the amount if the activity is undone within the above mentioned period with the interest rate of -- per annum:&nbsp</b></label>
+                            <paper-input name="SpecialActLessor_Interest" label="Enter Interest Rate" type="Number"  on-change="HandleOnChange" ></paper-input>
+                            <br>
+
+                        </div>
+                    </div>
+                    <!--lessee-->
+                    <div id="SpecialActLessee">
+                        <label id="special-act-lessee"><b>Special activity by Lessee Add own:&nbsp:&nbsp</b></label>
+                        <paper-radio-group id="SpecialActLessee_SpecialAct_Rb" area-labeld-by="special-act-lessee" selected="Yes">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <br>
+                        <br>
+
+                        <div id="SpecialActLessee_SpecialAct_Div">
+
+                            <template is="dom-repeat" items="{{data.SpecialActLessee.AddLesseeAct}}" index-as="LesseeActIndex">
+                                <paper-textarea name="SpecialActLessee_LesseeAct_{{LesseeActIndex}}" label="Activity" on-change="HandleOnChange">
+                                </paper-textarea>
+                                <label id="remove-Special-Act-Lessee-button">Remove</label>
+                                <paper-icon-button  suffix id="SpecialActLessee_LesseeAct_{{LesseeActIndex}}" icon="clear" area-labeldby="remove-Special-Act-Lessee-button" on-tap="RemoveMore"></paper-icon-button>
+                            </template>
+                            <br>
+                            <label id="add-Special-Act-Lessee-button">Add More Activities</label>
+                            <paper-icon-button id="SpecialActLessee_AddLesseeAct" icon="add-circle" area-labeldby="add-Special-Act-Lessee-button" on-tap="AddMore"></paper-icon-button>
+                            <paper-input name="SpecialActLessee_Period" label="Should be completed with in" type="Number"  on-change="HandleOnChange" ></paper-input>
+                            <paper-dropdown-menu area-labeldby="special-act-lessee">
+                                <paper-listbox id="SpecialActLessee_PeriodUnit_Main" class="dropdown-content" attr-for-selected="name" selected="Month">
+                                    <paper-item name="Month">Month</paper-item>
+                                    <paper-item name="Year">Year</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <br>
+                            <br>
+                            <label id="special-act-lessee-interest"><b>Lessee has the right to claim the amount if the activity is undone within the above mentioned period with the interest rate of -- per annum:&nbsp</b></label>
+                            <paper-input name="SpecialActLessee_Interest" label="Enter Interest Rate" type="Number"  on-change="HandleOnChange" ></paper-input>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- n section by abhishek--->
+            <div id="LessorEntryRights" class="forIndex">
+                <div class="InnerDiv">
+                    <label id="lessor-entry-right"> <h1><b>Lessor entry rights:&nbsp</b></h1></label>
+                    <paper-dropdown-menu area-labeldby="lessor-entry-right">
+                        <paper-listbox id="LessorEntryRights_Time_Main" class="dropdown-content" attr-for-selected="name" selected="With Lessees Permission">
+                            <paper-item name="With Lessees Permission">With Lessee’s Permission</paper-item>
+                            <paper-item name="Without Lessees Permission">Without Lessee’s Permission</paper-item>
+                            <paper-item name="No right to enter the Premises">No right to enter the Premises</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <div id="LessorEntryRights_Time_With Lessees Permission" name="LessorEntryRights_Time_All">
+
+                        <label id="lessor-entry-right-wp"><b>With Lessee’s Permission:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="lessor-entry-right-wp">
+                            <paper-listbox id="LessorEntryRights_TimeWp_Main" class="dropdown-content" attr-for-selected="name" selected="At reasonable time">
+                                <paper-item name="At reasonable time">At reasonable time</paper-item>
+                                <paper-item name="Specific time Slot">Specific time Slot</paper-item>
+                                <paper-item name="During normal working hours">During normal working hours</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div>
+                    <div id="LessorEntryRights_Time_Without Lessees Permission" name="LessorEntryRights_Time_All">
+                        <label id="lessor-entry-right-wtp"><b>Without Lessee’s Permission:&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="lessor-entry-right-wtp">
+                            <paper-listbox id="LessorEntryRights_TimeWtp_Main" class="dropdown-content" attr-for-selected="name" selected="At reasonable time">
+                                <paper-item name="At reasonable time">At reasonable time</paper-item>
+                                <paper-item name="Specific time Slot">Specific time Slot</paper-item>
+                                <paper-item name="During normal working hours">During normal working hours</paper-item>
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div>
+                </div>
+            </div>
+            <!-- p section by abhishek--->
+            <div id="Sublease">
+
+                <div class="InnerDiv">
+
+                    <label id="sublease-menu"> <h1><b>Sublease:&nbsp</b></h1></label>
+
+                    <paper-dropdown-menu area-labeldby="sublease-menu">
+                        <paper-listbox id="Sublease_Menu_Main" class="dropdown-content" attr-for-selected="name" selected="Sublease with permission">
+                            <paper-item name="Sublease with permission">Sublease with permission</paper-item>
+                            <paper-item name="Sublease without permission">Sublease without permission</paper-item>
+                            <paper-item name="Cant sublease">Cant sublease</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <br>
+                    <br>
+                    <div id="Sublease_Menu_Sublease with permission" name="Sublease_Menu_All">
+
+                        <label id="sublease-menu-wp"><b>Sublease with permission:&nbsp</b></label>
+
+                        <label id="sublease-paymentwp"> <b>The Lessee/(s) shall pay to the Lessor ? :&nbsp</b></label>
+
+                        <paper-radio-group id="Sublease_PaymentWp_Rb" area-labeld-by="sublease-paymentwp" selected="Yes">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <br>
+                        <div id="Sublease_PaymentWp_Div">
+                            <paper-input name="Sublease_AmountPaidWp" label="Amount paid by the lessee to get a sublease permission" type="Number" on-change="HandleOnChange"></paper-input>
+                            <paper-dropdown-menu area-labeldby="sublease-menu-wp">
+                                <paper-listbox id="Sublease_MenuWp_Main" class="dropdown-content" attr-for-selected="name" selected="Yearly">
+                                    <paper-item name="Yearly">Yearly</paper-item>
+                                    <paper-item name="Monthly">Monthly</paper-item>
+                                    <paper-item name="One time">One time</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                        </div>
+                        <br>
+                        <paper-input name="Sublease_CantSlWp" label="Cant sublease for a period more than (period)" type="text" on-change="HandleOnChange"></paper-input>
+                        <paper-input name="Sublease_AreaPremisesWp" label="Area of premises which can’t be subleased" type="text" on-change="HandleOnChange"></paper-input>
+                    </div>
+                    <div id="Sublease_Menu_Sublease without permission" name="Sublease_Menu_All">
+
+                        <label id="sublease-menu-wtp"><b>Sublease without permission:&nbsp</b></label>
+                        <label id="sublease-paymentwtp"> <b>The Lessee/(s) shall pay to the Lessor ? :&nbsp</b></label>
+
+                        <paper-radio-group id="Sublease_PaymentWtp_Rb" area-labeld-by="sublease-paymentwtp" selected="Yes">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <br>
+                        <div div id="Sublease_PaymentWtp_Div">
+                            <paper-input name="Sublease_AmountPaidWtp" label="Amount paid by the lessee to get a sublease permission" type="Number" on-change="HandleOnChange"></paper-input>
+                            <paper-dropdown-menu area-labeldby="sublease-menu-wtp">
+                                <paper-listbox id="Sublease_MenuWtp_Main" class="dropdown-content" attr-for-selected="name" selected="Yearly">
+                                    <paper-item name="Yearly">Yearly</paper-item>
+                                    <paper-item name="Monthly">Monthly</paper-item>
+                                    <paper-item name="One time">One time</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                        </div>
+                        <br>
+                        <paper-input name="Sublease_CantSlWtp" label="Cant sublease for a period more than (period)" type="text" on-change="HandleOnChange"></paper-input>
+                        <paper-input name="Sublease_AreaPremisesWtp" label="Area of premises which can’t be subleased" type="text" on-change="HandleOnChange"></paper-input>
+
+                    </div>
+                    <div id="Sublease_Menu_Cant sublease" name="Sublease_Menu_All">
+
+                        <label id="sublease-menu-cs"><b>Can Sublease:&nbsp</b></label>
+                        <paper-input name="Sublease_AreaPremisesCs" label="Area of premises which can be subleased" type="text" on-change="HandleOnChange"></paper-input>
+
+                    </div>
+                </div>
+            </div>
+            <!--q section by abhishek-->
+            <div id="Sublet">
+
+                <div class="InnerDiv">
+
+                    <label id="sublet-menu"> <h1><b>Sublet:&nbsp</b></h1></label>
+
+                    <paper-dropdown-menu area-labeldby="Sublet-menu">
+                        <paper-listbox id="Sublet_Menu_Main" class="dropdown-content" attr-for-selected="name" selected="Sublet with permission">
+                            <paper-item name="Sublet with permission">Sublet with permission</paper-item>
+                            <paper-item name="Sublet without permission">Sublet without permission</paper-item>
+                            <paper-item name="Cant Sublet">Cant Sublet</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <br>
+                    <br>
+                    <div id="Sublet_Menu_Sublet with permission" name="Sublet_Menu_All">
+                        <label id="Sublet-menu-wp"><b>Sublet with permission:&nbsp</b></label>
+                        <label id="sublet-paymentwp"> <b>The Lessee/(s) shall pay to the Lessor ? :&nbsp</b></label>
+
+                        <paper-radio-group id="Sublet_PaymentWp_Rb" area-labeld-by="sublet-paymentwp" selected="Yes">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <br>
+
+                        <div id="Sublet_PaymentWp_Div">
+                            <paper-input name="Sublet_AmountPaidWp" label="Amount paid by the lessee to get a Sublet permission" type="Number" on-change="HandleOnChange"></paper-input>
+                            <paper-dropdown-menu area-labeldby="Sublet-menu-wp">
+                                <paper-listbox id="Sublet_MenuWp_Main" class="dropdown-content" attr-for-selected="name" selected="Yearly">
+                                    <paper-item name="Yearly">Yearly</paper-item>
+                                    <paper-item name="Monthly">Monthly</paper-item>
+                                    <paper-item name="One time">One time</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                        </div>
+                        <br>
+                        <paper-input name="Sublet_CantSlWp" label="Cant Sublet for a period more than (period)" type="text" on-change="HandleOnChange"></paper-input>
+                        <paper-input name="Sublet_AreaPremisesWp" label="Area of premises which can’t be Subletd" type="text" on-change="HandleOnChange"></paper-input>
+                    </div>
+                    <div id="Sublet_Menu_Sublet without permission" name="Sublet_Menu_All">
+
+                        <label id="Sublet-menu-wtp"><b>Sublet without permission:&nbsp</b></label>
+                        <label id="sublet-paymentwtp"> <b>The Lessee/(s) shall pay to the Lessor ? :&nbsp</b></label>
+                        <paper-radio-group id="Sublet_PaymentWtp_Rb" area-labeld-by="sublet-paymentwtp" selected="Yes">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <br>
+                        <div id="Sublet_PaymentWtp_Div">
+                            <paper-input name="Sublet_AmountPaidWtp" label="Amount paid by the lessee to get a Sublet permission" type="Number" on-change="HandleOnChange"></paper-input>
+                            <paper-dropdown-menu area-labeldby="Sublet-menu-wtp">
+                                <paper-listbox id="Sublet_MenuWtp_Main" class="dropdown-content" attr-for-selected="name" selected="Yearly">
+                                    <paper-item name="Yearly">Yearly</paper-item>
+                                    <paper-item name="Monthly">Monthly</paper-item>
+                                    <paper-item name="One time">One time</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                        </div>
+                        <br>
+                        <paper-input name="Sublet_CantSlWtp" label="Cant Sublet for a period more than (period)" type="text" on-change="HandleOnChange"></paper-input>
+                        <paper-input name="Sublet_AreaPremisesWtp" label="Area of premises which can’t be Subletd" type="text" on-change="HandleOnChange"></paper-input>
+
+                    </div>
+                    <div id="Sublet_Menu_Cant Sublet" name="Sublet_Menu_All">
+
+                        <label id="Sublet-menu-cs"><b>Can Sublet:&nbsp</b></label>
+                        <paper-input name="Sublet_AreaPremisesCs" label="Area of premises which can be Subletd" type="text" on-change="HandleOnChange"></paper-input>
+
+                    </div>
+                </div>
+            </div>
+            <!--t section by abhishek-->
+            <div id="TerminationOfLeases">
+                <div class="InnerDiv">
+                    <h1> Termination of lease deed </h1>
+                    <label id="termination-of-lease"> <b>Party that can terminate the lease deed :&nbsp</b></label>
+                    <paper-dropdown-menu area-labeldby="termination-of-lease">
+                        <paper-listbox id="TerminationOfLeases_Party_Main" class="dropdown-content" attr-for-selected="name" selected="Either">
+                            <paper-item name="Either">Either </paper-item>
+                            <paper-item name="None of the parties can terminate the lease deed">None of the parties can terminate the lease deed</paper-item>
+                            <paper-item name="Lessor">Lessor</paper-item>
+                            <paper-item name="Lessee">Lessee</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <div id="TerminationOfLeases_Party_Either" name="TerminationOfLeases_Party_All">
+                        <paper-input name="TerminationOfLeases_LockInPeriodA" label="Lock in period for the lease deed" type="text" on-change="HandleOnChange"></paper-input>
+                        <paper-input name="TerminationOfLeases_NoticePeriodDaysA" label="Notice Period" type="text" on-change="HandleOnChange"></paper-input>
+                        <label id="termination-of-lease-notice-period-a"> <b>When lease is terminated by the lessee :&nbsp</b></label>
+                        <paper-dropdown-menu area-labeldby="termination-of-lease-notice-period-a">
+                            <paper-listbox id="TerminationOfLeases_NoticePeriodA_Main" class="dropdown-content" attr-for-selected="name" selected="Days">
+                                <paper-item name="Days">Days</paper-item>
+                                <paper-item name="Months">Months</paper-item>
+                                <paper-item name="Years">years</paper-item>
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <div id="LeaseTerminatedbylessor">
+                            <label id="termination-of-lease-either-lessor"> <b>When lease is terminated by the lessor :&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="termination-of-lease-either-lessor">
+                                <paper-listbox id="TerminationOfLeases_EitherLessor_Main" class="dropdown-content" attr-for-selected="name" selected="Pay to the Lessee a sum of Rs">
+                                    <paper-item name="Pay to the Lessee a sum of Rs">Pay to the Lessee a sum of Rs</paper-item>
+                                    <paper-item name="Get replacement premises similar to the demised premises for the Lessee to move in. The failure to do so shall make the Lessor liable to the Lessee
+                                 for a sum of Rs">Get replacement premises</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="TerminationOfLeases_EitherLessor_Pay to the Lessee a sum of Rs" name="TerminationOfLeases_EitherLessor_All">
+                                <paper-input name="TerminationOfLeases_EAmntLessor" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                            </div>
+                            <div id="TerminationOfLeases_EitherLessor_Get replacement premises similar to the demised premises for the Lessee to move in. The failure to do so shall make the Lessor liable to the Lessee
+                                 for a sum of Rs" name="TerminationOfLeases_EitherLessor_All">
+                                <paper-input name="TerminationOfLeases_EAmntReplaceLessor" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                            </div>
+                        </div>
+
+                        <div id="LeaseTerminatedbylessee">
+                            <label id="termination-of-lease-either-lessee"> <b>When lease is terminated by the lessee :&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="termination-of-lease-either-lessee">
+                                <paper-listbox id="TerminationOfLeases_EitherLessee_Main" class="dropdown-content" attr-for-selected="name" selected="Pay to the Lessor a sum of Rs">
+                                    <paper-item name="Get a replacement prospective Lessee for the demised premises. The Lessor shall not reject such prospective Lessee unreasonably. In case such a prospective Lessee isnt found the Lessee shall">Get a replacement prospective</paper-item>
+                                    <paper-item name="Pay to the Lessor a sum of Rs">Pay to the Lessor a sum of Rs</paper-item>
+                                    <paper-item name="Pay to the Lessor the rent of period">Pay to the Lessor the rent of period</paper-item>
+
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="TerminationOfLeases_EitherLessee_Pay to the Lessor a sum of Rs" name="TerminationOfLeases_EitherLessee_All">
+                                <paper-input name="TerminationOfLeases_EAmntLessee" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                            </div>
+                            <div id="TerminationOfLeases_EitherLessee_Get a replacement prospective Lessee for the demised premises. The Lessor shall not reject such prospective Lessee unreasonably. In case such a prospective Lessee isnt found the Lessee shall" name="TerminationOfLeases_EitherLessee_All">
+
+                                <!--critical-->
+                                <paper-dropdown-menu area-labeldby="termination-of-lease-either-lessee-a">
+                                    <paper-listbox id="TerminationOfLeases_EitherLesseeA_Main" class="dropdown-content" attr-for-selected="name" selected="continue the Lease for such period as decided mutually">
+                                        <paper-item name="continue the Lease for such period as decided mutually">continue the Lease for such period as decided mutually</paper-item>
+                                        <paper-item name="pay to the Lessor a sum of Rs">pay to the Lessor a sum of Rs</paper-item>
+                                        <paper-item name="Pay to the Lessor the rent of period">Pay to the Lessor the rent of period</paper-item>
+
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <div id="TerminationOfLeases_EitherLesseeA_pay to the Lessor a sum of Rs" name="TerminationOfLeases_EitherLesseeA_All">
+                                    <paper-input name="TerminationOfLeases_EitherLesseeAAmmount" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <div id="TerminationOfLeases_EitherLesseeA_Pay to the Lessor the rent of period" name="TerminationOfLeases_EitherLesseeA_All">
+                                    <paper-input name="TerminationOfLeases_ERentLesseeA" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                                    <label id="termination-of-lease-either-lessee-rentperiod-a"> <b>When lease is terminated by the lessee :&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="termination-of-lease-either-lessee-rentperiod-a">
+                                        <paper-listbox id="TerminationOfLeases_ERentPeriodLesseeA_Main" class="dropdown-content" attr-for-selected="name" selected="Month">
+                                            <paper-item name="Month">Month</paper-item>
+                                            <paper-item name="Year">year</paper-item>
+
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                </div>
+
+                            </div>
+                            <div id="TerminationOfLeases_EitherLessee_Pay to the Lessor the rent of period" name="TerminationOfLeases_EitherLessee_All">
+                                <paper-input name="TerminationOfLeases_ERentLesseeC" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                                <label id="termination-of-lease-either-lessee-rentperiod-c"> <b>When lease is terminated by the lessee :&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="termination-of-lease-either-lessee-rentperiod-c">
+                                    <paper-listbox id="TerminationOfLeases_ERentPeriodLesseeC_Main" class="dropdown-content" attr-for-selected="name" selected="Month">
+                                        <paper-item name="Month">Month</paper-item>
+                                        <paper-item name="Year">year</paper-item>
+
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="TerminationOfLeases_Party_None of the parties can terminate the lease deed" name="TerminationOfLeases_Party_All">
+                        <label id="termination-of-lease-none"> <b>Termination allowed in exceptional circumstances?</b></label>
+
+                        <paper-radio-group id="TerminationOfLeases_None_Rb" area-labeld-by="termination-of-lease-none" selected="Yes">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div id="TerminationOfLeases_Party_Lessor" name="TerminationOfLeases_Party_All">
+
+                        <label id="termination-of-lease-notice-period-c"> <b>When lease is terminated by only  the lessee :&nbsp</b></label>
+
+                        <paper-input name="TerminationOfLeases_LockInPeriodC" label="Lock in period for the lease deed" type="text" on-change="HandleOnChange"></paper-input>
+                        <paper-input name="TerminationOfLeases_NoticePeriodDaysC" label="Notice Period" type="text" on-change="HandleOnChange"></paper-input>
+                        <paper-dropdown-menu area-labeldby="termination-of-lease-notice-period-c">
+                            <paper-listbox id="TerminationOfLeases_NoticePeriodC_Main" class="dropdown-content" attr-for-selected="name" selected="Days">
+                                <paper-item name="Days">Days</paper-item>
+                                <paper-item name="Months">Months</paper-item>
+                                <paper-item name="Years">years</paper-item>
+
+                            </paper-listbox>
+
+                        </paper-dropdown-menu>
+                        <br>
+                        <br>
+
+                        <paper-dropdown-menu area-labeldby="termination-of-lease-only-lessor">
+                            <paper-listbox id="TerminationOfLeases_OnlyLessor_Main" class="dropdown-content" attr-for-selected="name" selected="Pay to the Lessee a sum of Rs">
+                                <paper-item name="Pay to the Lessee a sum of Rs">Pay to the Lessee a sum of Rs</paper-item>
+                                <paper-item name="Get replacement premises similar to the demised premises for the Lessee to move in. The failure to do so shall make the Lessor liable to the Lessee
+                                 for a sum of Rs">Get replacement premises</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <div id="TerminationOfLeases_OnlyLessor_Pay to the Lessee a sum of Rs" name="TerminationOfLeases_OnlyLessor_All">
+                            <paper-input name="TerminationOfLeases_EAmntOnlyLessor" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                        </div>
+                        <div id="TerminationOfLeases_OnlyLessor_Get replacement premises similar to the demised premises for the Lessee to move in. The failure to do so shall make the Lessor liable to the Lessee
+                                 for a sum of Rs"name="TerminationOfLeases_OnlyLessor_All">
+                            <paper-input name="TerminationOfLeases_EAmntReplaceOnlyLessor" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                        </div>
+
+
+                    </div>
+
+                    <div id="TerminationOfLeases_Party_Lessee" name="TerminationOfLeases_Party_All">
+                        <label id="termination-of-lease-only-lessee"> <b>When lease is terminated by the only lessee :&nbsp</b></label>
+                        <paper-input name="TerminationOfLeases_LockInPeriodD" label="Lock in period for the lease deed" type="text" on-change="HandleOnChange"></paper-input>
+
+                        <paper-input name="TerminationOfLeases_NoticePeriodDaysD" label="Notice Period" type="text" on-change="HandleOnChange"></paper-input>
+                        <paper-dropdown-menu area-labeldby="termination-of-lease-notice-period-d">
+                            <paper-listbox id="TerminationOfLeases_NoticePeriodD_Main" class="dropdown-content" attr-for-selected="name" selected="Days">
+                                <paper-item name="Days">Days</paper-item>
+                                <paper-item name="Months">Months</paper-item>
+                                <paper-item name="Years">years</paper-item>
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <br>
+                        <br>
+
+                        <paper-dropdown-menu area-labeldby="termination-of-lease-only-lessee">
+                            <paper-listbox id="TerminationOfLeases_OnlyLessee_Main" class="dropdown-content" attr-for-selected="name" selected="Pay to the Lessor a sum of Rs">
+                                <paper-item name="Get a replacement prospective Lessee for the demised premises. The Lessor shall not reject such prospective Lessee unreasonably. In case such a prospective Lessee isnt found the Lessee shall">Get a replacement prospective</paper-item>
+                                <paper-item name="Pay to the Lessor a sum of Rs">Pay to the Lessor a sum of Rs</paper-item>
+                                <paper-item name="Pay to the Lessor the rent of period">Pay to the Lessor the rent of period</paper-item>
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <div id="TerminationOfLeases_OnlyLessee_Pay to the Lessor a sum of Rs" name="TerminationOfLeases_OnlyLessee_All">
+                            <paper-input name="TerminationOfLeases_EAmntOnlyLessee" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                        </div>
+                        <div id="TerminationOfLeases_OnlyLessee_Get a replacement prospective Lessee for the demised premises. The Lessor shall not reject such prospective Lessee unreasonably. In case such a prospective Lessee isnt found the Lessee shall" name="TerminationOfLeases_OnlyLessee_All">
+
+                            <!--critical-->
+                            <paper-dropdown-menu area-labeldby="termination-of-lease-only-lessee-a">
+                                <paper-listbox id="TerminationOfLeases_OnlyLesseeA_Main" class="dropdown-content" attr-for-selected="name" selected="continue the Lease for such period as decided mutually">
+                                    <paper-item name="continue the Lease for such period as decided mutually">continue the Lease for such period as decided mutually</paper-item>
+                                    <paper-item name="pay to the Lessor a sum of Rs">pay to the Lessor a sum of Rs</paper-item>
+                                    <paper-item name="Pay to the Lessor the rent of period">Pay to the Lessor the rent of period</paper-item>
+
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="TerminationOfLeases_OnlyLesseeA_pay to the Lessor a sum of Rs" name="TerminationOfLeases_OnlyLesseeA_All">
+                                <paper-input name="TerminationOfLeases_OnlyLesseeAAmmount" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                            </div>
+                            <div id="TerminationOfLeases_OnlyLesseeA_Pay to the Lessor the rent of period" name="TerminationOfLeases_OnlyLesseeA_All">
+                                <paper-input name="TerminationOfLeases_ERentOnlyLesseeA" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                                <label id="termination-of-lease-only-lessee-rentperiod-a"> <b>When lease is terminated by the lessee :&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="termination-of-lease-only-lessee-rentperiod-a">
+                                    <paper-listbox id="TerminationOfLeases_ERentPeriodOnlyLesseeA_Main" class="dropdown-content" attr-for-selected="name" selected="Month">
+                                        <paper-item name="Month">Month</paper-item>
+                                        <paper-item name="Year">year</paper-item>
+
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                            </div>
+
+                        </div>
+                        <div id="TerminationOfLeases_OnlyLessee_Pay to the Lessor the rent of period" name="TerminationOfLeases_OnlyLessee_All">
+                            <paper-input name="TerminationOfLeases_ERentOnlyLesseeC" label="Ammount" type="text" on-change="HandleOnChange"></paper-input>
+                            <label id="termination-of-lease-only-lessee-rentperiod-c"> <b>When lease is terminated by the lessee :&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="termination-of-lease-only-lessee-rentperiod-c">
+                                <paper-listbox id="TerminationOfLeases_ERentPeriodOnlyLesseeC_Main" class="dropdown-content" attr-for-selected="name" selected="Month">
+                                    <paper-item name="Month">Month</paper-item>
+                                    <paper-item name="Year">year</paper-item>
+
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+                    <!--sections by prathamesh-->
+                <div id="Surrender" class="forIndex">
+                    <div class="InnerDiv">
+                        <h1>Surrendering the property after the lease ends</h1>
+
+                            <label id="Surrender-Options"><b>Options:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="Surrender-Options">
+                                <paper-listbox id="Surrender_Options_Main" class="dropdown-content" attr-for-selected="name" selected="Transfer possession">
+                                    <paper-item name="Transfer possession">Transfer possession of the buildings built subsequently on land to lessor</paper-item>
+                                    <paper-item name="Don’t transfer possession">Don’t transfer possession of the buildings built subsequently on land to lessor</paper-item>
+                                    <paper-item name="Create own clause">Create own clause</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu><br>
+                            <div id="Surrender_Options_Transfer possession" name="Surrender_Options_All">
+                                <label id="Surrender-IsCompensation">Liable to pay compensation?</label>
+                                <paper-radio-group id="Surrender_IsCompensation_Rb" area-labeld-by="Surrender-IsCompensation" selected="No">
+                                    <paper-radio-button name="No">No</paper-radio-button>
+                                    <paper-radio-button name="Yes">Yes</paper-radio-button>
+                                </paper-radio-group>
+                                <div id="Surrender_IsCompensation_Div" hidden>
+                                    <label id="Surrender-compensation"><b>Compensation:&nbsp</b></label>
+                                    <paper-dropdown-menu area-labeldby="Surrender-compensation">
+                                        <paper-listbox id="Surrender_Compensation_Lb" class="dropdown-content" attr-for-selected="name" selected="The lessor shall pay compensation to the lessee/s for such transfer of possession">
+                                            <paper-item name="The lessor shall pay compensation to the lessee/s for such transfer of possession">The lessor shall pay compensation to the lessee/s for such transfer of possession </paper-item>
+                                            <paper-item name="The lessor shall not pay any compensation to the lessee/s for such transfer of possession">The lessor shall not pay any compensation to the lessee/s for such transfer of possession</paper-item>
+                                        </paper-listbox>
+                                    </paper-dropdown-menu>
+                                </div>
+                            </div>
+
+                            <div id="Surrender_Options_Create own clause" name="Surrender_Options_All">
+                                <h2>Excluding certain properties</h2>
+                                <template is="dom-repeat" items="{{data.Surrender.AddExclude}}" index-as="ExIndex">
+                                    <paper-textarea name="Surrender_Exclude_{{ExIndex}}" label="Description of property" on-change="HandleOnChange">
+                                    </paper-textarea>
+                                    <label id="remove-pointsex-button">Remove</label>
+                                    <paper-icon-button  suffix id="Surrender_Exclude_{{ExIndex}}" icon="clear" area-labeldby="remove-pointsex-button" on-tap="RemoveMore"></paper-icon-button>
+                                </template>
+                                <br>
+                                <label id="add-pointsex-button">Add More</label>
+                                <paper-icon-button id="Surrender_AddExclude" icon="add-circle" area-labeldby="add-pointsex-button" on-tap="AddMore"></paper-icon-button>
+                                <br>
+                                <h2>Including certain properties</h2>
+                                <template is="dom-repeat" items="{{data.Surrender.AddInclude}}" index-as="InIndex">
+                                    <paper-textarea name="Surrender_Include_{{InIndex}}" label="Description of property" on-change="HandleOnChange">
+                                    </paper-textarea>
+                                    <label id="remove-pointsin-button">Remove</label>
+                                    <paper-icon-button  suffix id="Surrender_Include_{{InIndex}}" icon="clear" area-labeldby="remove-pointsin-button" on-tap="RemoveMore"></paper-icon-button>
+                                </template>
+                                <br>
+                                <label id="add-pointsin-button">Add More</label>
+                                <paper-icon-button id="Surrender_AddInclude" icon="add-circle" area-labeldby="add-pointsin-button" on-tap="AddMore"></paper-icon-button>
+                                <br>
+                                Failing to surrender with in a period of &nbsp<paper-input name="Surrender_Period" type="Number"  style="width:10%;display: inline-block;" on-change="HandleOnChange"></paper-input>&nbsp days will make the lessee liable to pay a damage of &nbsp<paper-input name="Surrender_Amount"  style="width:10%;display: inline-block;" on-change="HandleOnChange"></paper-input>&nbsp per
+                                &nbsp
+                                <paper-dropdown-menu style="width: 10%">
+                                    <paper-listbox id="Surrender_PeriodTypeAmt_Lb" class="dropdown-content" attr-for-selected="name" selected="Days">
+                                        <paper-item name="Days">Days</paper-item>
+                                        <paper-item name="Months">Months</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                            </div>
+                        </div>
+                </div>
+                <div id="LeaseRen" class="forIndex">
+                    <!--incomplete enter amount -->
+                    <div class="InnerDiv">
+                        <h1>Lease renewal</h1>
+
+                        <label id="LeaseRen-isrebew">Lease can be renewed at the end of the term?</label>
+                        <paper-radio-group id="LeaseRen_IsRenew_Rb" area-labeld-by="LeaseRen-isrebew" selected="No">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <div id="LeaseRen_IsRenew_Div" hidden>
+                            <label id="LeaseRen-RenewBy">Lease can be renewed at the end of the term by :&nbsp</label>
+                            <paper-dropdown-menu area-labeldby="LeaseRen-RenewBy">
+                                <paper-listbox id="LeaseRen_RenewBy_Lb" class="dropdown-content" attr-for-selected="name" selected="Lessee">
+                                    <paper-item name="Lessee">Lessee</paper-item>
+                                    <paper-item name="Lessor">Lessor</paper-item>
+                                    <paper-item name="Both the parties">Both the parties</paper-item>
+                                    <paper-item name="Either of the parties">Either of the parties</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <paper-input name="LeaseRen_Period" label="Renewed for a period of"  type="Number" on-change="HandleOnChange"></paper-input>
+                            <label id="LeaseRen-periodtype"><b>Period Type:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="LeaseRen-periodtype">
+                                <paper-listbox id="LeaseRen_PeriodType_Lb" class="dropdown-content" attr-for-selected="name" selected="Months">
+                                    <paper-item name="Days">Days</paper-item>
+                                    <paper-item name="Months">Months</paper-item>
+                                    <paper-item name="Years">Years</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <br>
+                            <label id="LeaseRen-NewRent">Rent for the new lease: &nbsp</label>
+                            <paper-dropdown-menu area-labeldby="LeaseRen-NewRent">
+                                <paper-listbox id="LeaseRen_NewRent_Lb" class="dropdown-content" attr-for-selected="name" selected="Same rent structure as per the old lease">
+                                    <paper-item name="Same rent structure as per the old lease">Same rent structure as per the old lease</paper-item>
+                                    <paper-item name="Will be mutually decided by the parties">Will be mutually decided by the parties</paper-item>
+                                    <paper-item name="Other">Enter amount</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="LeaseRen_NewRent_Div">
+                                <paper-input name="LeaseRen_OtherNewRent" label="Amount" on-change="HandleOnChange"></paper-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="BuyingOp" class="forIndex">
+                    <!--incomplete enter amount -->
+                    <div class="InnerDiv">
+                        <h1>Buying Option</h1>
+                        <label id="BuyingOp-Buy">Include Buying Option?</label>
+                        <paper-radio-group id="BuyingOp_Buy_Rb" area-labeld-by="BuyingOp-Buy" selected="No">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <div id="BuyingOp_Buy_Div" hidden>
+                            <label id="BuyingOp-Options"><b>Buying Option:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="BuyingOp-Options">
+                                <paper-listbox id="BuyingOp_Option_Main" class="dropdown-content" attr-for-selected="name" selected="On Completion">
+                                    <paper-item name="On Completion">On Completion</paper-item>
+                                    <paper-item name="Anytime in between">Anytime in between</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="BuyingOp_Option_On Completion" name="BuyingOp_Option_All">
+                                <label id="BuyingOp-payment"><b>Payment will be according to :&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="BuyingOp-payment">
+                                    <paper-listbox id="BuyingOp_Payment_Lb" class="dropdown-content" attr-for-selected="name" selected="The market prevalent at time of exercising the buying option ">
+                                        <paper-item name="The market prevalent at time of exercising the buying option ">The market prevalent at time of exercising the buying option </paper-item>
+                                        <paper-item name="Other">Enter Specific Amount</paper-item>
+                                        <paper-item name="As mutually decided by parties">As mutually decided by parties</paper-item>
+                                        <paper-item name="Other">Other</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <div id="BuyingOp_Payment_Div">
+                                    <paper-input name="BuyingOp_OtherPayment" label="Other" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <paper-input name="BuyingOp_NoticePeriod" label="Notice period for exercising the rights of buying options" type="Number" on-change="HandleOnChange"></paper-input>
+                                <label id="BuyingOp-periodtype"><b>Period Type:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="BuyingOp-periodtype">
+                                    <paper-listbox id="BuyingOp_PeriodType_Lb" class="dropdown-content" attr-for-selected="name" selected="Months">
+                                        <paper-item name="Months">Months</paper-item>
+                                        <paper-item name="Years">Years</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <br>
+                                <label id="BuyingOp-charges"><b>Stamp duty and registration charges will be paid by:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="BuyingOp-charges">
+                                    <paper-listbox id="BuyingOp_Charges_Lb" class="dropdown-content" attr-for-selected="name" selected="Lessee alone">
+                                        <paper-item name="Lessee alone">Lessee alone</paper-item>
+                                        <paper-item name="Lessor alone">Lessor alone</paper-item>
+                                        <paper-item name="Both Equally">Equally</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+
+                            </div>
+                            <div id="BuyingOp_Option_Anytime in between" name="BuyingOp_Option_All">
+                                <label id="BuyingOp-paymentany"><b>Payment will be according to :&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="BuyingOp-payment">
+                                    <paper-listbox id="BuyingOp_PaymentAny_Lb" class="dropdown-content" attr-for-selected="name" selected="The market prevalent at time of exercising the buying option ">
+                                        <paper-item name="The market prevalent at time of exercising the buying option ">The market prevalent at time of exercising the buying option </paper-item>
+                                        <paper-item name="Other">Enter Specific Amount</paper-item>
+                                        <paper-item name="As mutually decided by parties">As mutually decided by parties</paper-item>
+                                        <paper-item name="Other">Other</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <div id="BuyingOp_PaymentAny_Div">
+                                    <paper-input name="BuyingOp_OtherPaymentAny" label="Other" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <paper-input name="BuyingOp_NoticePeriodAny" label="Notice period for exercising the rights of buying options" type="Number" on-change="HandleOnChange"></paper-input>
+                                <label id="BuyingOp-periodtypeany"><b>Period Type:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="BuyingOp-periodtype">
+                                    <paper-listbox id="BuyingOp_PeriodTypeAny_Lb" class="dropdown-content" attr-for-selected="name" selected="Months">
+                                        <paper-item name="Months">Months</paper-item>
+                                        <paper-item name="Years">Years</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <br>
+                                <label id="BuyingOp-chargesany"><b>Stamp duty and registration charges will be paid by:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="BuyingOp-charges">
+                                    <paper-listbox id="BuyingOp_ChargesAny_Lb" class="dropdown-content" attr-for-selected="name" selected="Lessee alone">
+                                        <paper-item name="Lessee alone">Lessee alone</paper-item>
+                                        <paper-item name="Lessor alone">Lessor alone</paper-item>
+                                        <paper-item name="Both Equally">Both Equally</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="DisputeRes" class="forIndex">
+                    <div Class="InnerDiv">
+                        <h1>Dispute Resolution</h1>
+
+                        <label id="DisputeRes-Dispute">Include Dispute Resolution?</label>
+                        <paper-radio-group id="DisputeRes_Dispute_Rb" area-labeld-by="DisputeRes-Dispute" selected="No">
+                            <paper-radio-button name="No">No</paper-radio-button>
+                            <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        </paper-radio-group>
+                        <div id="DisputeRes_Dispute_Div" hidden>
+                            <label id="DisputeRes-restype"><b>Dispute Resolution:&nbsp</b></label>
+                            <paper-dropdown-menu area-labeldby="DisputeRes-restype">
+                                <paper-listbox id="DisputeRes_ResType_Main" class="dropdown-content" attr-for-selected="name" selected="Mediation by a mediator">
+                                    <paper-item name="Mediation by a mediator">Mediation by a mediator</paper-item>
+                                    <paper-item name="Arbitral Tribunal">Arbitral Tribunal</paper-item>
+                                    <paper-item name="Conciliation">Conciliation</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <div id="DisputeRes_ResType_Arbitral Tribunal" name="DisputeRes_ResType_All">
+                                <label id="DisputeRes-regulation"><b>Arbitration will be regulated by:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="DisputeRes-regulation">
+                                    <paper-listbox id="DisputeRes_Regulation_Lb" class="dropdown-content" attr-for-selected="name" selected="The provisions of the Arbitration and Conciliation Act,1996">
+                                        <paper-item name="The provisions of the Arbitration and Conciliation Act,1996">The provisions of the Arbitration and Conciliation Act,1996</paper-item>
+                                        <paper-item name="Other">Other</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <div id="DisputeRes_Regulation_Div">
+                                    <paper-input name="DesputeRes_OtherRegulation" label="Other" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <br>
+                                <label id="DisputeRes-proceeedings"><b>The proceedings should have:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="DisputeRes-proceeedings">
+                                    <paper-listbox id="DisputeRes_Proceedings_Lb" class="dropdown-content" attr-for-selected="name" selected="A single arbitrator">
+                                        <paper-item name="A single arbitrator">A single arbitrator</paper-item>
+                                        <paper-item name="Three arbitrators, one chosen by each party and one chosen by the arbitrators together as the presiding arbitrator">Three arbitrators, one chosen by each party and one chosen by the arbitrators together as the presiding arbitrator</paper-item>
+                                        <paper-item name="Five arbitrators, two chosen by each party and one chosen by the arbitrators together as the presiding arbitrator">Five arbitrators, two chosen by each party and one chosen by the arbitrators together as the presiding arbitrator</paper-item>
+                                        <paper-item name="Two arbitrators, one chosen by each party">Two arbitrators, one chosen by each party</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+
+                            </div>
+                            <div id="DisputeRes_ResType_Conciliation" name="DisputeRes_ResType_All">
+                                <label id="DisputeRes-conciregulation"><b>Conciliation will be regulated by:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="DisputeRes-conciregulation">
+                                    <paper-listbox id="DisputeRes_ConciRegulation_Lb" class="dropdown-content" attr-for-selected="name" selected="The provisions of the Arbitration and Conciliation Act,1996">
+                                        <paper-item name="The provisions of the Arbitration and Conciliation Act,1996">The provisions of the Arbitration and Conciliation Act,1996</paper-item>
+                                        <paper-item name="Other">Other</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                                <div id="DisputeRes_ConciRegulation_Div">
+                                    <paper-input name="DesputeRes_OtherConciRegulation" label="Other" on-change="HandleOnChange"></paper-input>
+                                </div>
+                                <br>
+                                <label id="DisputeRes-conciproceeedings"><b>The proceedings should have:&nbsp</b></label>
+                                <paper-dropdown-menu area-labeldby="DisputeRes-conciproceeedings">
+                                    <paper-listbox id="DisputeRes_ConciProceedings_Lb" class="dropdown-content" attr-for-selected="name" selected="A single conciliator">
+                                        <paper-item name="A single conciliator">A single conciliator</paper-item>
+                                        <paper-item name="Three conciliators, one chosen by each party and one chosen by the conciliators together as the presiding conciliator">Three conciliators, one chosen by each party and one chosen by the conciliators together as the presiding conciliator</paper-item>
+                                        <paper-item name="Five conciliators, two chosen by each party and one chosen by the conciliators together as the presiding conciliator">Five conciliators, two chosen by each party and one chosen by the conciliators together as the presiding conciliator</paper-item>
+                                        <paper-item name="Two conciliators, one chosen by each party">Two conciliators, one chosen by each party</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div id="ExClauses" class="forIndex">
+                        <div class="InnerDiv"><h1>Extra Clauses </h1></div>
+                        <paper-material elevation="1">
+                            <div class="InnerDiv">
+                                <paper-checkbox id="ExClauses_Nuisance_Cb"><b>Nuisance</b></paper-checkbox><br><br>
+                            IF BARREN LAND without construction rights:
+                            The [Lessee/Lessees] will not do or cause or suffer to be done upon the demised premises, any act which shall be a nuisance or annoyance, or be injurious or offensive to the owners or tenants of any neighboring premises, if any.
+                            OTHERWISE:
+                            The [Lessee/Lessees] will not do or cause or suffer to be done upon the demised premises, including any building constructed thereon, if any, any act which shall be a nuisance or annoyance, or be injurious or offensive to the owners or tenants of any neighbouring premises, if any.
+                            </div>
+                        </paper-material>
+                        <br>
+                        <paper-material elevation="1">
+                            <div class="InnerDiv">
+                                <paper-checkbox id="ExClauses_Indemnify_Cb"><b>Indemnify</b></paper-checkbox><br><br>
+                                The [Lessee/Lessees] will indemnify and keep indemnified the Lessor against all suits, claims and demands in respect of the demised premises.
+                            </div>
+                        </paper-material>
+                        <br>
+                        <paper-material elevation="1">
+                            <div class="InnerDiv">
+                                <paper-checkbox id="ExClauses_Sell earth or gravel from the property_Cb"><b>Sell earth or gravel from the property</b></paper-checkbox><br><br>
+                                The [Lessee/Lessees] shall not be entitled to sell or dispose of any earth, gravel or sand from the demised premises or to excavate the same (except so far as may be necessary for the execution of the construction work – if construction rights are present )
+                            </div>
+                        </paper-material>
+                        <br>
+                        <paper-material elevation="1">
+                            <div class="InnerDiv">
+                                <paper-checkbox id="ExClauses_Instance of default_Cb"><b>Instance of default</b></paper-checkbox><br><br>
+                            If the [Lessee/Lessees] fails to comply with any of the financial or material provisions of this Deed, or of any present rules and regulations or any that may be hereafter prescribed by Lessor, or materially fails to comply with any duties imposed on the [Lessee/Lessees] by law or statute, within (number) days after delivery of written notice by Lessor specifying the non-compliance and indicating the intention of Lessor to terminate the Deed by reason thereof, the Lessor may terminate this Deed.
+                            The [Lessee/s] will be in default if:<br>
+                            (a) The [Lessee does/Lessees do] not pay rent or other amounts that are owed;<br>
+                            (b) The [Lessee/s], guests, or occupants violate this Deed, rules of fire, safety, health, or criminal laws, regardless of whether arrest or conviction occurs;<br>
+                            (c) The [Lessee/s] abandons the Premises;<br>
+                            (d) The [Lessee/s] gives incorrect or false information in this Deed;<br>
+                            (e) The [Lessee/s], or any occupant is arrested, convicted, or given deferred adjudication for a criminal offense involving actual or potential physical harm to a person, or involving possession, manufacture, or delivery of any substance not permitted by law;<br>
+                            (f) any illegal drugs or paraphernalia are found in the Premises or on the person of Lessee, guests, or occupants while on the Premises and/or;<br>
+                            (g) as otherwise allowed by law.
+                            </div>
+                        </paper-material>
+                        <br>
+
+                        <template is="dom-repeat" items="{{data.ExClauses.AddClauses}}" index-as="ClauseIndex">
+                            <paper-material elevation="1">
+                                <div class="InnerDiv">
+                                    <paper-textarea name="ExClauses_Clauses_{{ClauseIndex}}" label="Additional Clause" on-change="HandleOnChange">
+                                    </paper-textarea>
+                                    <label id="remove-clause-button">Remove</label>
+                                    <paper-icon-button  suffix id="ExClauses_Clauses_{{ClauseIndex}}" icon="clear" area-labeldby="remove-clause-button" on-tap="RemoveMore"></paper-icon-button>
+                                </div>
+                            </paper-material>
+                            <br>
+                        </template>
+                        <div class="InnerDiv">
+
+                            <label id="add-clause-button">Add More Clauses</label>
+                            <paper-icon-button id="ExClauses_AddClauses" icon="add-circle" area-labeldby="add-clause-button" on-tap="AddMore"></paper-icon-button>
+
+                        </div>
+                </div>
+            <div id="DatePlace" class="forIndex">
+                <div class="InnerDiv">
+                    <h1>Date and Place</h1>
+                    <paper-date-picker-item icon="icons:today" id="DatePlace_Date" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                    <paper-input name="DatePlace_City" label="City" on-change="HandleOnChange"></paper-input>
+
+                </div>
+            </div>
+
+
+            <div>
+
+                <lease-deed-land-doc data="{{data}}"></lease-deed-land-doc>
+
+            </div>
+
+        </paper-material>
+    </template>
+
+      <script>
+          Polymer({
+              is:"lease-deed-land",
+              observers:[
+                  'DataChange(data.*)'
+              ],
+              listeners:{
+                  'iron-select':'HandleIronSelect',
+                  'iron-change':'HandleIronChange',
+                  'paper-radio-group-changed':'HandleRadioButton'
+              },
+              behaviors:[SuperBehavior],
+              HandleCharges:function (e) {
+                  var x=e.target.name.split('_');
+                  if(e.target.value>100 || e.target.value<0){
+                      e.target.value=50;
+                  }
+                  this.data[x[0]][x[1]]=e.target.value;
+                  if(x[0]=='ChargesSLessee'){
+                      this.data['ChargesSLessor'][x[1]]=100-e.target.value;
+                      document.getElementsByName('ChargesSLessor_'+x[1])[0].value=this.data['ChargesSLessor'][x[1]];
+                  }
+                  else{
+                      this.data['ChargesSLessee'][x[1]]=100-e.target.value;
+                      document.getElementsByName('ChargesSLessee_'+x[1])[0].value=this.data['ChargesSLessee'][x[1]];
+                  }
+
+                  this.notifyPath('data.ChargesSLessee.'+x[1]);
+                  this.notifyPath('data.ChargesSLessor.'+x[1]);
+              },
+              _ShowRatio:function (x,a,b) {
+
+                  if(this.data.Charges.Shared.indexOf(a)>=0){
+                      this.data['Charges'+b][a]=document.getElementsByName('Charges'+b+'_'+a)[0].value;
+                      if(b=='SLessee'){
+                          var ele=document.getElementsByName('Charges'+b+'_'+a)[0];
+                          this.data['ChargesSLessor'][a]=100-ele.value;
+                          document.getElementsByName('ChargesSLessor_'+a)[0].value=this.data['ChargesSLessor'][a];
+                      }
+                      else{
+                          var ele=document.getElementsByName('Charges'+b+'_'+a)[0];
+                          this.data['ChargesSLessee'][a]=100-ele.value;
+                          document.getElementsByName('ChargesSLessee_'+a)[0].value=this.data['ChargesSLessee'][a];
+                      }
+                      this.notifyPath('data.ChargesSLessee');
+                      this.notifyPath('data.ChargesSLessor');
+                      return false;
+                  }
+                  return true;
+              },
+              UpdateCharges:function (e) {
+                  var id=e.target.name.split('_');
+                  var index1=this.data.Charges['Lessee'].indexOf(id[2]);
+                  var index2=this.data.Charges['Lessor'].indexOf(id[2]);
+                  var index3=this.data.Charges['Shared'].indexOf(id[2]);
+                  if(index1>=0)this.splice('data.Charges.Lessee',index1,1);
+                  if(index2>=0)this.splice('data.Charges.Lessor',index2,1);
+                  if(index3>=0)this.splice('data.Charges.Shared',index3,1);
+
+                  if(e.target.checked){
+                      this.push('data.Charges.'+id[1],id[2]);
+                  }
+
+                  this.notifyPath('data.Charges.Lessee');
+                  this.notifyPath('data.Charges.Lessor');
+                  this.notifyPath('data.Charges.Shared');
+              },
+              AddMoreCharges:function (e) {
+                  var x=e.target.parentElement.id.split('_');
+                  var ele=document.getElementsByName(x[0]+'_Add'+x[1])[0];
+                  if(ele.value)
+                  this.push('data.Charges.ChargesList',ele.value);
+              },
+              RemoveCharges:function (e) {
+                  var x=e.target.parentElement.id.split('_');
+                  var index=this.data.Charges.Lessee.indexOf(x[2]);
+                  if(index>=0)this.data.splice('data.Charges.Lessee',index,1);
+                  index=this.data.Charges.Lessor.indexOf(x[2]);
+                  if(index>=0)this.splice('data.Charges.Lessor',index,1);
+                  index=this.data.Charges.Shared.indexOf(x[2]);
+                  if(index>=0)this.splice('data.Charges.Shared',index,1);
+                  index=this.data.Charges.ChargesList.indexOf(x[2]);
+                  if(index>=0)this.splice('data.Charges.ChargesList',index,1);
+
+              },
+              HandleRatio:function (e)
+              {
+                  var x=e.target.name.split('_');
+                  if(e.target.value>100 || e.target.value<0)
+                  {
+                      e.target.value=50;
+
+                  }
+                  var id=x[1];
+                  var t=x[0];
+                  var index=-1;
+                  this.UpdateData(x[0],id,index,e.target.value);
+                  if(x[1]=='RatioOne')
+                  {
+                      var val=100-e.target.value;
+                      this.UpdateData(x[0],'RatioTwo',index,val);
+                      document.getElementsByName(t+"_"+"RatioTwo"+"_"+x[2])[0].value=100-e.target.value;
+                  }
+                  else
+                  {
+                        var val=100-e.target.value;
+                      this.UpdateData(x[0],'RatioOne',index,val);
+                      document.getElementsByName(t+"_"+"RatioOne"+"_"+x[2])[0].value=100-e.target.value;
+                  }
+
+              }
+          });
+      </script>
+  </dom-module>
+  </body>
+  </html>

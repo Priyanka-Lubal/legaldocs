@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+</head>
+<body>
+<dom-module id="domestic-arbitration-agreement-doc">
+    <style>
+        span{
+            pointer-events: none;
+        }
+    </style>
+    <template>
+
+        <!--<paper-dialog id="PreviewDialog" entry-animation="scale-up-animation"  with-backdrop>-->
+
+        <!--<paper-dialog-scrollable id="PreviewDoc">-->
+
+        <div id="EntireDoc" class="InnerDiv">
+            <p align="center"><strong>Arbitration agreement</strong></p><br>
+            <!-- <p align="center">&nbsp;</p> -->
+            <p>This Arbitration <b>"Agreement"</b> is made between</p>
+
+            <template is="dom-repeat" items="{{data.Party.AddOneParty}}">
+
+                <div hidden="{{_OptionalDiv(data.Party.*,'PartyType','Individual',index)}}">
+                    {{_Format(data.Party.*,'IndividualTitle',index)}} {{_Format(data.Party.*,'NameIndividual',index)}}, aged {{_Format(data.Party.*,'AgeIndividual',index)}} years, residing at {{_Format(data.Party.*,'PartyAddrFirstParty',index)}} hereinafter referred to as the Party of the {{_EntityNo(index)}} Part.<br>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.Party.*,'PartyType','Company',index)}}">
+                    M/s {{_Format(data.Party.*,'NameCompany',index)}}, a {{_Format(data.Party.*,'CompanyType',index)}} incorporated under the {{_Format(data.Party.*,'RegisteredAct',index)}},{{_FormatString(data.Party.*,'having CIN ','','CINCompany',index)}} and having their registered office at {{_Format(data.Party.*,'AddrRegisteredOffice',index)}} hereinafter referred to as the Party of the {{_EntityNo(index)}} Part.<br>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.Party.*,'PartyType','Partnershipfirm',index)}}">
+                    M/s {{_Format(data.Party.*,'Namepartnership',index)}}, a Partnership Firm, {{_FormatString(data.Party.*,'having registration number ',' and','RegistrationNo',index)}} having its registered office at {{_Format(data.Party.*,'AddrRegisteredOfficefirm',index)}}, hereinafter referred to as the Party of the {{_EntityNo(index)}} Part.<br>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.Party.*,'PartyType','Society',index)}}">
+                    {{_Format(data.Party.*,'Namesociety',index)}}, a {{_Format(data.Party.*,'SocietyType',index)}} registered under {{_Format(data.Party.*,'ActSocietyReg',index)}}, having its registered office at {{_Format(data.Party.*,'AddrSociety',index)}} hereinafter referred to as the Party of the {{_EntityNo(index)}} Part.<br>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.Party.*,'PartyType','HUF',index)}}">
+                    {{_Format(data.Party.*,'HUFTitle',index)}} {{_Format(data.Party.*,'NameKartaManager',index)}} aged {{_Format(data.Party.*,'AgeKartaManager',index)}} years, residing at {{_Format(data.Party.*,'AddrKartaManager',index)}} and in <span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Mr')}}">he</span><span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Ms')}}">she</span><span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Mrs')}}">she</span><span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Shri')}}">he</span><span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Shrimati')}}">she</span> capacity as the Karta or Manager of <span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Mr')}}">he</span><span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Ms')}}">she</span><span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Mrs')}}">she</span><span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Shri')}}">he</span><span hidden="{{_OptionalDiv(data.Party.*,'HUFTitle','Shrimati')}}">she</span> joint and undivided Hindu family hereinafter referred to as the Party of the {{_EntityNo(index)}} Part.<br>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.Party.*,'PartyType','SoleTraders',index)}}">
+                    {{_Format(data.Party.*,'soletradertitle',index)}} {{_Format(data.Party.*,'Nameofsoletrader',index)}}, carrying on business as a sole proprietorship with the name {{_Format(data.Party.*,'NameoftheCompany',index)}}, aged {{_Format(data.Party.*,'Ageparty',index)}} years {{_FormatString(data.Party.*,'having PAN ','','PAN',index)}} having its office at {{_Format(data.Party.*,'Addrparty',index)}} hereinafter referredto as the Party of the {{_EntityNo(index)}} Part.<br>
+                </div>
+
+            </template>
+
+            and hereinafter all the parties are jointly referred to as <b>"The Parties</b>"
+
+            <ol type="1">
+
+                <template  is="dom-if" if="{{_IsProperty(data.Contract.*,'period')}}">
+                <li>
+                    The Parties hereby agree to resort to peaceful and amicable settlement and resolution of all the disputes pertaining to {{_Format(data.Contract.*,'NameContract',-1)}}
+                    dated {{_Format(data.Contract.*,'DateDDMMYY',-1)}} using means of internal negotiation, mediation or any other such method. In the event that the disputes and differences between the Parties cannot be settled {{_FormatString(data.Contract.*,'through amicable means within a period of  ',' from the date','DaysNo',-1)}} {{_Format(data.Contract.*,'period',-1)}},
+                    then all disputes which have arisen or may arise out of or in connection with the {{_Format(data.Contract.*,'NameContract',-1)}} dated {{_Format(data.Contract.*,'DateDDMMYY',-1)}} shall be referred to arbitration. 
+                </li>
+                </template><br>
+                <template  is="dom-if" if="{{_IsProperty(data.Contract.*,'period')}}">
+                <li>
+                    The Parties agree to submit to arbitration all disputes which have arisen or may arise out of or in connection with the {{_Format(data.Contract.*,'NameContract',-1)}} dated {{_Format(data.Contract.*,'DateDDMMYY',-1)}} entered into between the Parties within {{_Format(data.Contract.*,'DaysNo',-1)}} of the dispute taking place given that they fail to resolve the said dispute(s) through peaceful and amicable means of settlement as aforementioned within {{_Format(data.Contract.*,'period',-1)}} from the date (of the dispute arising OR on which legal notice(s) are sent to the other [party/parties]; save those disputes which are expressly barred by the Arbitration and Conciliation Act, 1996 to be subjected to arbitration. The decision of the arbitral tribunal/the award conferred by the arbitral tribunal shall be binding on the Parties.<br>
+                </li>
+                </template><br>
+                <template  is="dom-if" if="{{!_IsProperty(data.Contract.*,'period')}}">
+                <li>
+                    The Parties agree to submit to arbitration all disputes which have arisen or may arise out of or in connection with the {{_Format(data.Contract.*,'NameContract',-1)}} dated {{_Format(data.Contract.*,'DateDDMMYY',-1)}} entered into between the Parties within {{_Format(data.Contract.*,'DaysNo',-1)}} of the dispute taking place; save those disputes which are expressly barred by the Arbitration and Conciliation Act, 1996 to be subjected to arbitration. The decision of and the award conferred by the arbitral tribunal shall be binding on the Parties.
+                </li>
+                </template><br>
+                <li hidden="{{!_OptionalDiv(data.LimitCommencement.*,'Startrun','From arbitrator/Arbitral tribunal conducting its final hearing',-1)}}">
+                    <h3>LIMIT: COMMENCEMENT TO AWARD</h3>
+                    The final award of the arbitral tribunal must be rendered within a period of {{_Format(data.LimitCommencement.*,'NoDays',-1)}}. Such time limit shall start to run from the {{_Format(data.LimitCommencement.*,'Startrun',-1)}}. Such a time limit can be reasonably modified by the Parties mutually as per their discretion <span hidden="{{_OptionalDiv(data.LimitCommencement.*,'Limit','Yes',-1)}}">by a written agreement</span> and notified to the arbitrators sufficiently in advance. Failure to comply with such time limit gives the parties the right to terminate the mandate of such arbitral tribunal, prior to the publishing of such award, and the Parties may proceed to adopt other means, including but not limited to fresh arbitral proceedings for resolution of the dispute.
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.LimitCommencement.*,'Startrun','From arbitrator/Arbitral tribunal conducting its final hearing',-1)}}">
+                    <h3>LIMIT: END OF PROCEEDINGS TO AWARD</h3>
+                    The arbitral tribunal shall render its final award within {{_Format(data.LimitCommencement.*,'NoDays',-1)}} of the arbitral tribunal conducting its final hearing. Such time limit shall start to run from the date of closure of such arbitral proceedings. Such a time limit can be reasonably modified by the Parties mutually as per their discretion <span hidden="{{_OptionalDiv(data.LimitCommencement.*,'Limit','Yes',-1)}}">by a written agreement</span> and notified to the arbitrators sufficiently in advance. Failure to comply with such time limit gives the Parties the right to terminate the mandate of such arbitral tribunal, prior to the publishing of such award, and the Parties may proceed to adopt other means, including but not limited to fresh arbitral proceedings for resolution of the dispute.
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.NewParties.*,'PartyType','Can be added after Mutual consent of Parties',-1)}}">
+                    <h3>Can be added after Mutual Consent of Parties</h3>
+                    Any party which is not exclusively a signatory to the {{_Format(data.Contract.*,'NameContract',-1)}} or the present arbitration agreement but has sufficient interest in the dispute or whose presence is required in order to resolve the said dispute can be subject to the arbitral proceedings after <span hidden="{{_OptionalDiv(data.NewParties.*,'Consent','Yes',-1)}}">written</span> mutual consent of the original Parties OR as and when directed by the arbitral tribunal either before the commencement of such proceedings or otherwise, at the discretion of the arbitral tribunal OR after <span hidden="{{_OptionalDiv(data.NewParties.*,'Consent','Yes',-1)}}">written</span>mutual consent of the original Parties or as and when directed by the arbitral tribunal either before the commencement of such proceedings or otherwise, at the discretion of the arbitral tribunal). Any additional parties who proceed to become parties to {{_Format(data.Contract.*,'NameContract',-1)}} shall be deemed to be parties to the present arbitration agreement and shall be bound by all duties and obligations imposed by the said agreement.
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.NewParties.*,'PartyType','Can be added after the permission of arbitral tribunal',-1)}}">
+                    <h3>Can be added after Permission of Arbitral Tribunal</h3>
+                    Any party which is not exclusively a signatory to the {{_Format(data.Contract.*,'NameContract',-1)}} or the present Arbitration Agreement but has sufficient interest in the dispute or whose presence is required in order to resolve the said dispute can be subject to the arbitral proceedings only after obtaining such prior permission, and at the discretion of the arbitral tribunal. Any additional parties who proceed to become parties to {{_Format(data.Contract.*,'NameContract',-1)}} shall be deemed to be parties to the present arbitration agreement and shall be bound by all duties and obligations imposed by the said Agreement.
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.NewParties.*,'PartyType','Cannot be added',-1)}}">
+                    <h3>Cannot be added</h3>
+                    The Parties hereby agree that no new parties shall be added to the present Agreement nor be a party to the arbitral proceedings notwithstanding the participation of witnesses and other such persons except in exceptional circumstances mutually decided by Parties thereto.
+                </li>
+
+                <div hidden="{{_OptionalDiv(data.VenueSeat.*,'Venue','Name the Indian city',-1)}}">
+                    <div hidden="{{_OptionalDiv(data.VenueSeat.*,'legalseats','Same as the venue',-1)}}">
+                <li>
+                    <h3>VENUE AND SEAT.</h3>
+                    The Parties have agreed to conduct the arbitral proceedings at {{_Format(data.VenueSeat.*,'Cities',-1)}} which shall be deemed to be the place and/or the legal seat of the arbitration.
+                </li>
+                    </div>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.VenueSeat.*,'Venue','Name the Indian city',-1)}}">
+                    <div hidden="{{_OptionalDiv(data.VenueSeat.*,'legalseats','Different than the venue',-1)}}">
+                <li>
+                    <h3>VENUE AND SEAT.</h3>
+                    The Parties have agreed to conduct the arbitral proceedingsat {{_Format(data.VenueSeat.*,'Cities',-1)}} which shall be the {{_Format(data.VenueSeat.*,'VenueSelect',-1)}} of arbitration whereas {{_Format(data.VenueSeat.*,'NameCity',-1)}} shall be deemed to be the legal seat of arbitration. 
+                </li>
+                    </div>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.VenueSeat.*,'Venue','Shall be decided by the arbitral tribunal',-1)}}">
+                    <div hidden="{{_OptionalDiv(data.VenueSeat.*,'legalseats','Shall be decided by the arbitral tribunal',-1)}}">
+                <li>
+                    <h3>VENUE AND SEAT.</h3>
+                    The Parties hereby agree that the arbitral tribunal shall determine the venue, place and/or the legal seat of arbitration. 
+                </li>
+                    </div>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.VenueSeat.*,'Venue','Shall be decided by the arbitral tribunal',-1)}}">
+                    <div hidden="
+                    {{_OptionalDiv(data.VenueSeat.*,'legalseats','Different than the venue',-1)}}">
+                <li>
+                    <h3>VENUE AND SEAT.</h3>
+                    The Parties hereby agree that the arbitral tribunal shall determine the venue, but the legal seat of arbitration shall be {{_Format(data.VenueSeat.*,'NameCity',-1)}}. 
+                </li>
+                    </div>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.VenueSeat.*,'Venue','Name the Indian city',-1)}}">
+                    <div hidden="{{_OptionalDiv(data.VenueSeat.*,'legalseats','Shall be decided by the arbitral tribunal',-1)}}">
+                <li>
+                    <h3>VENUE AND SEAT.</h3>
+                    The Parties hereby agree that the arbitral tribunal shall determine the seat of the arbitration, but the venue of arbitration shall be {{_Format(data.VenueSeat.*,'NameCity',-1)}}. 
+                </li>
+                    </div>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.VenueSeat.*,'Venue','Where the following parties have their corporate office or place of residence',-1)}}">
+                    <div hidden="{{_OptionalDiv(data.VenueSeat.*,'legalseats','Same as the venue',-1)}}">
+                        <li>
+                            <h3>VENUE AND SEAT.</h3>
+                            The Parties hereby agree that the arbitral proceedings shall be held in the city or any of the cities where the Party of the {{_Format(data.VenueSeat.*,'PartySelect',-1)}} Part has or shall in the future have <span hidden="{{_OptionalDiv(data.Party.*,'Title','Mr',{{_Format(data.VenueSeat.*,'PartySelect',-1)}})}}">his</span><span hidden="{{_OptionalDiv(data.Party.*,'Title','Ms',{{_Format(data.VenueSeat.*,'PartySelect',-1)}})}}">her</span><span hidden="{{_OptionalDiv(data.Party.*,'Title','Mrs',{{_Format(data.VenueSeat.*,'PartySelect',-1)}})}}">her</span><span hidden="{{_OptionalDiv(data.Party.*,'Title','Shri',{{_Format(data.VenueSeat.*,'PartySelect',-1)}})}}">his</span><span hidden="{{_OptionalDiv(data.Party.*,'Title','Shrimati',{{_Format(data.VenueSeat.*,'PartySelect',-1)}})}}">her</span> {{_Format(data.VenueSeat.*,'VenueSelect',-1)}} and the venue of the proceedings shall be where such (office OR residence) is located, and the same shall be the seat of the arbitration. 
+                        </li>
+                    </div>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.VenueSeat.*,'Venue','Where the following parties have their corporate office or place of residence',-1)}}">
+                    <div hidden="{{_OptionalDiv(data.VenueSeat.*,'legalseats','Different than the venue',-1)}}">
+                        <li>
+                            <h3>VENUE AND SEAT.</h3>
+                            The Parties hereby agree that the arbitral proceedings shall be held in the city or any of the cities where the Party of the {{_Format(data.VenueSeat.*,'PartySelect',-1)}} Part has or shall in the future have (its/his/her) {{_Format(data.VenueSeat.*,'VenueSelect',-1)}} is located, but the seat of the Arbitration shall be {{_Format(data.VenueSeat.*,'NameCity',-1)}}.
+                        </li>
+                    </div>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.VenueSeat.*,'Venue','Where the following parties have their corporate office or place of residence',-1)}}">
+                    <div hidden="{{_OptionalDiv(data.VenueSeat.*,'legalseats','Shall be decided by the arbitral tribunal',-1)}}">
+                        <li>
+                            <h3>VENUE AND SEAT.</h3>
+                            The Parties hereby agree that the arbitral proceedings shall be held in the city or any of the cities where the Party of the {{_Format(data.VenueSeat.*,'PartySelect',-1)}} Part has or shall in the future have (its/his/her) {{_Format(data.VenueSeat.*,'VenueSelect',-1)}} is located, and the seat of the Arbitration shall be determined by the arbitral tribunal.
+                        </li>
+                    </div>
+                </div>
+
+                <li>
+                    <h3>LAW</h3>
+                    <ol type="a">
+                        <li>
+                            <h4>GOVERNING LAW OF ARBITRATION</h4>
+                            The parties have agreed on Indian Law as the applicable law to this arbitration.
+                        </li>
+                        <li>
+                            <h4>CURIAL LAW, SUBSTANTIVE LAW AND GOVERNING LAW PROVISIONS</h4>
+                            Any dispute arising out of or in connection with {{_Format(data.Contract.*,'NameContract',-1)}} including any question regarding its existence, validity or termination, shall be referred to and finally resolved by arbitration under the {{_Format(data.Law.*,'NameInstitution',-1)}}, which Rules are deemed to be incorporated by reference into this clause. The Parties, by reading the Rules, shall declare that they have agreed to comply with its terms, obligations and consequences beforehand.
+                        </li>
+                    </ol>
+                </li><br>
+
+                <li>
+                    The governing law of the {{_Format(data.Contract.*,'NameContract',-1)}} shall be the substantive law of India.
+                </li><br>
+
+                <li>
+                    The arbitration shall be governed and construed in accordance with the laws of India.
+                </li>
+
+                <li>
+                    <h3>Language</h3>
+                    <ol type="a">
+
+                        <li hidden="{{!_OneOrMoreInArray(data.Language.*,'AddLanguage')}}">The language to be used in the course of the arbitration proceedings shall be {{_Format(data.Language.*,'Languages',-1)}}.</li><br>
+
+                        <li hidden="{{_OneOrMoreInArray(data.Language.*,'AddLanguage')}}">The languages to be used in the course of the arbitration proceedings shall be {{_Format(data.Language.*,'Languages',-1)}}.</li>
+                        
+                    </ol>
+                </li>
+                    
+                    <div hidden="{{_TwoInArray(data.Party.*,'AddOneParty')}}">
+                    <li hidden="{{_OptionalDiv(data.Expenses.*,'ExpenseSelect','Shared equally',-1)}}">
+                        <h3>Expenses</h3>
+                        The Parties each undertake to pay a sum totaling half of the expenses incurred during the arbitration proceedings that shall be notified subsequent to the initiation of the suit before the arbitral tribunal. Each Party also undertakes to pay his share of the total expenses determined within the arbitral award which will be declared by the arbitral tribunal.
+                    </li>
+                    </div>
+
+                    <div  hidden="{{!_TwoInArray(data.Party.*,'AddOneParty')}}">
+                    <li hidden="{{_OptionalDiv(data.Expenses.*,'ExpenseSelect','Shared equally',-1)}}">
+                        <h3>Expenses</h3>
+                        The Parties each undertake to pay the expenses incurred during the arbitration proceedings that shall be notified subsequent to the initiation the suit before the arbitral tribunal in equal proportions. Each Party also undertakes to pay his share of the total expenses determined by the arbitral award to be declared by the arbitral tribunal.
+                    </li>
+                    </div>
+
+                    <li hidden="{{_OptionalDiv(data.Expenses.*,'ExpenseSelect','Specific ratio',-1)}}">
+                        <h3>Expenses</h3>
+                        The arbitration expenses and any other expenses resulting from the arbitration proceedings shall be borne by the claimants and the defendant in the ratio of {{_Format(data.Expenses.*,'Ratio',-1)}} respectively.
+                    </li>
+
+                    <li hidden="{{_OptionalDiv(data.Expenses.*,'ExpenseSelect','One arbitrators and one arbitration',-1)}}">
+                        <h3>Expenses</h3>
+                        The Parties hereby agree that Party of the {{_Format(data.Expenses.*,'RelatedCosts',-1)}} Part shall incur all expenses pertaining to the arbitrators including their fees and other expenses directly related to the arbitrators whilst Party of the {{_Format(data.Expenses.*,'ProceedingsCosts',-1)}} Part shall undertake all expenses in connection with conduct of the arbitral proceedings including costs pertaining to the venue and any other particulars.
+                    </li>
+
+                    <li hidden="{{_OptionalDiv(data.Expenses.*,'ExpenseSelect','List view of each expenses',-1)}}">
+                        <h3>Expenses</h3>
+                        The Parties hereby agree that (Party of the (Numbers) Part) shall undertake (List of expenses separated by commas) whilst (Party of the (Numbers) Part) shall undertake (List of expenses separated by commas).
+                    </li>
+
+                    <li hidden="{{_OptionalDiv(data.Expenses.*,'ExpenseSelect','The parties will incur all the cost for the arbitrator nominated by the party',-1)}}">
+                        <h3>Expenses</h3>
+                        The Parties each undertake to bear the expenses incurred by the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> nominated by them including the expenses of the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> in relation to or in connection with the arbitral proceedings including travel, accommodation, pleasantries, stationery and any other sundry or related expenses incurred by the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span>. The Parties further undertake to bear any other expenses in relation to the conduct of the arbitral proceedings including the expenses of the venue and that of the presiding arbitrator, including all of the presiding arbitrator’s expenses in relation to or in connection with the arbitral proceedings including travel, accommodation, pleasantries, stationery and any other sundry or related expenses incurred by the arbitrators in the ratio of {{_Format(data.Expenses.*,'CostRatio',-1)}}.
+                    </li>
+
+                <li>
+                    <h3>Deposits</h3>
+                    <ol type="a">
+                        <li>The Parties may be directed to, in such proportions and at such times as the arbitral tribunal thinks appropriate, to make one or more payments to the arbitral tribunal on account of the arbitration costs. Such payments deposited by the Parties may be utilized by the arbitral tribunal to pay any amount of such arbitration costs.</li>
+
+                        <li>In the event that a party fails or refuses to make any payment with regard to the arbitration costs, as directed by the arbitral tribunal, the arbitral tribunal may direct the other party or parties to effect a substitute payment to allow the arbitration to proceed (subject to any order or award on arbitration costs).
+                        </li>
+
+                        <li>Failure by a claiming or cross-claiming party to make promptly and in full any required payment on account of arbitration costs may be treated by the arbitral tribunal as a withdrawal from the arbitration of the claim or cross-claim respectively, thereby removing such claim or cross-claim (as the case may be) from the scope of the arbitral tribunal’s jurisdiction under the Agreement, subject to any terms decided by the arbitral tribunal as to the reinstatement of the claim or cross-claim in the event of subsequent payment by the claiming or cross-claiming party. Such a withdrawal shall not preclude the claiming or cross-claiming party from defending as a respondent any claim or cross-claim made by another party.</li>
+                    </ol>
+                </li>
+
+                <li>
+                    <h3>INDEMINIFICATION OF <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">ARBITRATOR</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">ARBITRATORS</span>/ARBITRAL TRIBUNAL</h3>
+                    The Parties hereby agree that the arbitral tribunal shall not be liable for any claim or loss arising from or in relation to the arbitration and the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> shall have no liability unless so directed by a court of law in accordance with due process. The Parties otherwise release and indemnify the arbitral tribunal with respect to any matter relating to or arising from the arbitration.
+                </li>
+
+                <div hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'Mutual','In case the arbitrator is pre-appointed',-1)}}">
+                <li hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">
+                    <h3>COMPOSITION OF THE TRIBUNAL</h3>
+                    The Parties have nominated, as the sole arbitrator {{_Format(data.Appointingarbitrator.*,'arbitratortitle',-1)}} {{_Format(data.Appointingarbitrator.*,'NameArbitrator',-1)}} residing at the address of {{_Format(data.Appointingarbitrator.*,'ArbitratorAddr',-1)}} and [his/her] award shall be deemed final and binding on [both OR all] the parties.
+                </li>
+                <li hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">
+                    <h3>COMPOSITION OF THE TRIBUNAL</h3>
+                    For the purpose of the determination of the dispute, the matter shall be referred to <template is="dom-repeat" items="{{data.Appointingarbitrator.AddArbitrator}}">{{_Format(data.Appointingarbitrator.*,'NameArbitrator',index)}} residing at {{_Format(data.Appointingarbitrator.*,'ArbitratorAddr',index)}},</template>, mutually decided by the Parties as arbitrators and their award shall be deemed final and binding on <span hidden="{{_TwoInArray(data.Party.*,'AddOneParty')}}">both</span><span hidden="{{!_TwoInArray(data.Party.*,'AddOneParty')}}">all</span> the parties.
+                </li>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'Mutual','In case the arbitrator is not already appointed',-1)}}">
+                <li hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">
+                    The Parties accept to mutually nominate the sole arbitrator themselves <template is="dom-if" if="{{_IsProperty(data.Appointingarbitrator.*,'AppointDays')}}">within {{_Format(data.Appointingarbitrator.*,'AppointDays',-1)}} days from the {{_Format(data.Appointingarbitrator.*,'AppointStart',-1)}}</template> and the said arbitrator’s award shall be deemed final and binding on <span hidden="{{_TwoInArray(data.Party.*,'AddOneParty')}}">both</span><span hidden="{{!_TwoInArray(data.Party.*,'AddOneParty')}}">all</span> the parties.
+                </li>
+
+                <li hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">
+                    The Parties accept to mutually nominate (NumberofArbitrators) arbitrators by themselves <template is="dom-if" if="{{_IsProperty(data.Appointingarbitrator.*,'AppointDays')}}">within {{_Format(data.Appointingarbitrator.*,'AppointDays',-1)}} days from the {{_Format(data.Appointingarbitrator.*,'AppointStart',-1)}}</template> aand the said arbitrators’ award shall be deemed final and binding on <span hidden="{{_TwoInArray(data.Party.*,'AddOneParty')}}">both</span><span hidden="{{!_TwoInArray(data.Party.*,'AddOneParty')}}">all</span> the parties.
+                </li>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'Respectively','In case the arbitrator is pre-appointed',-1)}}">
+                    <li>
+                        For the purpose of the determination of the dispute, the matter shall be referred to <template is="dom-repeat" items="{{data.Appointingarbitrator.AddArbitrator}}">{{_Format(data.Appointingarbitrator.*,'NameArbitrator',ArbitratorIndex)}} residing at {{_Format(data.Appointingarbitrator.*,'ArbitratorAddr',ArbitratorIndex)}}</template> nominated by Party of the (Numbers) Part as arbitrators and their award shall be deemed final and binding on <span hidden="{{_TwoInArray(data.Party.*,'AddOneParty')}}">both</span><span hidden="{{!_TwoInArray(data.Party.*,'AddOneParty')}}">all</span> the parties.
+                    </li>
+                </div>
+
+                <div hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'Respectively','In case the arbitrator is not already appointed',-1)}}">
+                    <li hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'2Aii','Three arbitrator">
+                        The Parties agree to have one of the three arbitrators nominated by the [claimant in its OR claimant(s) in their – if more than 2 parties] Petition of Arbitration Request and the second arbitrator to be nominated by the [defendant in its OR defendant(s) in their – if more than 2 parties] response and the presiding arbitrator to be selected by the two arbitrators (within (Number of Days/Weeks/Months). – optional)
+                    </li>
+                    <li hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'2Aii','More than three arbitrator">
+                        The Parties agree to have (NumberofArbitrators) arbitrators nominated by the [claimant in its OR claimant(s) in their – if more than 2 parties] Petition of Arbitration Request and (NumberofArbitrators) nominated by the [defendant in its OR defendant(s) in their – if more than 2 parties] response within (Number of Days/Weeks/Months).
+                    </li>
+                </div>
+
+                <li hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'Institutional','When the institution is not pre-decided',-1)}}">
+                    The Parties hereby agree to resort to Institutional Arbitration and select the respective forum and the number of arbitrators as and when the dispute arises or earlier as mutually agreed to by the Parties.
+                    Any disputes or misunderstandings arising, regarding the appointment, composition, disqualification and re-appointment of the arbitral tribunal shall be settled in accordance with the rules of the institution thus selected and such rules shall be duly adhered to by the Parties.
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'Institutional','When the institution is pre-decided',-1)}}">
+
+                    It is determined by the Parties that disputes shall be settled by {{_Format(data.Appointingarbitrator.*,'NameInstitution',-1)}} arbitral tribunal located at {{_Format(data.Appointingarbitrator.*,'AddrInstitution',-1)}}.
+                    <div hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">
+                        The Parties have agreed on the appointment of a sole arbitrator by the {{_Format(data.Appointingarbitrator.*,'NameInstitution',-1)}}.   
+                    </div>
+                    <div hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">
+                        The Parties agree upon the appointment of all arbitrators to be decided by the {{_Format(data.Appointingarbitrator.*,'NameInstitution',-1)}} arbitral tribunal.
+                    </div>
+                    Any disputes or misunderstandings regarding the appointment, composition, disqualification and re-appointment of the arbitral tribunal shall be settled in accordance with the rules of {{_Format(data.Appointingarbitrator.*,'NameInstitution',-1)}} and such rules shall be duly adhered to by the Parties.
+                    
+                </li>
+
+                <li>
+                    <h3>Qualifications of <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">Arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">Arbitrators</span></h3>
+                    The following clause is applicable in instances wherein the arbitrator has not been previously appointed. In cases where the arbitrator has already been appointed, the Parties may specify qualifications of new <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> in case of death or disqualification of the existing <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> on any grounds whatsoever. Such a decision shall be mutually taken thereto by the Parties and incorporated into the present Agreement.<br>
+                    Each of the Arbitrators shall be of Indian nationality and shall possess the following qualifications:
+                    <ol type="a">
+                        <li>He/She is expected to have expert knowledge/ is deemed to be an expert in the field of {{_Format(data.QualificationDuties.*,'Expertise',-1)}}</li>
+                        <li>He/She shall have a minimum of {{_Format(data.QualificationDuties.*,'NoYears',-1)}} years of experience in the field of {{_Format(data.QualificationDuties.*,'Field',-1)}}</li>
+                        <li>He/She shall have a basic understanding of the concepts of {{_Format(data.QualificationDuties.*,'Concept',-1)}}</li>
+                        <li>He/She should be qualified enough to understand the nature, nuances and determine various facets of the dispute.</li>
+                        <li>He/She shall be well acquainted with and able to comprehend, communicate and reciprocate in {{_Format(data.QualificationDuties.*,'Language',-1)}} in which the arbitral proceedings shall be conducted.</li>
+                        <li>All arbitrators shall be and remain at all times impartial and independent of the Parties; and none shall act in the arbitration as advocate for or representative of any party. No arbitrator shall advise any party on the parties’ dispute or the outcome of the arbitration.</li>
+                    </ol>
+                </li>
+
+                <li>
+                    <h3>General Duties</h3>
+                    Under the Agreement, the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator's</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators'</span> general duties at all times during the arbitration shall include:<br>
+                    <ol type="a">
+                        <li>the duty to act fairly and impartially towards all parties, giving each a reasonable opportunity of putting their case and dealing with that of their opponent’s; and</li>
+                        <li>the duty to adopt procedures suitable to the circumstances of the arbitration, avoiding unnecessary delay and expense, so as to provide a fair, efficient and expeditious means for the final resolution of the parties' dispute.</li>
+                    </ol>
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.ExtraClauses.*,'Re-appointment of arbitrators','true')}}">
+                    <h3>Re-Appointment of Arbitrators</h3>
+                    <ol type="a">
+                        <li>If the arbitrators or anyone of them as chosen under this Agreement become incapacitated either by death or sickness or other disability, the parties retain the right of nominating substitutes and no fresh agreement thereof would be necessary.</li>
+                        <li  hidden="{{_OptionalDiv(data.Appointingarbitrator.*,'Tribunal','Ad-hoc arbitration',-1)}}">In instances where the Parties mutually find the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> to be corrupt or malicious or ill-suited or incompetent to adjudicate the proceedings for any reason whatsoever or the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> do not conduct or participate in the arbitration with reasonable efficiency, diligence and industry, the Parties may mutually decide to revoke such arbitrator’s appointment after serving him/her a notice {{_Format(data.ExtraClauses.*,'DaysNo',-1)}} days prior and paying all the relevant dues. Such a measure shall be undertaken only after mutual <span  hidden="{{_OptionalDiv(data.ExtraClauses.*,'Consent','Yes',-1)}}">and written consent</span> of the Parties. The Parties may then proceed to appoint another <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> within {{_Format(data.ExtraClauses.*,'NoDays',-1)}} days of such revocation taking place.</li>
+                    </ol>
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.ExtraClauses.*,'Waiver','true')}}">
+                    <h3>Waiver</h3>
+                    A party which proceeds with the arbitration without raising its objection to a failure to comply with any provision of the Agreement, or of any other rules applicable to the proceedings, any direction given by the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span>/arbitral tribunal, or any requirement under the Agreement relating to the constitution of the arbitral tribunal or qualifications of the arbitrators or the conduct of the proceedings, shall be deemed to have waived its right to object.
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.ExtraClauses.*,'Objection to appointment of arbitrators','true')}}">
+                    <h3>Objections to Appointment of <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">Arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">Arbitrators</span></h3>
+                    If either Parties have any objections regarding the appointment or any other attribute concerning any particular <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span>, they may raise such objections within {{_Format(data.ExtraClauses.*,'ObjectionDays',-1)}} of receiving an intimation regarding the invocation of arbitral proceedings via written, telephonic or electronic means of communication. Failure to raise and communicate any such objection will be considered as amounting to consent with regard to such aspect. 
+                </li>
+
+                <li>
+                    <h3>If at least one of the parties is individual or Sole proprietorship</h3>
+                    The Parties hereto agree that this reference to arbitration would not be revoked either by death of either party or any other cause.
+                </li>
+
+                <li>
+                    Both the parties agree that they would co-operate and lead evidence etc. with the <span hidden="{{!_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrator</span><span hidden="{{_OneOrMoreInArray(data.Appointingarbitrator.*,'AddArbitrator')}}">arbitrators</span> so appointed as expeditiously as possible and it is an express condition of this agreement, that if any of the parties fails to co-operate or is absent at the reference, the arbitrators would be at liberty to proceed with the reference ex parte.
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.ExtraClauses.*,'Confidentiality Clause','true')}}">
+                    <h3>Confidentiality Clause </h3>
+                    The Parties agree to keep confidential the existence of the arbitration, the arbitral proceedings, the submissions made by the parties and the decisions made by the arbitral tribunal, including its awards, except as required by the applicable law and to the extent not already in the public domain. The documents and evidence exchanged between the Parties or given in examinations conducted during the arbitral proceedings shall similarly be maintained in confidence.
+                </li>
+
+                <li>
+                    The terms of the present Agreement may be modified only after written mutual consent of the Parties. Such renewed terms shall be duly agreed upon and signed by the Parties. After receiving such due authorization, the renewed terms shall be incorporated into the present Agreement
+                </li>
+
+                <li hidden="{{_OptionalDiv(data.ExtraClauses.*,'Binding Clause','true')}}">
+                    <h3>BINDING</h3>
+                    <div hidden="{{_IsIndividual(data.Party.*,'PartyType')}}">It is an express stipulation that any award passed by the said arbitrators shall be deemed binding and final on the parties and their heirs, executors, assigns and legal representatives.</div>
+                    <div hidden="{{!_IsIndividual(data.Party.*,'PartyType')}}">It is an express stipulation that any award passed by the said arbitrators shall be deemed binding and final on the parties, and their executors, assignees and legal representatives.</div>
+                </li>
+
+                <li>
+                    We hereby undertake to accept and to duly comply with all the provisions of the present Agreement.
+                </li>
+            </ol>
+            <br><br>
+
+            <div id="left" align="left" style="float: left">
+                <b>On behalf of</b><br>
+                ______________<br>
+                ______________
+            </div>
+            <div id="right" align="right">
+                <b>On behalf of</b><br>
+                ______________<br>
+                ______________
+            </div>
+
+        </div>
+        <!--</paper-dialog-scrollable>-->
+
+        <!--</paper-dialog>-->
+    </template>
+    <script>
+        Polymer({
+            is: "domestic-arbitration-agreement-doc",
+            behaviors: [SuperBehavior],
+            _IsIndividual:function (x,a) {
+                var t=x.path.split(".")[1];
+                var d;
+                if(this.data[t][a]){
+                    d=this.data[t][a];
+                    for(var i in d)
+                    {
+                        if(d[i]=="individual")
+                        {
+                            return false;
+                            break;
+                        }
+                    }
+                }
+                return true;
+            },
+
+            _TwoInArray:function(x,p){
+
+            var t=x.path.split(".")[1];
+            if(this.data[t][p].length == 2) return false;
+            return true;
+        }
+        });
+    </script>
+</dom-module>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="import" href="lease-deed-land.html">
+    <link rel="import" href="proforma-question.html">
+    <link rel="import" href="power-of-attorney.html">
+    <link rel="import" href="vakalat-nama.html">
+    <link rel="import" href="domestic-arbitration-agreement.html">
+
+    <link rel="import" href="../js/bower_components/iron-pages/iron-pages.html">
+    <link rel="import" href="../js/bower_components/paper-material/paper-material.html">
+    <link rel="import" href="../js/bower_components/paper-radio-group/paper-radio-group.html">
+    <link rel="import" href="../js/bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../js/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="../js/bower_components/paper-listbox/paper-listbox.html">
+    <link rel="import" href="../js/bower_components/paper-item/paper-item.html">
+    <link rel="import" href="../js/bower_components/paper-input/paper-textarea.html">
+    <link rel="import" href="../js/bower_components/iron-form/iron-form.html">
+    <link rel="import" href="../js/bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="../js/bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="../js/bower_components/paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="../js/bower_components/iron-input/iron-input.html">
+    <link rel="import" href="../js/bower_components/vaadin-date-picker/vaadin-date-picker.html">
+    <link rel="import" href="../js/bower_components/paper-date-picker-item/paper-date-picker-item.html">
+    <link rel="import" href="../js/bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../js/bower_components/paper-listbox/paper-listbox.html">
+    <link rel="import" href="../js/bower_components/iron-list/iron-list.html">
+    <link rel="import" href="../js/bower_components/iron-signals/iron-signals.html">
+
+</head>
+<body>
+<dom-module id="create-document">
+    <template>
+        <style>
+            div.InnerDiv{
+                margin: 5% 5% 5% 5% ;
+            }
+            paper-button.indigo {
+                background-color: var(--paper-indigo-500);
+                color: white;
+            }
+            paper-button{
+                width: 150px;
+            }
+        </style>
+        <!--<div id="Index" style="float: left">-->
+        <!--<paper-listbox id="DocIndex" style="position: fixed;height: 100%;overflow-y: scroll;overflow-x: hidden">-->
+        <!--<template is="dom-repeat" items="{{newDocIndex}}">-->
+        <!--<a href="#{{item.id}}"><paper-item>{{item.value}}</paper-item></a>-->
+        <!--</template>-->
+        <!--</paper-listbox>-->
+        <!--</div>-->
+        <div id="DocumentForms" style="float:left;margin-top: 1%">
+            <!-- <lease-deed-land data="{{data}}"></lease-deed-land> -->
+            <!-- <power-of-attorney data="{{data1}}"></power-of-attorney> -->
+            <!-- <proforma-question data="{{proforma}}"></proforma-question> -->
+             <!-- <vakalat-nama data="{{vakalatnama}}"></vakalat-nama> -->
+            <domestic-arbitration-agreement data="{{domestic}}"></domestic-arbitration-agreement>
+
+        </div>
+
+        <div style="float:left;margin-left:88%;margin-top:1%;position: fixed">
+            <paper-button raised class="custom indigo" style="text-align: center" on-tap="Submit">Save Work</paper-button>
+            <iron-ajax id="SaveWork"
+                       url="/demo"
+                       method="POST"
+                       content-type="application/json"
+                       body="{{data}}"
+                       handle-as="text"
+                       on-response="handleSave"
+            ></iron-ajax>
+            <br><br>
+            <paper-button raised class="custom indigo" on-tap="Preview">Preview</paper-button>
+            <br><br>
+            <paper-button raised class="custom indigo" on-tap="Open">Open</paper-button>
+            <iron-ajax id="OpenDoc"
+                       url="/open"
+                       method="GET"
+                       handle-as="json"
+                       on-response="handleOpen"
+            ></iron-ajax>
+        </div>
+
+
+        <iron-signals on-iron-signal-docindex="_updateDocIndex"></iron-signals>
+    </template>
+    <script>
+        Polymer({
+            is:"create-document",
+            properties:{
+
+                newDocIndex:{
+                    type:Array,
+                    value:[]
+                },
+                data:{//for lease deed land
+                    type:Object,
+                    value:{ Lessee:{AddOneLessee:[1]},Lessor:{NoOfLessor:[1]},Property:{AddPoints:[1]},
+                        Agreement:{},LeaseD:{AddPurpose:[1]},RentD:{AddIncrement:[1]},AdvRentD:{},Deposit:{},Charges:{ChargesList:['Rates','Taxes','Cess Charges','Duties','Burdens','Assessments','Outgoings','Impositions','Repairs'],Lessee:[],Lessor:[],Shared:[]}
+                        ,Surrender:{AddInclude:[1],AddExclude:[1]},LeaseRen:{},BuyingOp:{},DisputeRes:{},
+                        ExClauses:{AddClauses:[1]},DatePlace:{},ConsRt:{},SellRtA:{},AssignA:{},MortgageA:{},SellRtAWP:{},AssignAWP:{},
+                        MortgageAWP:{},SpecialActLessor:{AddLessorAct:[1]},SpecialActLessee:{AddLesseeAct:[1]},LessorEntryRights:{},
+                        Sublease:{},Sublet:{},TerminationOfLeases:{},ChargesSLessor:{},ChargesSLessee:{},AssignN:{}
+                    }
+                },
+
+                data1:{ //for power of attorney to collect debts
+                    type:Object,
+                    value:{Granter:{},Attorney:{AddOneAttorney:[1]},Debtor:{},Debt:{},DateOfAttorney:{},Witness1:{},Witness2:{}}
+
+                },
+
+                proforma:{
+                    type:Object,
+                    value:{Case:{},Petitioner:{},Defendant:{}}
+                },
+                vakalatnama:{
+                    type:Object,
+                    value:{Case:{},Petitioner:{},Defendant:{},Granter:{AddOneGranter:[1]},Attorney:{AddOneAttorney:[1]},Undertaking:{}}
+                },
+
+                domestic:{
+                    type:Object,
+                    value:{Party:{AddOneParty:[1]},Contract:{},LimitCommencement:{},NewParties:{},VenueSeat:{AddCities:[1]},Law:{},Language:{AddLanguage:[1]},Expenses:{},Appointingarbitrator:{AddArbitrator:[1]},QualificationDuties:{AddExpertise:[1],AddConcept:[1],AddLanguage:[1],AddDuties:[1]},ExtraClauses:{}}
+                },
+
+            },
+
+            _updateDocIndex:function (e) {
+
+                this.debounce('getDataDebounce',this.computeIndex,1);
+            },
+            attached: function () {
+
+                this.computeIndex();
+                //this.debounce('getDataDebounce',this.computeIndex,1);
+            },
+            computeIndex:function () {
+                this.newDocIndex=[];
+                var x=document.querySelectorAll(".forIndex");
+
+                for(var i=0;i<x.length;i++){
+                    if(!x[i].hidden&&x[i].offsetParent) {
+                        var iid = x[i].id;
+                        var ivalue = x[i].querySelector("h1").innerText.substring(0,24);
+                        this.push('newDocIndex', {id: iid, value: ivalue});
+                    }
+                }
+            },
+            Submit:function () {
+                document.getElementById("SaveWork").generateRequest();
+            },
+            Preview:function () {
+                document.getElementById("PreviewDialog").open();
+            },
+            Open:function () {
+                //document.getElementById("OpenDoc").generateRequest();
+                /*var doc = new jsPDF();
+                var elementHandler = {
+                    //'#ignorePDF': function (element, renderer) {
+                    //  return true;
+                    //}
+                };
+                var source = window.document.getElementsByTagName("paper-dialog")[0];
+                doc.fromHTML(
+                    source,
+                    15,
+                    15,
+                    {
+                        'width': 180,'elementHandlers': elementHandler
+                    }
+                );
+
+                doc.output("dataurlnewwindow");*/
+                var mywindow = window.open('', 'PRINT', 'height=600,width=800');
+
+                mywindow.document.write(document.getElementById("PreviewDialog").innerHTML);
+
+
+                mywindow.document.close(); // necessary for IE >= 10
+                mywindow.focus(); // necessary for IE >= 10*/
+
+                mywindow.print();
+            },
+            handleSave:function (e) {
+                console.log(e.detail.response);
+            },
+            handleOpen:function (e) {
+                this.data=e.detail.response;
+                this.ProcessData("paper-input","name","value");
+                this.ProcessData("paper-textarea","name","value");
+                this.ProcessData("paper-listbox","id","selected");
+                this.ProcessData("paper-radio-group","id","selected");
+                this.ProcessData("paper-checkbox","id","checked");//to be tested
+            },
+            ProcessData:function (tag,id,attr) {
+                var inp=document.getElementsByTagName(tag);
+                for(var i in inp){
+                    var x="";
+                    if(inp[i][id])
+                        x=inp[i][id].split('_');
+                    var val=this.data;
+                    if(val[x[0]])val=val[x[0]];
+                    else val=undefined;
+                    if(val && val[x[1]])val=val[x[1]];
+                    else val=undefined;
+                    if(val && val[x[x.length-1]])val=val[x[x.length-1]];
+                    if(val)
+                        inp[i][attr]=val;
+                }
+            }
+
+        })
+    </script>
+</dom-module>
+</body>
+</html>

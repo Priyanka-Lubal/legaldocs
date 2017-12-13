@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+</head>
+<body>
+<dom-module id="power-of-attorney-doc">
+    <style>
+        span{
+            pointer-events: none;
+        }
+    </style>
+    <template>
+
+        <!--<paper-dialog id="PreviewDialog" entry-animation="scale-up-animation"  with-backdrop>-->
+
+            <!--<paper-dialog-scrollable id="PreviewDoc">-->
+
+                <div id="EntireDoc" class="InnerDiv">
+                    <p align="center"><strong>Power of Attorney to Collect Debts</strong></p>
+                    <p align="center">&nbsp;</p>
+                    <p>To All to Whom These Presents Shall Come, I am <span title="Granter_Gender_{{-1}}_Span">{{_Format(data.Granter.*,'Gender',-1)}}</span>. <span title="Granter_Name_{{-1}}_Span">{{_Format(data.Granter.*,'Name',-1)}}</span>, aged <span title="Granter_Age_{{-1}}_Span">{{_Format(data.Granter.*,'Age',-1)}}</span> years residing at <span title="Granter_Address_{{-1}}_Span">{{_Format(data.Granter.*,'Address',-1)}}</span>,</p>
+                    <p>Whereas in the course of my business, I have several amounts to recover from others and which were either advances or loans or on account payments or as deposits or arising out of sale and purchase of goods.</p>
+                    <p>And Whereas due to my <span title="Granter_Reason_{{-1}}_Span">{{_Format(data.Granter.*,'Reason',-1)}}</span>, I am unable to take the necessary action to recover the debts and I, therefore, propose to appoint some fit and proper <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">person</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">persons</span> as my <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> to do all acts and things in that behalf which <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">he</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">she</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">they</span> <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">has</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">have</span> agreed to do.</p>
+                    <p>NOW KNOW YOU ALL AND THESE PRESENTS WITNESS that I, the said <span title="Granter_Name_{{-1}}_Span">{{_Format(data.Granter.*,'Name',-1)}}</span> do hereby appoint the <a><span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">sole Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">co- Attorneys</span></a>&nbsp;as my true and lawful <a><span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> </a>with full power and authority to do and execute all acts, deeds, and things as hereinafter mentioned.</p>
+                    <div hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">
+                        <p>I, the said <span title="Granter_Name_{{-1}}_Span">{{_Format(data.Granter.*,'Name',-1)}}</span> hereby appoint <span title="Attorney_Name_0_Span">{{_Format(data.Attorney.*,'Name',0)}}</span>, aged <span title="Attorney_Age_0_Span">{{_Format(data.Attorney.*,'Age',0)}}</span> years, residing at <span title="Attorney_Address_0_Span">{{_Format(data.Attorney.*,'Address',0)}}</span> as my sole Power of Attorney.</p>
+                    </div>
+                    <div hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">
+                        <p>I, the said <span title="Granter_Name_{{-1}}_Span">{{_Format(data.Granter.*,'Name',-1)}}</span> appoint the following co-attorneys as my Power of Attorney-</p>
+                        <template is="dom-repeat" items="{{data.Attorney.AddOneAttorney}}">
+                            <ol start="{{_EntityNo(index)}}">
+                                <li><span title="Attorney_Name_{{index}}_Span">{{_Format(data.Attorney.*,'Name',index)}}</span>, aged <span title="Attorney_Age_{{index}}_Span">{{_Format(data.Attorney.*,'Age',index)}}</span> years, residing at <span title="Attorney_Address_{{index}}_Span">{{_Format(data.Attorney.*,'Address',index)}}</span></li>
+                            </ol>
+                        </template>
+                        <p>The co-attorneys <span hidden="{{_OptionalDiv(data.Attorney.*,'Independent','Yes')}}">Shall</span><span hidden="{{_OptionalDiv(data.Attorney.*,'Independent','No')}}">Shall Not</span> act independently of each other.</p>
+                    </div>
+
+                    <p>The <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> shall be authorised to collect <span hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToCollect','Yes')}}">all of the</span><span hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToCollect','No')}}"><span title="Attorney_ParticularDebt_{{-1}}_Span">{{_Format(data.Attorney.*,'ParticularDebt',-1)}}</span></span> payments due to me.</p>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToCollect','No')}}">
+                        <p>Name of debtor, along with age, address-<span title="Debtor_Name_{{-1}}_Span">{{_Format(data.Debtor.*,'Name',-1)}}</span>, <span title="Debtor_Age_{{-1}}_Span">{{_Format(data.Debtor.*,'Age',-1)}}</span>, <span title="Debtor_Address_{{-1}}_Span">{{_Format(data.Debtor.*,'Address',-1)}}</span></p>
+                        <p>Amount due-<span title="Debtor_AmountDue_{{-1}}_Span">{{_Format(data.Debtor.*,'AmountDue',-1)}}</span></p>
+                        <p>Date of repayment-<span title="Debtor_RepaymentDate_{{-1}}_Span">{{_Format(data.Debtor.*,'RepaymentDate',-1)}}</span></p>
+                        <p>Interest-<span title="Debtor_InterestRate_{{-1}}_Span">{{_Format(data.Debtor.*,'InterestRate',-1)}}</span>%</p>
+                        <p>Penalty for late payment –<span title="Debtor_Penalty_{{-1}}_Span">{{_Format(data.Debtor.*,'Penalty',-1)}}</span></p>
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToCollect','Yes')}}">
+                        <p>To demand and recover all the debts including <span hidden="{{_OptionalDiv(data.Debt.*,'IncludeInterest','No')}}">Principal Amounts only</span><span hidden="{{_OptionalDiv(data.Debt.*,'IncludeInterest','Yes')}}">Interest along with Principal Amounts</span> and such other amounts due or payable to me on any account from any person or persons including any corporate body, any Govt. or any local or other authority and to give valid receipt or discharge for the same.</p>
+                    </div>
+                    <!--any person or persons doubtful-->
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToCollect','No')}}">
+                        <p>To demand and recover the aforementioned debts including <span hidden="{{_OptionalDiv(data.Debt.*,'IncludeInterest','No')}}">Principal Amounts only</span><span hidden="{{_OptionalDiv(data.Debt.*,'IncludeInterest','Yes')}}">Interest along with Principal Amounts</span> and such other amounts due or payable to me on any account from (any person or persons/particular persons as mentioned above)  or any corporate body, any Govt. or any local or other authority and to give valid receipt or discharge for the same.</p>
+                    </div>
+
+                    <p>The <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">is</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">are</span> authorised to collect, receive and realize debts <span title="Debt_Collected_{{-1}}_Span">{{_Format(data.Debt.*,'Collected',-1)}}</span>.
+                        <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">he</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">she</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">they</span> <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">is</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">are</span>  empowered to grant instalments and grant time for payment of debts and to recover debts according to those instalments and granted time.
+                        <span hidden="{{_OptionalDiv(data.Attorney.*,'Authorized','Yes')}}"><span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">he</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">she</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">they</span> <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">is</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">are</span>  further authorized to accept security for payment of debts.</span></p>
+                    <p>To file suits, petitions, or take any other legal action, against any such person as aforesaid to recover the debts or other amounts due and payable by <span hidden="{{_OptionalDiv(data.Debtor.*,'Gender','Mr')}}">him</span><span hidden="{{!_OptionalDiv(data.Debtor.*,'Gender','Mr')}}">her</span>  to me, <span hidden="{{_OptionalDiv(data.Attorney.*,'CanFileSuits','In any Court of law')}}">in any Court of law</span><span hidden="{{_OptionalDiv(data.Attorney.*,'CanFileSuits','Tribunal/ Debt Recovery Tribunal of the concerned city or state')}}">Tribunal/ Debt Recovery Tribunal of the concerned city or state</span> or any other judicial, quasi-judicial or executive authority.</p>
+                    <p>Alternatively, the <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> <span hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToRefer','Yes')}}">shall</span><span hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToRefer','No')}}">will not</span> be authorised to refer any dispute regarding any debt or other amount due to me or alleged to be due by me to arbitration to one or more arbitrators as required and file statements of claims or defences and documents, to give oral evidence and to conduct such activities personally or through advocate and to sign the agreement for reference to arbitrators.</p>
+                    <p>To compromise, compound, settle or adjust any debt or other amount due and payable to me by any such person/persons on such terms and conditions as the <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> may think fit.</p>
+                    <p>To start and prosecute any insolvency or liquidation proceedings against any person who is indebted to me for any amount.</p>
+                    <p>For the purpose aforesaid to sign, declare and file plaints, petition applications, affidavits and other papers referred required to be filed in any court or tribunal in any such legal proceedings.</p>
+                    <p>To defend any legal action taken against me in the matter of any debt due to me or alleged to be due by me in any court or tribunal.</p>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedForAppointing','Authorized')}}">
+                        <p>For the purpose aforesaid, the <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> shall be authorised to appoint any advocate or advocates and to sign a vakalatnama in <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">his</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">her</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">their</span> favour and to change <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">him</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">her</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">them</span> if required and to settle and pay their fees, without my consent.</p>
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedForAppointing','Not Authorized')}}">
+                        <p>For the purpose aforesaid, the <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> will not be authorised to appoint any advocate or advocates and to sign a vakalatnama in <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">his</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">her</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">their</span> favour and to change <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">him</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">her</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">them</span> if required and to settle and pay their fees.</p>
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedForAppointing','Authorized only with granter’s consent')}}">
+                        <p>For the purpose aforesaid, the <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> shall be authorised to appoint any advocate or advocates and to sign a vakalatnama in <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">his</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">her</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">their</span> favour and to change <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"><span hidden="{{_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">him</span><span hidden="{{!_OptionalDiv(data.Attorney.*,'Gender','Mr')}}">her</span></span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">them</span> if required and to settle and pay their fees,only on acquiring my consent.</p>
+                    </div>
+
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'Remuneration','Yes')}}">
+                        <p>Such <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> will receive remuneration for the services advanced.</p>
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'Remuneration','No')}}">
+                        <p>Such <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> will not receive remuneration for the services advanced.</p>
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'Remuneration','Only with granter’s approval')}}">
+                        <p>Such <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> will receive remuneration for the services advanced, subject to my approval only.</p>
+                    </div>
+
+                    <p>The <span hidden="{{!_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorney</span><span hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}">Attorneys</span> <span hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToHire','Yes')}}">shall</span><span hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToHire','No')}}">will not</span> be authorised  to appoint a substitute or substitutes for recovering any particular debt or other amounts due to me and to delegate to him all or any of the powers herein contained as the attorney may think fit.</p>
+                    <div hidden="{{_OptionalDiv(data.Attorney.*,'AuthorizedToHire','Yes')}}">
+                        <div hidden="{{_OptionalDiv(data.Attorney.*,'SuchSubstitute','Yes')}}">
+                            <p>Such substitute will  receive remuneration for the services advanced.</p>
+                        </div>
+                        <div hidden="{{_OptionalDiv(data.Attorney.*,'SuchSubstitute','No')}}">
+                            <p>Such substitute will not  receive remuneration for the services advanced.</p>
+                        </div>
+                        <div hidden="{{_OptionalDiv(data.Attorney.*,'SuchSubstitute','Only with Granters approval')}}">
+                            <p>Such substitute will receive remuneration for the services advanced, subject to my approval only.</p>
+                        </div>
+                    </div>
+
+                    <p>To do all other acts and things as may be required to be done to recover or realise the debts and all other amounts due and payable to me.</p>
+
+                    <p>AND I, hereby ratify and confirm all lawful acts done by the said attorney pursuant to this Power of Attorney.</p>
+                    <p>IN WITNESS WHEREOF I, the abovenamed <span title="Granter_Name_{{-1}}_Span">{{_Format(data.Granter.*,'Name',-1)}}</span> have hereunto set my hand this <span title="DateOfAttorney_Date_{{-1}}_Span">{{_Format(data.DateOfAttorney.*,'DateDDMMYY',-1)}}</span> day of <span title="DateOfAttorney_DateMonthW_{{-1}}_Span">{{_Format(data.DateOfAttorney.*,'DateMonthW',-1)}}</span> in the year <span title="DateOfAttorney_DateYear_{{-1}}_Span">{{_Format(data.DateOfAttorney.*,'DateYear',-1)}}</span>.</p>
+                    <p><a>Signed, sealed and delivered by the above named in the presence of: </a></p>
+                    <ol type="a">
+                        <li>Name:<span title="Witness1_Name_{{-1}}_Span">{{_Format(data.Witness1.*,'Name',-1)}}</span></li>
+                    </ol>
+                    <p>Address:<span title="Witness1_Address_{{-1}}_Span">{{_Format(data.Witness1.*,'Address',-1)}}</span></p>
+                    <p><a>Signature:____________________________________</a></p>
+                    <ol start="2" type="a">
+                        <li>Name:<span title="Witness2_Name_{{-1}}_Span">{{_Format(data.Witness2.*,'Name',-1)}}</span></li>
+                    </ol>
+                    <p>Address:<span title="Witness2_Address_{{-1}}_Span">{{_Format(data.Witness2.*,'Address',-1)}}</span></p>
+                    <p>Signature:__________________________________</p>
+                    <div>&nbsp;</div>
+
+
+                </div>
+            <!--</paper-dialog-scrollable>-->
+
+        <!--</paper-dialog>-->
+    </template>
+    <script>
+        Polymer({
+                is: "power-of-attorney-doc",
+                behaviors: [SuperBehavior]
+            })
+    </script>
+</dom-module>
+</body>
+</html>

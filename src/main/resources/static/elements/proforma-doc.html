@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+</head>
+<body>
+<dom-module id="proforma-doc">
+    <style>
+        span{
+            pointer-events: none;
+        }
+        #table1 {
+            padding-bottom: 150px
+        }
+        #table2 {
+            padding-bottom: 250px
+        }
+    </style>
+    <template>
+
+        <!--<paper-dialog id="PreviewDialog" entry-animation="scale-up-animation"  with-backdrop>-->
+
+            <!--<paper-dialog-scrollable id="PreviewDoc">-->
+
+                <div id="EntireDoc" class="InnerDiv">
+                    <p align="center"><strong>Proforma</strong></p>
+                    <p align="center">&nbsp;</p>
+                    <p><center>IN THE COURT OF {{_Format(data.Case.*,'CourtName',-1)}}</center>.</p><br>
+                    <center>{{_Format(data.Case.*,'Jurisdiction',-1)}}</center><br>
+                    <p><span hidden="{{!_OptionalDiv(data.Case.*,'Number','Other')}}">{{_Format(data.Case.*,'Number',-1)}}</span><span hidden="{{_OptionalDiv(data.Case.*,'Number','Other')}}">{{_Format(data.Case.*,'OtherNumber',-1)}}</span> No.{{_Format(data.Case.*,'No',-1)}} OF {{_Format(data.Case.*,'DateYear',-1)}}</p><br>
+
+                    <p align="right">
+                    {{_Format(data.Petitioner.*,'Name',-1)}}<br><br>
+                    {{_Format(data.Petitioner.*,'AttorneyName',-1)}}</p><br>
+                    V/s<br>
+                    <p align="right">{{_Format(data.Defendant.*,'Name',-1)}}<br><br>
+                    {{_Format(data.Defendant.*,'AttorneyName',-1)}}</p><br><br>
+
+                    <table border="1">
+                        <tr>
+                            <th id="table1">Office notes, Office Memoranda of Coram,<br> Appearances, Court’s orders or Directions and Prothonotary’s orders.</th>
+                            <th id="table1">Court of Judge’s Orders.</th>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <table border="1">
+                        <tr>
+                            <th id="table2">Office notes, Office Memoranda of Coram,<br> Appearances, Court’s orders or Directions and Prothonotary’s orders.</th>
+                            <th id="table2">Court of Judge’s Orders.</th>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <table border="1">
+                        <tr>
+                            <th id="table2">Office notes, Office Memoranda of Coram,<br> Appearances, Court’s orders or Directions and Prothonotary’s orders.</th>
+                            <th id="table2">Court of Judge’s Orders.</th>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <table border="1">
+                        <tr>
+                            <th id="table2">Office notes, Office Memoranda of Coram,<br> Appearances, Court’s orders or Directions and Prothonotary’s orders.</th>
+                            <th id="table2">Court of Judge’s Orders.</th>
+                        </tr>
+                    </table>
+
+                </div>
+            <!--</paper-dialog-scrollable>-->
+
+        <!--</paper-dialog>-->
+    </template>
+    <script>
+        Polymer({
+                is: "proforma-doc",
+                behaviors: [SuperBehavior]
+            })
+    </script>
+</dom-module>
+</body>
+</html>

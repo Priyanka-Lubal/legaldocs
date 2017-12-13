@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="import" href="../js/bower_components/paper-dialog/paper-dialog.html">
+    <link rel="import" href="../js/bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+    <link rel="import" href="../js/bower_components/neon-animation/neon-animations.html">
+    <link rel="import" href="SuperBehavior.html">
+</head>
+<body>
+<dom-module id="lease-deed-land-doc">
+    <template>
+
+        <paper-dialog id="PreviewDialog" entry-animation="scale-up-animation"  with-backdrop>
+
+            <paper-dialog-scrollable id="PreviewDoc">
+
+                <div id="EntireDoc">
+
+                    <p>THIS DEED OF LEASE made on this the {{_Format(data.DatePlace.*,'DateDayN',-1)}} day of {{_Format(data.DatePlace.*,'DateMonthW',-1)}}, {{_Format(data.DatePlace.*,'DateYear',-1)}} at {{_Format(data.DatePlace.*,'City',-1)}} BETWEEN</p>
+
+                    <template is="dom-repeat" items="{{data.Lessor.NoOfLessor}}">
+
+                        <div hidden="{{_LessorType(data.Lessor.*,'Other',index)}}">[FOR OTHERS]: {{_Format(data.Lessor.*,'NewTitle',index)}} {{_Format(data.Lessor.*,'NewName',index)}}, a {{_Format(data.Lessor.*,'Type',index)}} {{_FormatString(data.Lessor.*,'registered under ','','NewRegisteredAct',index)}}, having it&rsquo;s {{_Format(data.Lessor.*,'NewOfficeType',index)}} at {{_Format(data.Lessor.*,'NewAddress',index)}} hereinafter referred to as &ldquo;THE Lessor&rdquo; which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns</div>
+
+                        <div hidden="{{_LessorType(data.Lessor.*,'Individual',index)}}">
+                            [For Individual]: {{_Format(data.Lessor.*,'IndividualTitle',index)}} {{_Format(data.Lessor.*,'NameIndividual',index)}}, aged {{_Format(data.Lessor.*,'AgeIndividual',index)}} years {{_FormatString(data.Lessor.*,'having pan ','','PanFirstParty',index)}}, residing at {{_Format(data.Lessor.*,'PartyAddrFirstParty',index)}} hereinafter referred to as &ldquo;THE Lessor&rdquo; which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include {{_HisOrHer(data.Lessor.*,'GenderIndividualTitle')}} heirs, executors, administrators and permitted assigns.</p>
+                        </div>
+
+                        <div hidden="{{_LessorType(data.Lessor.*,'SoleProprietorship',index)}}">[For Sole Proprietorship]: {{_Format(data.Lessor.*,'SoleProprietorshipTitle',index)}} {{_Format(data.Lessor.*,'NameParty',index)}}, carrying on business as a sole proprietorship with the name {{_Format(data.Lessor.*,'NameCompany',index)}}, aged {{_Format(data.Lessor.*,'AgeFirstParty',index)}} years {{_FormatString(data.Lessor.*,'having pan ','PanFirstParty',index)}}, having office at {{_Format(data.Lessor.*,'AddrFirstParty',index)}} hereinafter referred to as &ldquo;THE Lessor&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include {{_HisOrHer(data.Lessor.*,'GenderSoleProprietorshipTitle')}} heirs, executors, administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LessorType(data.Lessor.*,'Company',index)}}">[For Companies]: M/s {{_Format(data.Lessor.*,'NameCompany',index)}}, a {{_Format(data.Lessor.*,'CompanyType',index)}} incorporated under the {{_Format(data.Lessor.*,'RegisteredAct',index)}},{{_FormatString(data.Lessor.*,'having CIN ','','CINCompany',index)}} and having their registered office at {{_Format(data.Lessor.*,'AddrRegisteredOffice',index)}} hereinafter referred to as &ldquo;THE Lessor&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LessorType(data.Lessor.*,'HUF',index)}}">[For HUF]: {{_Format(data.Lessor.*,'HUFTitle',index)}} {{_Format(data.Lessor.*,'NameKartaManager',index)}}, aged {{_Format(data.Lessor.*,'AgeKartaManager',index)}} years, {{_FormatString(data.Lessor.*,'having pan ','','PanKartaManager',index)}} residing at {{_Format(data.Lessor.*,'AddrKartaManager',index)}} in {{_HisOrHer(data.Lessor.*,'GenderHUFTitle')}} capacity as the Karta or Manager of {{_HisOrHer(data.Lessor.*,'GenderHUFTitle')}} joint and undivided Hindu family hereinafter referred to as &ldquo;THE Lessor&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LessorType(data.Lessor.*,'Trust',index)}}">[FOR TRUST]: M/s {{_Format(data.Lessor.*,'NameTrust',index)}}, a Trust registered under the {{_Format(data.Lessor.*,'RegisteredActTrust',index)}}, {{_FormatString(data.Lessor.*,'having registration number ',' and','RegNoTrust',index)}} having its registered office at {{_Format(data.Lessor.*,'AddrRegOfficeTrust',index)}} hereinafter referred to as &ldquo;THE Lessor&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LessorType(data.Lessor.*,'Partnership',index)}}">[FOR PARTNERSHIP]: M/s {{_Format(data.Lessor.*,'NamePartnership',index)}}, a Partnership Firm, {{_FormatString(data.Lessor.*,'having registration number ',' and','RegNoPartnership',index)}} having its) office at {{_Format(data.Lessor.*,'AddrRegOfficePartnership',index)}}, through its partners, hereinafter referred to as &ldquo;THE Lessor&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LessorType(data.Lessor.*,'LLP',index)}}">[FOR LLP]: M/s {{_Format(data.Lessor.*,'NameLLP',index)}}, a Limited Liability Partnership Firm, {{_FormatString(data.Lessor.*,'having Limited Liability Partnership Identification Number ',' and','LLPIN',index)}} having its registered office at {{_Format(data.Lessor.*,'AddrRegOfficeLLP',index)}}, through its partners, hereinafter referred to as &ldquo;THE Lessor&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns)</div>
+
+
+                    </template>
+
+
+                    <template is="dom-repeat" items="{{data.Lessee.AddOneLessee}}">
+
+                        <div hidden="{{_LesseeType(data.Lessee.*,'Other',index)}}">[FOR OTHERS]: {{_Format(data.Lessee.*,'NewTitle',index)}} {{_Format(data.Lessee.*,'NewName',index)}}, a {{_Format(data.Lessee.*,'NewType',index)}} {{_FormatString(data.Lessee.*,'registered under ','','NewRegisteredAct',index)}}, having it&rsquo;s {{_Format(data.Lessee.*,'NewOfficeType',index)}} at {{_Format(data.Lessee.*,'NewAddress',index)}} hereinafter referred to as &ldquo;THE Lessee&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns)</div>
+
+                        <div hidden="{{_LesseeType(data.Lessee.*,'Individual',index)}}">
+                            [For Individual]: {{_Format(data.Lessor.*,'IndividualTitle',index)}} {{_Format(data.Lessee.*,'NameIndividual',index)}}, aged {{_Format(data.Lessee.*,'AgeIndividual',index)}} years {{_FormatString(data.Lessee.*,'having pan ','','PanFirstParty',index)}}, residing at {{_Format(data.Lessee.*,'PartyAddrFirstParty',index)}} hereinafter referred to as &ldquo;THE Lessee&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include {{_HisOrHer(data.Lessee.*,'GenderIndividualTitle')}} heirs, executors, administrators and permitted assigns).</p>
+                        </div>
+
+                        <div hidden="{{_LesseeType(data.Lessee.*,'SoleProprietorship',index)}}">[For Sole Proprietorship]: {{_Format(data.Lessor.*,'SoleProprietorshipTitle',index)}} {{_Format(data.Lessee.*,'NameParty',index)}}, carrying on business as a sole proprietorship with the name {{_Format(data.Lessee.*,'NameCompany',index)}}, aged {{_Format(data.Lessee.*,'AgeFirstParty',index)}} years {{_FormatString(data.Lessee.*,'having pan ','PanFirstParty',index)}}, having office at {{_Format(data.Lessee.*,'AddrFirstParty',index)}} hereinafter referred to as &ldquo;THE Lessee&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include {{_HisOrHer(data.Lessee.*,'GenderSoleProprietorshipTitle')}} heirs, executors, administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LesseeType(data.Lessee.*,'Company',index)}}">[For Companies]: M/s {{_Format(data.Lessee.*,'NameCompany',index)}}, a {{_Format(data.Lessee.*,'CompanyType',index)}} incorporated under the {{_Format(data.Lessee.*,'RegisteredAct',index)}},{{_FormatString(data.Lessee.*,'having CIN ','','CINCompany',index)}} and having their registered office at {{_Format(data.Lessee.*,'AddrRegisteredOffice',index)}} hereinafter referred to as &ldquo;THE Lessee&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LesseeType(data.Lessee.*,'HUF',index)}}">[For HUF]: {{_Format(data.Lessor.*,'HUFTitle',index)}} {{_Format(data.Lessee.*,'NameKartaManager',index)}}, aged {{_Format(data.Lessee.*,'AgeKartaManager',index)}} years, {{_FormatString(data.Lessee.*,'having pan ','','PanKartaManager',index)}} residing at {{_Format(data.Lessee.*,'AddrKartaManager',index)}} in {{_HisOrHer(data.Lessee.*,'GenderHUFTitle')}} capacity as the Karta or Manager of {{_HisOrHer(data.Lessee.*,'GenderHUFTitle')}} joint and undivided Hindu family hereinafter referred to as &ldquo;THE Lessee&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LesseeType(data.Lessee.*,'Trust',index)}}">[FOR TRUST]: M/s {{_Format(data.Lessee.*,'NameTrust',index)}}, a Trust registered under the {{_Format(data.Lessee.*,'RegisteredActTrust',index)}}, {{_FormatString(data.Lessee.*,'having registration number ',' and','RegNoTrust',index)}} having its registered office at {{_Format(data.Lessee.*,'AddrRegOfficeTrust',index)}} hereinafter referred to as &ldquo;THE Lessee&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LesseeType(data.Lessee.*,'Partnership',index)}}">[FOR PARTNERSHIP]: M/s {{_Format(data.Lessee.*,'NamePartnership',index)}}, a Partnership Firm, {{_FormatString(data.Lessee.*,'having registration number ',' and','RegNoPartnership',index)}} having its registered office at {{_Format(data.Lessee.*,'AddrRegOfficePartnership',index)}}, through its partners, hereinafter referred to as &ldquo;THE Lessee&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns).</div>
+
+                        <div hidden="{{_LesseeType(data.Lessee.*,'LLP',index)}}">[FOR LLP]: M/s {{_Format(data.Lessee.*,'NameLLP',index)}}, a Limited Liability Partnership Firm, {{_FormatString(data.Lessee.*,'having Limited Liability Partnership Identification Number ',' and','LLPIN',index)}} having its registered office at {{_Format(data.Lessee.*,'AddrRegOfficeLLP',index)}}, through its partners, hereinafter referred to as &ldquo;THE Lessee&rdquo; (which expression shall, unless it be repugnant to the context or meaning thereof, be deemed to include its administrators and permitted assigns)</div>
+
+
+                    </template>
+
+                    <p>WHEREAS:-</p>
+                    <ol type="a">
+                        <li>The Lessor is seized and absolutely possessed of or otherwise well and sufficiently entitled to the {{_Format(data.Property.*,'Type',-1)}} admeasuring {{_Format(data.Property.*,'Area',-1)}} {{_Format(data.Property.*,'AreaUnit',-1)}} situated at {{_FormatString(data.Property.*,'CTS No ','','AddrCTS',-1)}} {{_FormatString(data.Property.*,'Survey No ','','AddrSurvey',-1)}} {{_FormatString(data.Property.*,'Hissa No ','','AddrHissa',-1)}} {{_Format(data.Property.*,'AddrOther',-1)}}), being, lying and situated at {{_Format(data.Property.*,'Addr',-1)}} {{_Format(data.Property.*,'AddrVillage',-1)}} {{_Format(data.Property.*,'AddrTaluka',-1)}} {{_Format(data.Property.*,'AddrDistrict',-1)}} {{_Format(data.Property.*,'AddrCity',-1)}} {{_Format(data.Property.*,'AddrState',-1)}} and more particularly described in the Schedule hereunder written.</li>
+                        <div hidden="{{_OptionalDiv(data.Property.*,'SpecAuth','Yes')}}">
+                        <li>The Lessor has hereby acquired the said {{_Format(data.Property.*,'Desc',-1)}} - {{_Format(data.Property.*,'Type',-1)}} from {{_Format(data.Property.*,'NameAuth',-1)}} in the year {{_Format(data.Property.*,'YearAq',-1)}} {{_FormatString(data.Property.*,'under the ','','AqScheme',-1)}}</li>
+                        </div>
+                        <template is="dom-repeat" items="{{data.Property.AddPoints}}" index-as="PointsIndex">
+                            <template is="dom-if" if="{{_IsProperty(data.Property.*,'Points')}}"><li>{{_Format(data.Property.*,'Points',PointsIndex)}}</li></template>
+                        </template>
+                        <li>The Lessor has agreed to demise to the {{_LesseeOrLessees(data.Lessee.*)}} the said {{_Format(data.Property.*,'Desc',-1)}} - {{_Format(data.Property.*,'Type',-1)}} together with the right to the construction of building or other structure thereon for the period and at the rent and upon the terms and conditions recorded herein.</li>
+                        <li>At the request of the {{_LesseeOrLessees(data.Lessee.*)}}, the Lessor has agreed to execute these presents in favour of the {{_LesseeOrLessees(data.Lessee.*)}}.</li>
+                    </ol>
+                    <div hidden="{{_OptionalDiv(data.Agreement.*,'PriorAgr','Yes')}}">
+                    <p>By an agreement to Lease entered into between the Lessor and the {{_LesseeOrLessees(data.Lessee.*)}} on the {{_Format(data.Agreement.*,'Date',-1)}}, the Lessor had agreed to grant a Lease of the said {{_Format(data.Property.*,'Desc',-1)}}- {{_Format(data.Property.*,'Type',-1)}} for a period of {{_Format(data.Agreement.*,'PriorPeriod',-1)}} at a {{_Format(data.Agreement.*,'RentPeriodicity',-1)}} rent of Rs. {{_Format(data.Agreement.*,'RentAmt',-1)}}
+                    <div hidden="{{_OptionalDiv(data.Agreement.*,'AgrEvents','Yes')}}">at the condition {{_Format(data.Agreement.*,'LeaseEvent',-1)}}</div></p>
+                    </div>
+                    <!--startttttttttt-->
+                    <p>NOW THIS DEED WITNESSETH AS FOLLOWS:</p>
+                    <ol type="1">
+
+                        <li>In consideration of the lease payments and Lessee&rsquo;s covenants hereinafter reserved and contained, the Lessor doth hereby demise unto the
+                            {{_LesseeOrLessees(data.Lessee.*)}} ALL THAT plot situated at {{_Format(data.Property.*,'PropertyAddr',-1)}} and more particularly described in the Schedule hereunder written
+                            together with the right to the construction of building or other structure thereon TO HOLD UNTO the {{_LesseeOrLessees(data.Lessee.*)}} the
+                            premises hereby demised hereafter for brevity&rsquo;s sake referred to as the &lsquo;demised premises&rsquo; from the {{_Format(data.LeaseD.*,'DateDayN',-1)}} day of {{_Format(data.LeaseD.*,'DateMonthW',-1)}}, {{_Format(data.LeaseD.*,'DateYear',-1)}} for the term of {{_Format(data.LeaseD.*,'Period',-1)}}
+                            [Period in words] yielding and paying the
+                            <div hidden="{{_OptionalDiv(data.RentD.*,'LumpSum','No')}}">lump sum</div>
+                            <div hidden="{{_OptionalDiv(data.RentD.*,'LumpSum','Yes')}}"> {{_Format(data.RentD.*,'Type',-1)}} </div>
+
+                            rent of Rs. {{_Format(data.RentD.*,'Amount',-1)}} {{_Format(data.RentD.*,'AmountAmountWords',-1)}}, and such rent shall
+                            be payable by the {{_LesseeOrLessees(data.Lessee.*)}} to the Lessor {{_Format(data.RentD.*,'Schedule',-1)}}.<br>
+                        </li>
+
+
+
+                    <li>The demised premises will be used for the following (purpose/purposes):</li>
+                    <template is="dom-repeat" items="{{data.LeaseD.AddPurpose}}" index-as="PurIndex">
+                        <template is="dom-if" if="{{_IsProperty(data.LeaseD.*,'Purpose')}}"><li>{{_Format(data.LeaseD.*,'Purpose',PurIndex)}}</li></template>
+                    </template>
+                    <div hidden="{{_OptionalDiv(data.RentD.*,'LumpSum','Yes')}}">
+                        <div id="{{_OptionalDiv(data.RentD.*,'IsIncr','Yes')}}">
+                            <li>INCREMENT OF RENT Not applicable for Lump Sum Rent</li>
+
+                            <p>The lease rent of the said demised premises</p>
+                            <ol>
+                                <template is="dom-repeat" items="{{data.RentD.AddIncrement}}" index-as="IncrIndex">
+                                    <template is="dom-if" if="{{_IsProperty(data.RentD.*,'Increment')}}"><li>{{_Format(data.RentD.*,'Increment',IncrIndex)}}</li></template>
+                                </template>
+                            </ol>
+                        </div>
+                    </div>
+
+
+                    <div hidden="{{_OptionalDiv(data.RentD.*,'LumpSum','No')}}">
+
+
+                        <li>The {{_LesseeOrLessees(data.Lessee.*)}} covenants that {{_GetLesseeGender(data.Lessee.*,'he/she/it/they')}} shall&nbsp; pay to the Lessor the aforesaid {{_Format(data.RentD.*,'Amount',-1)}} rent without deduction, unless authorised by this deed, and in all the circumstances in the manner aforesaid.</li>
+                    </div>
+
+                    <div hidden="{{_OptionalDiv(data.RentD.*,'LumpSum','Yes')}}">
+
+
+                        <li>The {{_LesseeOrLessees(data.Lessee.*)}} covenants that during the said term {{_GetLesseeGender(data.Lessee.*,'he/she/it/they')}} shall regularly &ndash; only if not lump sum pay to the Lessor the aforesaid {{_Format(data.RentD.*,'Type',-1)}} rent without deduction, unless authorised by this deed, and in all the circumstances in the manner aforesaid.</li>
+                        <div hidden="{{_OptionalDiv(data.RentD.*,'Delay','Yes')}}">
+                            <ol type="a">
+                                <li>In the event of any delay, the Lessee shall pay interest on the arrears at the rate of  {{_Format(data.RentD.*,'DelayRoi',-1)}} % per annum from the due date till the date of actual payment  {{_FormatString(data.RentD.*,'after a grace period of ','','DelayPeriod',-1)}}  {{_Format(data.RentD.*,'GraceP',-1)}}.</li>
+
+
+                                <div hidden="{{_OptionalDiv(data.RentD.*,'Recover','Yes')}}"><ol type="i"> <li>Such interest shall be recovered as if the same formed part of the rent </li></ol></div>
+                            </ol>
+                            <p>The provision of interest shall be without prejudice to the other rights and remedies of the Lessor.</p>
+                        </div>
+                    </div>
+                        <div hidden="{{_OptionalDiv(data.RentD.*,'LateFee','Yes')}}">
+
+
+                            <li>It is further agreed by the parties that, in the event that any rent payment required to be paid by {{_LesseeOrLessees(data.Lessee.*)}} hereunder is not paid&nbsp;in full {{_Format(data.RentD.*,'Schedule',-1)}} , the {{_LesseeOrLessees(data.Lessee.*)}} shall pay to Lessor, in addition to such payment,</li>
+                            <div hidden="{{_OptionalDiv(data.RentD.*,'Delay','Yes')}}">
+                                <p>including interest </p>
+                            </div>
+                            or other charges due hereunder
+                            <ol type="a">
+                                <li>a late fee of Rs. {{_Format(data.RentD.*,'LateAmount',-1)}}  {{_FormatString(data.RentD.*,'after','','LateDays',-1)}}</li><br>
+                                <li>Further, a subsequent late fee of {{_Format(data.RentD.*,'FurtherAmount',-1)}} per {{_Format(data.RentD.*,'FurtherPeriod',-1)}} will be incurred by the {{_LesseeOrLessees(data.Lessee.*)}} for every {{_Format(data.RentD.*,'FurtherPeriod1',-1)}} the payment is delayed {{_FormatString(data.RentD.*,'FurtherGPeriod',-1)}}</li>
+                            </ol>
+                        </div>
+                    <p>All future payments will be allocated {{_Format(data.RentD.*,'FutureP',-1)}}.</p>
+                    <!--Advance rent details -->
+                    <div hidden="{{_OptionalDiv(data.AdvRentD.*,'AdvRent','Yes')}}">
+
+                        <li>Subsequent to the execution of this Deed and {{_Format(data.AdvRentD.*,'PaymentType',-1)}}, the {{_LesseeOrLessees(data.Lessee.*)}} will pay to the Lessor an amount equivalent to {{_FormatString(data.AdvRentD.*,'the rent of the demised premises for','','Period',-1)}} {{_Format(data.AdvRentD.*,'PeriodType',-1)}}  {{_FormatString(data.AdvRentD.*,'Or a sum of Rs.','','Amount',-1)}} and such amount will be treated as advance rent and adjusted against the amounts payable by the {{_LesseeOrLessees(data.Lessee.*)}} to the Lessor as rent</li>
+                    </div>
+                    <!--deposit-->
+                    <div hidden="{{_OptionalDiv(data.Deposit.*,'IsDep','Yes')}}">
+
+                        <div hidden="{{_OptionalDiv(data.Deposit.*,'Options','To be Paid')}}">
+
+                            <li>Subsequent to the execution of this Deed and {{_Format(data.Deposit.*,'PaymentType',-1)}}, the {{_LesseeOrLessees(data.Lessee.*)}} will pay to the Lessor a sum of Rs. {{_Format(data.Deposit.*,'AmountToBePaid',-1)}} {{_Format(data.Deposit.*,'PaymentTypeVia',-1)}} and such amount will be treated as a {{_Format(data.Deposit.*,'Refund',-1)}} security deposit with respect to the demise of the premises.</li>
+                            <div hidden="{{_OptionalDiv(data.Deposit.*,'LesseeRoi','Yes')}}">
+                                <p>Such deposit will bear an interest at the rate of {{_Format(data.Deposit.*,'Roi',-1)}} % per annum to the {{_LesseeOrLessees(data.Lessee.*)}}</p>
+                            </div>
+                        </div>
+
+                        <div hidden="{{_OptionalDiv(data.Deposit.*,'Options','Already Paid')}}">
+
+                            <p>The {{_LesseeOrLessees(data.Lessee.*)}} has paid to the Lessor, and the Lessor has received from {{_LesseeOrLessees(data.Lessee.*)}} sum of Rs. {{_Format(data.Deposit.*,'AmountPaid',-1)}} {{_Format(data.Deposit.*,'PaidTypeVia',-1)}} towards a {{_Format(data.Deposit.*,'Refund',-1)}} security deposit with respect to the demise of the premises.</p>
+                            <div hidden="{{_OptionalDiv(data.Deposit.*,'PaidLesseeRoi','Yes')}}">
+                                <p>Such deposit will bear an interest at the rate of {{_Format(data.Deposit.*,'PaidRoi',-1)}} % per annum to the {{_LesseeOrLessees(data.Lessee.*)}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--point 8-->
+
+                    <li>The Lessee shall pay all the {{_Format(data.Charges.*,'Lessee',-1)}} whatsoever now payable or hereafter during the said term shall become payable and now or hereafter during the
+                        said term assessed charged or imposed upon the demised premises or any part thereof or upon the buildings to be hereafter erected whether payable by landlord,
+                        tenant or occupier in respect thereof respectively.
+                        <div hidden="{{_OptionalDiv(data.Charges.*,'LessorByLessee','Yes')}}">
+                         The Lessor shall be at liberty to pay the above mentioned {{_Format(data.Charges.*,'Lessee',-1)}} or other levy including penalties,
+                        if any, charged thereon in case of default or delay by the Lessee and demand the amount so paid together with other incidental expenses as reimbursement of
+                        all such amounts, costs, expenses, etc., {{_FormatString(data.Charges.*,'with interest at ',' per cent per annum from the date of such payments until realisation by the Lessor','LessorByLesseeRoi',-1)}}.
+                        </div>
+                    </li>
+
+
+
+                    <li>Lessor shall pay all the {{_Format(data.Charges.*,'Lessor',-1)}} whatsoever now payable or hereafter during the said term shall become payable and now or hereafter during the said term
+                        assessed charged or imposed upon the demised premises or any part thereof or upon the buildings to be hereafter erected whether payable by landlord,
+                        tenant or occupier in respect thereof respectively.
+                        <div hidden="{{_OptionalDiv(data.Charges.*,'LesseeByLessor','Yes')}}">
+                        The Lessee shall be at liberty to pay the above mentioned {{_Format(data.Charges.*,'Lessor',-1)}} or other levy including penalties,
+                        if any, charged thereon in case of default or delay by the Lessor and adjust the amount so paid together with other incidental expenses, from out of the
+                        rents in respect of the &lsquo;demised premises&rsquo; becoming due immediately after the said payment or demand reimbursement of all such amounts,
+                        costs, expenses, etc., {{_FormatString(data.Charges.*,'with interest at ',' per cent per annum from the date of such payments until realisation by the Lessee','LesseeByLessorRoi',-1)}}.
+                         </div>
+                     </li>
+
+
+
+                    <li>The Lessee shall pay the
+                        <template is="dom-repeat" items="{{data.Charges.Shared}}">
+                            {{_FormatCharges(data.ChargesSLessee.*,item)}}
+                        </template>
+
+                        while the Lessor shall pay the
+                        <template is="dom-repeat" items="{{data.Charges.Shared}}">
+                            {{_FormatCharges(data.ChargesSLessor.*,item)}}
+                        </template>
+                        whatsoever now payable or hereafter during the said term will become payable
+                        and now or hereafter during the said term assessed charged or imposed upon the demised premises or any part thereof or upon the buildings to be hereafter
+                        erected whether payable by landlord, tenant or occupier in respect thereof respectively.
+                        <div hidden="{{_OptionalDiv(data.Charges.*,'LLShared','Yes')}}">
+                        The other party with respect to a certain charge shall be at
+                        liberty to pay the certain charge or other levy including penalties, if any, charged thereon in case of default or delay by the defaulting party with respect
+                        to a certain charge and demand the amount so paid together with other incidental expenses as reimbursement of all such amounts, costs, expenses, etc., or,
+                        if the defaulting party with respect to a certain charge is the Lessor and the other party, being the Lessee pays this certain charge, then the Lessee can
+                        adjust the amount thus paid, including other incidental charges from out of the rents in respect of the &lsquo;demised premises&rsquo; becoming due
+                        immediately after the said payment, provided the Lessee is not a defaulting party with respect to any other charge, {{_FormatString(data.Charges.*,'with interest at ',' per cent per annum from the date of such payments until realisation by the Lessee','LLSharedRoi',-1)}}.
+                        </div>
+                    </li>
+                    <!--point 9 repairs-->
+                        <div  hidden="{{_OptionalDiv(data.SpecialActLessor.*,'SpecialAct','Yes')}}">
+
+                            <li>The Lessor covenants to perform thefollowing [activity/activities]:</li>
+                            <p>
+                                <template is="dom-repeat" items="{{data.SpecialActLessor.AddLessorAct}}" index-as="LessorActIndex">
+                                    <template is="dom-if" if="{{_IsProperty(data.SpecialActLessor.*,'LessorAct')}}"><li>{{_Format(data.SpecialActLessor.*,'LessorAct',LessorActIndex)}}</li></template>
+                                </template>
+                            </p>
+                            <p>If the Lessor failsto carry out such [activity/activities], the Lessee may call upon the Lessor, in writing, to
+                                do the same within {{_Format(data.SpecialActLessor.*,'Period',-1)}} {{_Format(data.SpecialActLessor.*,'PeriodUnit',-1)}} from the date of receipt of such request and if the Lessor fails to carry out the same within that time,
+                                the Lessee shall be at liberty to get it done and adjust the amount spent or expended on such [activity/activities].  {{_FormatString(data.SpecialActLessor.*,'with interest at rate per cent per annum','','Interest',-1)}}
+                                towards the rent payable to the Lessor or the Lessee shall have the right to recover the same from the Lessor.</p>
+
+                        </div>
+                        <!-- point 11 by abhishek -->
+                        <div  hidden="{{_OptionalDiv(data.SpecialActLessee.*,'SpecialAct','Yes')}}">
+
+                            <li>The Lessee covenants to perform the following activities:</li>
+                            <p>
+                                <template is="dom-repeat" items="{{data.SpecialActLessee.AddLesseeAct}}" index-as="LesseeActIndex">
+                                    <template is="dom-if" if="{{_IsProperty(data.SpecialActLessee.*,'LesseeAct')}}"><li>{{_Format(data.SpecialActLessee.*,'LesseeAct',LesseeActIndex)}}</li></template>
+                                </template>
+                            </p>
+                            <p>If the Lessee failsto carry out such [activity/activities], the Lessor may call upon the Lessee,
+                                in writing, to do the same within {{_Format(data.SpecialActLessee.*,'Period',-1)}} {{_Format(data.SpecialActLessor.*,'PeriodUnit',-1)}} from the date of receipt of such request and if the Lessee fails to carry out
+                                the same within that time, the Lessor shall be at liberty to get it done and claim the amount spent or expended on such [activity/activities].
+                                {{_FormatString(data.SpecialActLessee.*,'with interest at rate per cent per annum','','Interest',-1)}} in addition to the rent payable to the Lessor or the Lessor shall have
+                                the right to recover the same from the Lessee.</p>
+                        </div>
+                        <div>
+
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Not Allowed')}}">
+
+                                <li>The Lessee will not be entitled to, whether at [his/her/their] own cost or otherwise construct upon the demised land any building or buildings, other than the structures already built on the demised premises.</li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed with written permission from lessor')}}">
+
+                                <li>The Lessee will at [his/her/their] own efforts, expense and cost be entitled to construct and complete upon the demised land a new building
+                                    or buildings with all requisite and proper sewers, drains and other conveniences thereto in accordance with prevailing law, only after acquiring
+                                    such permission, in writing, from the Lessor.
+                                <div hidden="{{_OptionalDiv(data.ConsRt.*,'LLIncludea','Yes')}}">
+                                    The Lessor will not unreasonably withhold such permission and will give such permission provided
+                                    such the Lessee proves beyond doubt, to the Lessor, that the building plan has been approved by the appropriate authority.
+                                </div>
+                                <div hidden="{{_OptionalDiv(data.ConsRt.*,'LLIncludeb','Yes')}}">
+                                   Such permission may be withheld if the Lessor does not approve of the building plan.</p>
+                                </div>
+                                <p> {{_Format(data.ConsRt.*,'AWPSpecNote',-1)}}.</p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed')}}">
+
+                                <li>The Lessee will at [his/her/their] own efforts, expense and cost be entitled to construct and complete upon the demised landa new building or buildings with all requisite and proper sewers, drains and other conveniences thereto in accordance with the approved plan and prevailing law.</li>
+                                <p> {{_Format(data.ConsRt.*,'ASpecNote',-1)}}.</p>
+                            </div>
+                        </div>
+
+                        <!--point 13 conforming rules..-->
+                        <div>
+
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Not Allowed')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall, at all times during the continuance of this demise,
+                                    observe and conform to all such rules and regulations of the {{_Format(data.Property.*,'LocalGovName',-1)}}, the Government of the State of {{_Format(data.Property.*,'AddrState',-1)}}, the Central Government
+                                    and other authorities as may be in force for the time being relating to such land or any structure thereon.</li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed with written permission from lessor')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall, in executing the construction works aforesaid and at all times
+                                    uring the continuance of this demise, observe and conform to all such rules and regulations of the
+                                    {{_Format(data.Property.*,'LocalGovName',-1)}}, the Government of the State of {{_Format(data.Property.*,'AddrState',-1)}},
+                                    the Central Government and other authorities as may be in force for the time being relating to such land or any
+                                    of the buildings constructed thereon.</li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall, in executing the construction works aforesaid and at all times
+                                    uring the continuance of this demise, observe and conform to all such rules and regulations of the
+                                    {{_Format(data.Property.*,'LocalGovName',-1)}}, the Government of the State of {{_Format(data.Property.*,'AddrState',-1)}},
+                                    the Central Government and other authorities as may be in force for the time being relating to such land or any
+                                    of the buildings constructed thereon.</li>
+                            </div>
+                        </div>
+
+
+                        <div hidden="{{_OptionalDiv(data.LessorEntryRights.*,'Time','Without Lessees Permission')}}">
+                            <li>The Lessor shall, on Period notice given by the Lessor to the {{_LesseeOrLessees(data.Lessee.*)}}, have a right of access either by
+                                {{_GetLessorGender(data.Lessor.*,'himself/herself/itself/themselves')}} or through an authorized representative(s) to enter, view and inspect the demised premises {{_Format(data.LessorEntryRights.*,'TimeWtp',-1)}}.</li>
+                        </div>
+                        <div hidden="{{_OptionalDiv(data.LessorEntryRights.*,'Time','With Lessees Permission')}}">
+                            <li>TheLessor, on Period notice given by the Lessor to the {{_LesseeOrLessees(data.Lessee.*)}} can enter, view and inspect the demised premises,
+                                either by {{_GetLessorGender(data.Lessor.*,'himself/herself/itself/themselves')}} or through an authorized representative(s) {{_Format(data.LessorEntryRights.*,'TimeWp',-1)}}, providedthe {{_LesseeOrLessees(data.Lessee.*)}} [warrants/warrant] such entrance or inspection.</li>
+                        </div>
+                        <div hidden="{{_OptionalDiv(data.LessorEntryRights.*,'Time','No right to enter the Premises')}}">
+                            <li>TheLessor shall not have any right to enter, view or inspect the demised premises.</li>
+                        </div>
+                    <!--point 15 to 18-->
+
+                        <div hidden="{{_OptionalDiv(data.ExClauses.*,'Nuisance','true')}}">
+
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Not Allowed')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} will not do or cause or suffer to be done upon the demised premises, any act which shall be a nuisance or annoyance,
+                                    or be injurious or offensive to the owners or tenants of any neighboring premises, if any.</li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} will not do or cause or suffer to be done upon the demised premises, including any building constructed thereon,
+                                    if any, any act which shall be a nuisance or annoyance, or be injurious or offensive to the owners or tenants of any neighbouring premises, if any.</li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed with written permission from lessor')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} will not do or cause or suffer to be done upon the demised premises, including any building constructed thereon,
+                                    if any, any act which shall be a nuisance or annoyance, or be injurious or offensive to the owners or tenants of any neighbouring premises, if any.</li>
+                            </div>
+                        </div>
+                        <div hidden="{{_OptionalDiv(data.ExClauses.*,'Sell earth or gravel from the property','true')}}">
+
+                            <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to sell or dispose of any earth, gravel or sand from the demised premises or to excavate the same
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed with written permission from lessor')}}">
+                                except so far as may be necessary for the execution of the construction work &ndash; if construction rights are present
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed')}}">
+                                except so far as may be necessary for the execution of the construction work &ndash; if construction rights are present
+                            </div>
+                            </li>
+                        </div>
+                    <div hidden="{{_OptionalDiv(data.ExClauses.*,'Indemnify','true')}}">
+
+                    <li>The {{_LesseeOrLessees(data.Lessee.*)}} will indemnify and keep indemnified the Lessor against all suits, claims and demands in respect of the demised premises.</li>
+
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.ExClauses.*,'Instance of default','true')}}">
+
+                    <li>If the {{_LesseeOrLessees(data.Lessee.*)}} fails to comply with any of the financial or material provisions of this Deed, or of any present rules and regulations or any that may be hereafter prescribed by Lessor, or materially fails to comply with any duties imposed on the {{_LesseeOrLessees(data.Lessee.*)}} by law or statute, within number days after delivery of written notice by Lessor specifying the non-compliance and indicating the intention of Lessor to terminate the Deed by reason thereof, the Lessor may terminate this Deed.
+                        (b) The {{_LesseeOrLessees(data.Lessee.*)}}, guests, or occupants violate this Deed, rules of fire, safety, health, or criminal laws, regardless of whether arrest or conviction occurs;
+                        (c) The {{_LesseeOrLessees(data.Lessee.*)}} abandons the Premises;
+                        (d) The {{_LesseeOrLessees(data.Lessee.*)}} gives incorrect or false information in this Deed;
+                        (e) The {{_LesseeOrLessees(data.Lessee.*)}}, or any occupant is arrested, convicted, or given deferred adjudication for a criminal offense involving actual or potential physical harm to a person, or involving possession, manufacture, or delivery of any substance not permitted by law;
+                        (f) any illegal drugs or paraphernalia are found in the Premises or on the person of Lessee, guests, or occupants while on the Premises and/or;
+                        (g) as otherwise&nbsp;allowed by law.
+                    </li>
+                    </div>
+                    <template is="dom-repeat" items="{{data.ExClauses.AddClauses}}" index-as="ClausesIndex">
+                        <template is="dom-if" if="{{_IsProperty(data.ExClauses.*,'Clauses')}}"><li>{{_Format(data.ExClauses.*,'Clauses',ClausesIndex)}}</li></template>
+                    </template>
+                        <!--point 19-->
+                        <div  hidden="{{_LesseeLength(data.Lessee.*)}}">
+
+                            <li>Each Lessee is jointly and individually&nbsp;liable for all Lease Deed obligations, including but not limited to rent monies.</li>
+
+                            <p>a. J &amp; S for violations</p>
+
+                            <p>If any Lessee, guests, or occupant violates the Lease Deed, all Lessees are considered to have violated the Lease Deed.</p>
+                            <p>b. Joint Notice to</p>
+
+                            <p>The Lessor&rsquo;s requests and notices to any one Lessee constitutes notice to all Lessees and occupants.</p>
+
+                            <p>c. Joint Notice from</p>
+
+                            <p>Notices and requests from any one Lessee or occupant (including repair requests and entry permissions constitute notice from all Lessees.</p>
+                        </div>
+
+                        <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Not Allowed')}}">
+
+                            <div  hidden="{{_OptionalDiv(data.AssignN.*,'AssignRt','Assign without permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person.
+
+                                    {{_FormatReplace(data.AssignN.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign transfer or part with: ','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignN.*,'AssignRt','Assign with permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person without
+                                    previously obtaining such written consent of the Lessor, where such consent shall not be unreasonably withheld by the Lessor.Consent by Lessor to one such assignment ortransfer shall not
+                                    be deemed to be a consent to any subsequent assignment or transfer. An assignment or transfer without the prior written consent of Lessor or license by operation of law shall be absolutely
+                                    null and void and shall, at Lessor&rsquo;s option, terminate this Deed and start the eviction process.</li>
+                                {{_FormatReplace(data.AssignN.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign transfer or part with: ','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignN.*,'AssignRt','Cannot Assign')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person.
+                                    {{_FormatReplace(data.AssignN.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to assign transfer or part with: ','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                            </div>
+                        </div>
+
+                            <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed')}}">
+
+                            <div  hidden="{{_OptionalDiv(data.AssignA.*,'AssignRt','Assign without permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person.
+
+                                    {{_FormatReplace(data.AssignA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign transfer or part with:','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </li>
+                            </div>
+
+                            <div  hidden="{{_OptionalDiv(data.AssignA.*,'AssignRt','Assign with permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person without
+                                    previously obtaining such written consent of the Lessor, where such consent shall not be unreasonably withheld by the Lessor.Consent by Lessor to one such assignment ortransfer shall not
+                                    be deemed to be a consent to any subsequent assignment or transfer. An assignment or transfer without the prior written consent of Lessor or license by operation of law shall be absolutely
+                                    null and void and shall, at Lessor&rsquo;s option, terminate this Deed and start the eviction process.</li>
+                                {{_FormatReplace(data.AssignA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign transfer or part with:','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignA.*,'AssignRt','Cannot Assign')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person.
+                                    {{_FormatReplace(data.AssignA.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to assign transfer or part with:','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}</li>
+
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignA.*,'AssignRt','Assign without permission')}}">
+
+                                <p>Provided further that after the building/s to be constructed on the demised premises, if any, is/are completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to, without such
+                                    consent or permission, assign, transfer the possession of the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.AssignA.*,data.Lessee.*,'','','BuildingAssignRtWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.
+                                <div hidden="{{_OptionalDiv(data.AssignA.*,'BuildingAssignRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.AssignA.*,'RatioOne',-1)}}% of leesee and {{_Format(data.AssignA.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.AssignA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign :- ','','AreaPremiseWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                                </p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignA.*,'AssignRt','Assign with permission')}}">
+
+                                <p>Provided further that after the building/s to be constructed on the demised premises, if any, is/are completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to, only with such written
+                                    consent from the Lessor, assign, transfer the possession of the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.AssignA.*,data.Lessee.*,'','','BuildingAssignRtWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.
+                                <div hidden="{{_OptionalDiv(data.AssignA.*,'BuildingAssignRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.AssignA.*,'RatioOne',-1)}}% of leesee and {{_Format(data.AssignA.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.AssignA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign :- ','','AreaPremiseWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                                </p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignA.*,'AssignRt','Cannot Assign')}}">
+
+                                <p>Provided further that the {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to sell, assign or transfer the possession of the constructed premises, or any part thereof to third parties for the
+                                    benefit of any of the parties or any third party.</p>
+
+                                {{_FormatReplace(data.AssignA.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to assign :- ','','AreaPremiseCS',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                            </div>
+                        </div>
+
+                        <!--point 20 AWP-->
+                        <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed with written permission from lessor')}}">
+
+                            <div  hidden="{{_OptionalDiv(data.AssignAWP.*,'AssignRt','Assign without permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person.
+                                    {{_FormatReplace(data.AssignAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign transfer or part with:','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignAWP.*,'AssignRt','Assign with permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person without
+                                    previously obtaining such written consent of the Lessor, where such consent shall not be unreasonably withheld by the Lessor.Consent by Lessor to one such assignment ortransfer shall not
+                                    be deemed to be a consent to any subsequent assignment or transfer. An assignment or transfer without the prior written consent of Lessor or license by operation of law shall be absolutely
+                                    null and void and shall, at Lessor&rsquo;s option, terminate this Deed and start the eviction process.</li>
+                                {{_FormatReplace(data.AssignAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign transfer or part with:','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignAWP.*,'AssignRt','Cannot Assign')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to assign, transfer or part with the possession of the demised premises or any part thereof to any person.
+                                    {{_FormatReplace(data.AssignA.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to assign transfer or part with:','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                <p>&nbsp;
+                            </div>
+
+
+                            <div  hidden="{{_OptionalDiv(data.AssignAWP.*,'AssignRt','Assign without permission')}}">
+
+                                <p>Provided further that after the building/s to be constructed on the demised premises, if any, is/are) completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to, without such
+                                    consent or permission, assign, transfer the possession of the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.AssignAWP.*,data.Lessee.*,'','','BuildingAssignRtWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.
+                                <div hidden="{{_OptionalDiv(data.AssignAWP.*,'BuildingAssignRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.AssignAWP.*,'RatioOne',-1)}}% of leesee and {{_Format(data.AssignAWP.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.AssignAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign :- ','','AreaPremiseWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                                </p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignAWP.*,'AssignRt','Assign with permission')}}">
+
+                                <p>Provided further that after the building/s to be constructed on the demised premises, if any, isare completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to, only with such written
+                                    consent from the Lessor, assign, transfer the possession of the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.AssignAWP.*,data.Lessee.*,'','','BuildingAssignRtWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.
+                                <div hidden="{{_OptionalDiv(data.AssignAWP.*,'BuildingAssignRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.AssignAWP.*,'RatioOne',-1)}}% of leesee and {{_Format(data.AssignAWP.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.AssignAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to assign :- ','','AreaPremiseWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.AssignAWP.*,'AssignRt','Cannot Assign')}}">
+
+                                <p>Provided further that the {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to sell, assign or transfer the possession of the constructed premises, or any part thereof to third parties for the
+                                    benefit of any of the parties or any third party.</p>
+                                <p> {{_FormatReplace(data.AssignAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to assign :- ','','AreaPremiseCS',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}  </p>
+                            </div>
+                        </div>
+                        <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed')}}">
+
+                            <div  hidden="{{_OptionalDiv(data.MortgageA.*,'MortgageRt','Mortgage without permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to mortgage the demised premises or any part thereof to any person.
+                                    {{_FormatReplace(data.MortgageA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to mortgage:- ','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageA.*,'MortgageRt','Mortgage with permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled tomortgage the demised premises or any part thereof to any person without previously obtaining such written consent of the Lessor. Consent by Lessor to one such mortgage shall not be deemed to be a consent to any subsequent mortgage.
+                                    A mortgage without the prior written consent of Lessor or license by operation of law shall be absolutely null and void and shall, at Lessor&rsquo;s option, terminate this
+                                    Deed and start the eviction process.</li>
+                                <p>    {{_FormatReplace(data.MortgageA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to mortgage:','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}</p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageA.*,'MortgageRt','Cannot Mortgage')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to mortgage the demised premises or any part thereof to any person.
+                                <p>    {{_FormatReplace(data.MortgageA.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to mortgage::- ','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}</p>
+                            </div>
+
+                            <div  hidden="{{_OptionalDiv(data.MortgageA.*,'MortgageRt','Mortgage without permission')}}">
+
+                                <p>Provided further that after the building/s to be constructed on the demised premises, if any, is/(are) completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled, without such consent or permission, to
+                                    mortgage the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.MortgageA.*,data.Lessee.*,'','','buildingRtWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.
+                                <div hidden="{{_OptionalDiv(data.MortgageA.*,'buildingRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.MortgageA.*,'RatioOne',-1)}}% of leesee and {{_Format(data.MortgageA.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.MortgageA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to mortgage:','','AreaPremiseWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                                </p>
+                                <p>&nbsp;</p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageA.*,'MortgageRt','Mortgage with permission')}}">
+
+                                <p>Provided further that after the building/s to be constructed on the demised premises, if any, is/are completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled, only with such written consent
+                                    from the Lessor, to mortgage the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.MortgageA.*,data.Lessee.*,'','','buildingRtWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.
+                                <div hidden="{{_OptionalDiv(data.MortgageA.*,'buildingRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.MortgageA.*,'RatioOne',-1)}}% of leesee and {{_Format(data.MortgageA.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.MortgageA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to mortgage:','','AreaPremiseWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageA.*,'MortgageRt','Cannot Mortgage')}}">
+
+                                <p>Provided further that the {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to mortgage the constructed premises, or any part thereof to third parties for the benefit of any of the parties or any third party.</p>
+                                <p>
+                                    {{_FormatReplace(data.MortgageA.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to mortgage:','','AreaPremiseWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!--point 21 AWP-->
+                        <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed with written permission from lessor')}}">
+
+                            <div  hidden="{{_OptionalDiv(data.MortgageAWP.*,'MortgageRt','Mortgage without permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to mortgage the demised premises or any part thereof to any person.
+                                    {{_FormatReplace(data.MortgageAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to mortgage::- ','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}</li>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageAWP.*,'MortgageRt','Mortgage with permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled tomortgage the demised premises or any part thereof to any person without previously obtaining such written consent of the Lessor. Consent by Lessor to one such mortgage shall not be deemed to be a consent to any subsequent mortgage.
+                                    A mortgage without the prior written consent of Lessor or license by operation of law shall be absolutely null and void and shall, at Lessor&rsquo;s option, terminate this
+                                    Deed and start the eviction process.</li>
+                                <p>    {{_FormatReplace(data.MortgageAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to mortgage::- ','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}</p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageAWP.*,'MortgageRt','Cannot Mortgage')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to mortgage the demised premises or any part thereof to any person.
+                                <p>    {{_FormatReplace(data.MortgageAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to mortgage::- ','','AreaPremise',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}</p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageAWP.*,'MortgageRt','Mortgage without permission')}}">
+
+                                <p>Provided further that after the building/s to be constructed on the demised premises, if any, is/(are) completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled, without such consent or permission, to
+                                    mortgage the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.MortgageAWP.*,data.Lessee.*,'','','buildingRtWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.
+                                <div hidden="{{_OptionalDiv(data.MortgageAWP.*,'buildingRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.MortgageAWP.*,'RatioOne',-1)}}% of leesee and {{_Format(data.MortgageAWP.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.MortgageAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to mortgage:','','AreaPremiseWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                                </p>
+                                <p>&nbsp;</p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageAWP.*,'MortgageRt','Mortgage with permission')}}">
+
+                                <p>Provided further that after the building/s to be constructed on the demised premises, if any, is/are completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled, only with such written consent
+                                    from the Lessor, to mortgage the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.MortgageAWP.*,data.Lessee.*,'','','buildingRtWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.
+                                <div hidden="{{_OptionalDiv(data.MortgageAWP.*,'buildingRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.MortgageAWP.*,'RatioOne',-1)}}% of leesee and {{_Format(data.MortgageAWP.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.MortgageAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to mortgage:','','AreaPremiseWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                                </p>
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.MortgageAWP.*,'MortgageRt','Cannot Mortgage')}}">
+
+                                <p>Provided further that the {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to mortgage the constructed premises, or any part thereof
+                                    to third parties for the benefit of any of the parties or any third party.</p>
+                                <p>{{_FormatReplace(data.MortgageAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to mortgage:','','AreaPremiseCS',-1,'[Lessee/Lessees]','_LesseeOrLessees')}} </p>
+                            </div>
+                        </div>
+                        <div>
+
+                            <div hidden="{{_OptionalDiv(data.Sublease.*,'Menu','Sublease without permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to execute a sub-lease in respect of the demised premises or any part thereof to any person.</li>
+                                <p>
+                                    {{_FormatReplace(data.Sublease.*,data.Lessee.*,'owever the [Lessee/Lessees] shall not be entitled to execute a
+                                    sub-lease in respect of the demised premises or any part thereof for a period more than','','CantSlWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                                </p>
+                                <p>
+
+                                    {{_FormatReplace(data.Sublease.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to execute a sub-lease in respect of: ','','AreaPremisesWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </p>
+                                <div hidden="{{_OptionalDiv(data.Sublease.*,'PaymentWtp','Yes')}}">
+                                    <p>The {{_LesseeOrLessees(data.Lessee.*)}} shall pay to the Lessor a sum of Rs.{{_Format(data.Sublease.*,'AmountPaidWtp',-1)}} as a {{_Format(data.Sublease.*,'MenuWtp',-1)}} fee for granting such permission to execute a sub-lease
+                                        in respect of the demised premises or any part thereof.</p>
+                                </div>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.Sublease.*,'Menu','Sublease with permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to execute a sub-lease in respect of the demised premises or any part thereof to any person without previously
+                                    obtaining such written consent of the Lessor, where such consent shall not be unreasonably withheld by the Lessor.</li>
+                                <p>
+                                    {{_FormatReplace(data.Sublease.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to execute a
+                                    sub-lease in respect of the demised premises or any part thereof for a period more than','','CantSlWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </p>
+                                <p>
+                                    {{_FormatReplace(data.Sublease.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to execute a sub-lease in respect of: ','','AreaPremisesWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </p>
+                                <div hidden="{{_OptionalDiv(data.Sublease.*,'PaymentWp','Yes')}}">
+                                    <p>The Lessee shall pay to the Lessor a sum of Rs.{{_Format(data.Sublease.*,'AmountPaidWp',-1)}} as a {{_Format(data.Sublease.*,'MenuWp',-1)}} fee for granting such permission to execute a sub-lease
+                                        in respect of the demised premises or any part thereof.</p>
+                                </div>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.Sublease.*,'Menu','Cant sublease')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to execute a sub-lease in respect of the demised premises or any part thereof to any person.</li>
+
+                                {{_FormatReplace(data.Sublease.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to execute a sub-lease
+                                in respect of: ','','AreaPremisesCs',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                            </div>
+                        </div>
+                        <!-- point 23  by abhishek -->
+                        <div>
+                            <div hidden="{{_OptionalDiv(data.Sublease.*,'Menu','Sublease with permission')}}">
+
+
+
+                                <li>The personal liability of the Lessee to pay the lease rent will be absolute and will not be affected by the Lessee
+                                    granting by sub-demise any portion of the demised land or any shed or structure thereon and notwithstanding the consent given to sub-lease or by
+                                    the assignment of the demised land or any portion thereof, the said liability will continue unabated.</li>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.Sublease.*,'Menu','Sublease without permission')}}">
+                                <li>The personal liability of the Lessee to pay the yearly lease rent will be absolute and will not be affected by
+                                    the Lessee granting by sub-demise any portion of the demised land or any shed or structure thereon or by the assignment of the demised land or
+                                    any portion thereof, the said liability will continue unabated.</li>
+                            </div>
+                        </div>
+                        <div>
+                            <!-- point 24 by abhishek -->
+                            <div hidden="{{_OptionalDiv(data.Sublet.*,'Menu','Sublet without permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to sub-let the demised premises or any part thereof to any person on Leave License basis.
+
+                                    {{_FormatReplace(data.Sublet.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to sub-let the demised premises or any part thereof for a period mor
+                                    e than : ','','CantSlWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                    {{_FormatReplace(data.Sublet.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to execute a sub-let: ','','AreaPremisesWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </li>
+                                <div hidden="{{_OptionalDiv(data.Sublet.*,'PaymentWtp','Yes')}}">
+                                    <p>The Lessee shall pay to the Lessor a sum of Rs.{{_Format(data.Sublet.*,'AmountPaidWtp',-1)}} as a {{_Format(data.Sublet.*,'MenuWtp',-1)}} fee for granting such permission to sub-let the demised premises or any part thereof.</p>
+                                </div>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.Sublet.*,'Menu','Sublet with permission')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to sub-let the demised premises or any part thereof to any person without previously obtaining such written consent of the Lessor,
+                                    where such consent shall not be unreasonably withheld by the Lessor.
+
+                                    {{_FormatReplace(data.Sublet.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to sub-let the demised premises or any
+                                    part thereof for a period more than : ','','CantSlWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                    {{_FormatReplace(data.Sublet.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to execute a sub-let: ','','AreaPremisesWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </li>
+                                <div hidden="{{_OptionalDiv(data.Sublet.*,'PaymentWp','Yes')}}">
+                                    <p> The Lessee shall pay to the Lessor a sum of Rs.{{_Format(data.Sublet.*,'AmountPaidWp',-1)}} as a {{_Format(data.Sublet.*,'MenuWp',-1)}} fee for granting such permission to sub-let the
+                                        demised premises or any part thereof.</p>
+                                </div>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.Sublet.*,'Menu','Cant Sublet')}}">
+
+                                <li>The {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to sub-let the demised premises or any part thereof to any person.</li>
+                                <p>
+                                    {{_FormatReplace(data.Sublet.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to execute a sub-let: ','','AreaPremisesCs',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                                </p>
+                            </div>
+
+                        </div>
+                        <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed')}}">
+
+                            <div  hidden="{{_OptionalDiv(data.SellRtA.*,'SellRt','Selling rights present without permission')}}">
+
+                                <li>Provided further that after the building/s to be constructed on the demised premises,
+                                    if any, is/are completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to, without such consent or permission, to sell the constructed premises, or
+                                    any part thereof to third parties for the  {{_FormatReplace(data.SellRtA.*,data.Lessee.*,'','','BuildingSellRtWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.</li>
+                                <div hidden="{{_OptionalDiv(data.SellRtA.*,'BuildingSellRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                {{_Format(data.SellRtA.*,'RatioOne',-1)}}% of leesee and {{_Format(data.SellRtA.*,'RatioTwo',-1)}}% of lessor
+                                  </div>
+                                    {{_FormatReplace(data.SellRtA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to sell :- ','','AreaPremiseWTP',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                            </div>
+
+                            <div  hidden="{{_OptionalDiv(data.SellRtA.*,'SellRt','Selling rights present with permission')}}">
+
+                                <li>Provided further that after the building/s to be constructed on the demised premises, if any, is completed, the {{_LesseeOrLessees(data.Lessee.*)}}
+                                    shall be entitled, only with such written consent from the Lessor, to sell the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.SellRtA.*,data.Lessee.*,'','','BuildingSellRtWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.</li>
+                                <div hidden="{{_OptionalDiv(data.SellRtA.*,'BuildingSellRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                {{_Format(data.SellRtA.*,'RatioOne',-1)}}% of leesee and {{_Format(data.SellRtA.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                Consent by Lessor to one such sale shall not be deemed to be a consent to any subsequent sale.{{_FormatReplace(data.SellRtA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to sell :- ','','AreaPremiseWP',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.SellRtA.*,'SellRt','Cannot Sell')}}">
+                                <li>Provided further that the {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to sell the constructed premises, or any part thereof to third parties for the benefit of any of the parties or any third party.
+                                    {{_FormatReplace(data.SellRtA.*,data.Lessee.*,'However the [Lessee/Lessees] shall be entitled to sell :- ','','AreaPremiseCS',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}</li>
+                            </div>
+                        </div>
+                        <div  hidden="{{_OptionalDiv(data.ConsRt.*,'RtToCons','Allowed with written permission from lessor')}}">
+                            <div  hidden="{{_OptionalDiv(data.SellRtAWP.*,'SellRt','Selling rights present without permission')}}">
+                                <li>Provided further that after the building/(s) to be constructed on the demised premises,
+                                    if any, is/(are) completed, the {{_LesseeOrLessees(data.Lessee.*)}} shall be entitled to, without such consent or permission, to sell the constructed premises, or
+                                    any part thereof to third parties for the  {{_FormatReplace(data.SellRtAWP.*,data.Lessee.*,'','','BuildingSellRtWtp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.</li>
+                                <div hidden="{{_OptionalDiv(data.SellRtAWP.*,'BuildingSellRtWtp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                    {{_Format(data.SellRtAWP.*,'RatioOne',-1)}}% of leesee and {{_Format(data.SellRtAWP.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                    {{_FormatReplace(data.SellRtAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to sell :- ','','AreaPremiseWTP',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+                            </div>
+
+                            <div  hidden="{{_OptionalDiv(data.SellRtAWP.*,'SellRt','Selling rights present with permission')}}">
+
+                                <li>Provided further that after the building/s to be constructed on the demised premises, if any, is completed, the {{_LesseeOrLessees(data.Lessee.*)}}
+                                    shall be entitled, only with such written consent from the Lessor, to sell the constructed premises, or any part thereof to third parties for the
+                                    {{_FormatReplace(data.SellRtAWP.*,data.Lessee.*,'','','BuildingSellRtWp',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}.</li>
+                                <div hidden="{{_OptionalDiv(data.SellRtAWP.*,'BuildingSellRtWp','the  [Lessee/Lessees] and the Lessor sharing profits in the ratio')}}">
+                                {{_Format(data.SellRtAWP.*,'RatioOne',-1)}}% of leesee and {{_Format(data.SellRtAWP.*,'RatioTwo',-1)}}% of lessor
+                                </div>
+                                Consent by Lessor to one such sale shall not be deemed to be a consent to any subsequent sale.{{_FormatReplace(data.SellRtA.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to sell :- ','','AreaPremiseWP',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}
+
+                            </div>
+                            <div  hidden="{{_OptionalDiv(data.SellRtAWP.*,'SellRt','Cannot Sell')}}">
+                                <li>Provided further that the {{_LesseeOrLessees(data.Lessee.*)}} shall not be entitled to sell the constructed premises, or any part thereof to third parties for the benefit of any of the parties or any third party.
+                                    {{_FormatReplace(data.SellRtAWP.*,data.Lessee.*,'However the [Lessee/Lessees] shall not be entitled to sell :- ','','AreaPremiseCS',-1,'[Lessee/Lessees]','_LesseeOrLessees')}}</li>
+                            </div>
+                        </div>
+                        <!--point 26 -->
+                    <!--incomplete rights part-->
+                    <li>The {{_LesseeOrLessees(data.Lessee.*)}} will, at the expiration or sooner determination of the said lease term, surrender and deliver up to the Lessor the said demised premises</li>
+                        <ol type="a">
+                            <div hidden="{{_OptionalDiv(data.Surrender.*,'Options','Transfer possession')}}">
+
+                                <p>together with all buildings and erections which shall have been built thereon during the said term and all drains and appurtenances thereto in such good and substantial repair and condition and so maintained, saved and cleansed and in all respects in such state and condition as shall be consistent with the due performance of the several covenants hereinbefore contained, with consideration to normal wear and tear.</p>
+                                <div>
+                                    <div hidden="{{_OptionalDiv(data.Surrender.*,'IsCompensation','Yes')}}">
+                                        {{_Format(data.Surrender.*,'Compensation',-1)}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.Surrender.*,'Options','Don’t transfer possession')}}">
+
+
+                                <p>together with all buildings and erections which shall have been already existing prior to the said term and all drains and appurtenances thereto in such good and substantial repair and condition and so maintained, saved and cleansed and in all respects in such state and condition as shall be consistent with the due performance of the several covenants hereinbefore contained, with consideration to normal wear and tear, but no buildings and erections which have been built thereon during the said term shall be surrendered, that is, the {{_LesseeOrLessees(data.Lessee.*)}} shall maintain possession of the all structures built thereon by the Lessee during the said term.</p>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.Surrender.*,'Options','Create own clause')}}">
+                                <ol type="i">
+
+                                    <li>excluding the following, the possession of which shall lie with the Lessee after the termination of this Lease:</li>
+                                    <ol>
+                                    <template is="dom-repeat" items="{{data.Surrender.AddExclude}}" index-as="ExcludeIndex">
+                                        <template is="dom-if" if="{{_IsProperty(data.Surrender.*,'Exclude')}}"><li>{{_Format(data.Surrender.*,'Exclude',ExcludeIndex)}}</li></template>
+                                    </template>
+                                    </ol>
+                                    <p>The Lessee shall have the right to rights OR The Lessee shall have no rights in respect of this property.</p>
+
+                                    <ol>
+                                    <li>including the following:</li>
+                                    <template is="dom-repeat" items="{{data.Surrender.AddInclude}}" index-as="IncludeIndex">
+                                        <template is="dom-if" if="{{_IsProperty(data.Surrender.*,'Include')}}"><li>{{_Format(data.Surrender.*,'Include',IncludeIndex)}}</li></template>
+                                    </template>
+                                    </ol>
+                                    <p>In the event of the {{_LesseeOrLessees(data.Lessee.*)}} failing and/or neglecting to remove {{_GetLesseeGender(data.Lessee.*,'himself/herself/itself/themselves')}} and/or {{_GetLesseeGender(data.Lessee.*,'his/her/its/their')}} articles from the
+                                        said premises (within {{_Format(data.Surrender.*,'Period',-1)}} of the OR on the expiry or sooner determination of this Deed, the Lessor shall be entitled to recover damages
+                                        at  {{_Format(data.Surrender.*,'Amount',-1)}} {{_Format(data.Surrender.*,'PeriodTypeAmt',-1)}} the Lessor shall be entitled to
+                                        remove the {{_LesseeOrLessees(data.Lessee.*)}} and {{_GetLesseeGender(data.Lessee.*,'his/her/its/their')}} belongings from the demised premises.</p>
+                                    <p>&nbsp;</p>
+
+                                </ol>
+                            </div>
+                        </ol>
+                        <div>
+
+                            <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'Party','Either')}}">
+                                <li>Either of the parties can terminate this Lease Deed by giving {{_Format(data.TerminationOfLeases.*,'NoticePeriodDaysA',-1)}} {{_Format(data.TerminationOfLeases.*,'NoticePeriodA',-1)}}. notice to the other party in writing
+                                    {{_FormatString(data.TerminationOfLeases.*,' after a lock in period of ','','LockInPeriodA',-1)}}</li>
+                                <div>
+                                    <ol>  <li>In the event of termination wherein the termination takes place at the option of the {{_LesseeOrLessees(data.Lessee.*)}}, the {{_LesseeOrLessees(data.Lessee.*)}} shall</li>
+
+                                        <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'EitherLessee','Get a replacement prospective Lessee for the demised premises. The Lessor shall not reject such prospective Lessee unreasonably. In case such a prospective Lessee isnt found the Lessee shall')}}">
+                                            <p> get a replacement prospective Lessee for the demised premises. Such prospective Lessee shall not be rejected by the Lessor unreasonably. In case such a prospective
+                                                Lessee isn&rsquo;t found, the {{_LesseeOrLessees(data.Lessee.*)}} shall
+                                            <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'EitherLesseeA','continue the Lease for such period as decided mutually')}}">
+                                                continue the Lease for such period as decided mutually
+                                            </div>
+                                            <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'EitherLesseeA','pay to the Lessor a sum of Rs')}}"> pay to the Lessor a sum of Rs.{{_Format(data.TerminationOfLeases.*,'EitherLesseeAAmmount',-1)}}.</div>
+                                            <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'EitherLesseeA','Pay to the Lessor the rent of period')}}"> pay to the Lessor
+                                                the rent of {{_Format(data.TerminationOfLeases.*,'ERentLesseeA',-1)}} {{_Format(data.TerminationOfLeases.*,'ERentPeriodLesseeA',-1)}}.
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'EitherLessee','Pay to the Lessor a sum of Rs')}}">
+                                            <p>pay to the Lessor a sum of Rs. {{_Format(data.TerminationOfLeases.*,'EAmntLessee',-1)}}
+                                            </p>
+                                        </div>
+                                        <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'EitherLessee','Pay to the Lessor the rent of period')}}">
+                                            <p>the rent of {{_Format(data.TerminationOfLeases.*,'ERentLesseeC',-1)}} {{_Format(data.TerminationOfLeases.*,'ERentPeriodLesseeC',-1)}}</p>
+                                        </div>
+
+
+                                        <li>In the event of termination wherein the termination takes place at the option of the Lessor the Lessor shall </li>
+
+                                        <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'EitherLessor','Pay to the Lessee a sum of Rs')}}">  pay to the{{_LesseeOrLessees(data.Lessee.*)}} a sum of Rs.{{_Format(data.TerminationOfLeases.*,'EAmntLessor',-1)}}</div>
+                                        <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'EitherLessor','Get replacement premises similar to the demised premises for the Lessee to move in. The failure to do so shall make the Lessor liable to the Lessee
+                                 for a sum of Rs')}}">
+                                            get a
+                                            replacement premises, similar to the demised premises, for the {{_LesseeOrLessees(data.Lessee.*)}} to move in. The failure to do so shall make the Lessor liable to the {{_LesseeOrLessees(data.Lessee.*)}} for a sum of
+                                            Rs.{{_Format(data.TerminationOfLeases.*,'EAmntReplaceLessor',-1)}}.
+                                        </div>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'Party','None of the parties can terminate the lease deed')}}">
+                                <p>&nbsp;None of the parties can terminate this Lease Deed by giving notice to the other party in writing
+                                    {{_FormatString(data.TerminationOfLeases.*,'except in exceptional circumstances: ','','None',-1)}}
+                                </p>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'Party','Lessor')}}">
+                                <p>The [Lessor/s] can terminate this Lease Deed by giving
+                                    {{_Format(data.TerminationOfLeases.*,'NoticePeriodDaysC',-1)}} {{_Format(data.TerminationOfLeases.*,'NoticePeriodC',-1)}}. notice to the other party in writing
+                                    {{_FormatString(data.TerminationOfLeases.*,' after a lock in period of ','','LockInPeriodC',-1)}}</p>
+                                . In the event of such termination, the Lessor shall
+                                <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'OnlyLessor','Pay to the Lessee a sum of Rs')}}">
+                                    pay to the{{_LesseeOrLessees(data.Lessee.*)}} a sum of Rs.{{_Format(data.TerminationOfLeases.*,'EAmntOnlyLessor',-1)}}
+                                </div>
+                                <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'OnlyLessor','Get replacement premises similar to the demised premises for the Lessee to move in. The failure to do so shall make the Lessor liable to the Lessee
+                                 for a sum of Rs')}}">
+                                    get a replacement premises,
+                                    similar to the demised premises, for the {{_LesseeOrLessees(data.Lessee.*)}} to move in. The failure to do so shall make the Lessor liable to the {{_LesseeOrLessees(data.Lessee.*)}} for a sum of Rs.{{_Format(data.TerminationOfLeases.*,'EAmntReplaceOnlyLessor',-1)}}.</p>
+                                </div>
+                            </div>
+                            <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'Party','Lessee')}}">
+                                <p>The {{_LesseeOrLessees(data.Lessee.*)}} can terminate this Lease Deed by giving {{_Format(data.TerminationOfLeases.*,'NoticePeriodDaysD',-1)}} {{_Format(data.TerminationOfLeases.*,'NoticePeriodD',-1)}}. notice to the other party in writing
+                                    {{_FormatString(data.TerminationOfLeases.*,' after a lock in period of ','','LockInPeriodD',-1)}}</p>
+                                . In the event of such termination, the {{_LesseeOrLessees(data.Lessee.*)}} shall</p>
+
+                                <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'OnlyLessee','Get a replacement prospective Lessee for the demised premises. The Lessor shall not reject such prospective Lessee unreasonably. In case such a prospective Lessee isnt found the Lessee shall')}}">
+                                    <p>get a replacement prospective Lessee for the demised premises. Such prospective Lessee shall not be rejected by the Lessor unreasonably. In case such a prospective Lessee
+                                        isn&rsquo;t found, the {{_LesseeOrLessees(data.Lessee.*)}} shall
+                                    <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'OnlyLesseeA','continue the Lease for such period as decided mutually')}}">
+                                        continue the Lease for such period as decided mutually
+                                    </div>
+                                    <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'OnlyLesseeA','pay to the Lessor a sum of Rs')}}">
+                                        pay to the Lessor a sum of Rs.{{_Format(data.TerminationOfLeases.*,'OnlyLesseeAAmmount',-1)}}.
+                                    </div>
+                                    <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'OnlyLesseeA','Pay to the Lessor the rent of period')}}">
+                                        pay to the Lessor the rent
+                                        of {{_Format(data.TerminationOfLeases.*,'ERentOnlyLesseeA',-1)}} {{_Format(data.TerminationOfLeases.*,'ERentPeriodOnlyLesseeA',-1)}}.
+                                    </div>
+                                    </p>
+
+                                </div>
+                                <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'OnlyLessee','Pay to the Lessor a sum of Rs')}}">
+                                    <p>pay to the Lessor a sum of Rs.Amount {{_Format(data.TerminationOfLeases.*,'EAmntOnlyLessee',-1)}}. </p>
+                                </div>
+                                <div hidden="{{_OptionalDiv(data.TerminationOfLeases.*,'OnlyLessee','Pay to the Lessor the rent of period')}}">
+                                    <p>the rent of {{_Format(data.TerminationOfLeases.*,'ERentOnlyLesseeC',-1)}} {{_Format(data.TerminationOfLeases.*,'ERentPeriodOnlyLesseeC',-1)}}.</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!--point 28-->
+                    <div hidden="{{_OptionalDiv(data.LeaseRen.*,'IsRenew','Yes')}}">
+                        <li>This lease deed can be renewed at the end of the lease term at the option of the {{_Format(data.LeaseRen.*,'RenewBy',-1)}} for a period of {{_Format(data.LeaseRen.*,'Period',-1)}} {{_Format(data.LeaseRen.*,'PeriodType',-1)}} and at a {{_Format(data.LeaseRen.*,'NewRent',-1)}}.
+                            The ({{_LesseeOrLessees(data.Lessee.*)}} OR Lessor must give at least (Period in days/month/years notice of intension to renew the lease.</li>
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.LeaseRen.*,'IsRenew','No')}}">
+                        <li>This lease deed cannot be renewed at the end of the lease term at the option of any of the parties. However, the parties are free to enter into another agreement, deed of any kind after the end of the lease term, earlier determination there on.</li>
+                    </div>
+
+
+                    <!--point 29-->
+                    <div hidden="{{_OptionalDiv(data.BuyingOp.*,'Option','On Completion')}}">
+
+                        <li>On the completion of this lease (or earlier termination thereof, as the case maybe – wont come if termination cannot be done by any party), the {{_LesseeOrLessees(data.Lessee.*)}} jointly shall have the option to purchase the reversion in respect of the demised premises or any part or parts thereof at {{_Format(data.BuyingOp.*,'Payment',-1)}}.
+                        Such buying option shall require the {{_LesseeOrLessees(data.Lessee.*)}} to give appropriate notice of intention to the Lessor in writing at least {{_Format(data.BuyingOp.*,'NoticePeriod',-1)}}{{_Format(data.BuyingOp.*,'PeriodType',-1)}} prior to the exercise of such option. At the exercise of such an option, the Lessor shall, in respect of the demised land or any portion therefore so purchased, execute a deed of conveyance and/or conveyances in respect thereof in favour of the Lessee/s who has exercised the option or {{_GetLesseeGender(data.Lessee.*,'his/her/its/their')}} nominee(s) and that at the time of execution of such conveyance the Lessor shall make out a marketable title in respect of the portion so to be purchased. Provided further that the stamp and registration charges in respect of such conveyance shall be borne and paid by {{_Format(data.BuyingOp.*,'Charges',-1)}}.
+                        </li>
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.BuyingOp.*,'Option','Anytime in between')}}">
+                        <li>
+                            At any time during subsistence of this demise the {{_LesseeOrLessees(data.Lessee.*)}} shall have the option to purchase the reversion in respect of the demised land or any part or parts thereof on payment to the Lessor of {{_Format(data.BuyingOp.*,'Payment',-1)}}. Such buying option shall require the {{_LesseeOrLessees(data.Lessee.*)}} to give appropriate notice of intention to the Lessor in writing at least {{_Format(data.BuyingOp.*,'NoticePeriodAny',-1)}}{{_Format(data.BuyingOp.*,'PeriodTypeAny',-1)}} prior to the exercise of such option. At the exercise of such an option, the Lessor shall in respect of the demised land or any portion so purchased, execute a deed or conveyance and/or conveyances in respect thereof in favour of the Lessee/s who has exercised the option and that at the time of execution of each such conveyance the Lessor shall make out a marketable title in respect of the portion so to be purchased. Provided further that the stamp and registration charges In respect of such conveyance shall be borne and paid by {{_Format(data.BuyingOp.*,'ChargesAny',-1)}}. Provided further that, in the event of purchase of the reversion in respect of any portion of the demised premises the lease rent hereby agreed to be paid shall be proportionately reduced.
+                        </li>
+                    </div>
+                    <!--point 30 security deposit-->
+                        <div hidden="{{_OptionalDiv(data.Deposit.*,'IsDep','Yes')}}">
+
+
+                            <li>That on completion of this Deed or earlier termination thereof,
+                                as the case may be, the Lessor is free and entitled to recover and adjust from the amount of
+                                Security Deposit all arrears of Lease Rent, compensation and other dues, charges and expenses
+                                payable as provided in these presents or which may become payable by the  {{_LesseeOrLessees(data.Lessee.*)}} to the Lessor
+                                on account of any breach or default of the terms and conditions these presents by it or on account of any
+                                damages caused by the {{_LesseeOrLessees(data.Lessee.*)}} to the said demised premises or on account of any act of commission
+                                or omission by the  {{_LesseeOrLessees(data.Lessee.*)}} involving or incurring any responsibility, expenses or liability towards
+                                the Lessor. This provision is without prejudice to the Lessor&rsquo;s other rights.</li>
+                            <div hidden="{{_OptionalDiv(data.Deposit.*,'Refund','Refundable')}}">
+                                <p>If Security deposit is refundable: The Lessor is also liable to refund the security deposit to the  {{_LesseeOrLessees(data.Lessee.*)}},
+                                    after adjusting all the aforementioned amounts, after the lease period or
+                                    earlier termination thereof.</p>
+                                <div hidden="{{_OptionalDiv(data.Deposit.*,'RefundRoi','Yes')}}">
+                                    In case of any delay by the Lessor in refunding the security deposit after the termination of the lease,
+                                    <div hidden="{{_OptionalDiv(data.Deposit.*,'GracePeriod','Yes')}}">
+                                        after a period of {{_Format(data.Deposit.*,'GracePeriodValue',-1)}} {{_Format(data.Deposit.*,'GracePeriodUnit',-1)}}
+                                    </div>
+                                   <p> the Lessor is liable to pay, on the outstanding
+                                    security deposit amount, interest at the rate of {{_Format(data.Deposit.*,'RefundRoiInput',-1)}} % per annum to the
+                                       {{_LesseeOrLessees(data.Lessee.*)}} &ndash</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--point 31-->
+
+                    <li>If any dispute or difference shall arise between the Lessor and {{_LesseeOrLessees(data.Lessee.*)}} hereto with respect to the contents of this Deed and any actions, rights or duties arising out of this Deed or with respect to the interpretation of any provision hereof or otherwise, howsoever relating to the demise of the said property and other activities ancillary to it and incidental thereto, which cannot be resolved in terms of this deed, the same shall be referred to</li>
+
+                    <div hidden="{{_OptionalDiv(data.DisputeRes.*,'ResType','Mediation by a mediator')}}">mediation by a mediator</div>
+                    <div hidden="{{_OptionalDiv(data.DisputeRes.*,'ResType','Arbitral Tribunal')}}">an arbitral tribunal of {{_Format(data.DisputeRes.*,'Proceedings',-1)}} for arbitration and such arbitration shall be governed and regulated as per {{_Format(data.DisputeRes.*,'Regulation',-1)}}.</div>
+                    <div hidden="{{_OptionalDiv(data.DisputeRes.*,'ResType','Conciliation')}}">conciliation by {{_Format(data.DisputeRes.*,'ConciProceedings',-1)}} for arbitration and such arbitration shall be governed and regulated as per {{_Format(data.DisputeRes.*,'ConciRegulation',-1)}}.</div>
+                    <br>
+                    <!--point 32-->
+                    <div>
+                        <li>If any provision or clause of this Deed or the application thereof shall, for any reason and to any extent, be invalid or unenforceable, neither the remainder of this Deed nor the application of the provision to other persons, entities or circumstances shall be affected thereby, but instead shall be enforced to the maximum extent permitted by law.</li>
+                    </div>
+                    </ol>
+                    <div>
+                        <p>SCHEDULE OF PROPERTY</p>
+                        <p>Description of Property</p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <p>Bounded by:</p>
+                        <p>&nbsp;</p>
+                        <p>North:</p>
+                        <p>South:</p>
+                        <p>East:</p>
+                        <p>West:</p>
+                        <p>&nbsp;</p>
+                        <p>Lessor</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <u>{{_LesseeOrLessees(data.Lessee.*)}}</u></p>
+                    </div>
+
+                </div>
+
+
+            </paper-dialog-scrollable>
+        </paper-dialog>
+
+        </template>
+    <script>
+        Polymer({
+            is: "lease-deed-land-doc",
+            behaviors:[SuperBehavior],
+            _FormatCharges:function (x,a) {
+                var path=x.path.split(".")[1];
+
+               if(this.data[path][a])
+                    return this.data[path][a]+'% of '+a;
+
+            },
+            _LesseeType:function (x,a,b) {
+                if(this.data.Lessee.LesseeType){
+
+                    if(this.data.Lessee.LesseeType[b]==a){
+                        return false;
+                    }
+                    else return true;
+                }
+            },
+            _LessorType:function (x,a,b) {
+                if(this.data.Lessor.LessorType){
+
+                    if(this.data.Lessor.LessorType[b]==a){
+                        return false;
+                    }
+                    else return true;
+                }
+            },
+            _LesseeOrLessees:function (x) {
+                if(this.data.Lessee.AddOneLessee.length>1)return "lessees";
+                return "lessee";
+            },
+            _HisOrHer:function (x,a) {
+                var t=x.path.split(".")[1];
+                if(this.data[t][a]=="Male")return "his";
+                return "her";
+            },
+            _GetLesseeGender:function (x,a) {
+                var b=a.split('/');
+                if(this.data.Lessee.AddOneLessee.length>1){
+                    if(b.indexOf('their')!=-1)return 'their';
+                    else if(b.indexOf('themselves')!=-1)return 'themselves';
+                    else if(b.indexOf('they')!=-1)return 'they';
+                }
+                else{
+                    var type=this.data.Lessee.LesseeType;
+                    var gender="";
+                    if(this.data.Lessee['Gender'+type+'Title']){
+                        gender=this.data.Lessee['Gender'+type+'Title'];
+                    }
+                    return this.GetFromGenderVal(gender,a);
+                }
+            },
+            _GetLessorGender:function (x,a) {
+                var type=this.data.Lessor.LessorType;
+                var gender="";
+                if(this.data.Lessor['Gender'+type+'Title']){
+                    gender=this.data.Lessor['Gender'+type+'Title'];
+                }
+                return this.GetFromGenderVal(gender,a);
+            },
+            GetFromGenderVal:function (gender,a) {
+                var b=a.split('/');
+                if(gender=="Male"){
+                    if(b.indexOf('his')!=-1)return 'his';
+                    else if(b.indexOf('himself')!=-1)return 'himself';
+                    else if(b.indexOf('he')!=-1)return 'he';
+                }
+                else if(gender="Female"){
+                    if(b.indexOf('his')!=-1)return 'her';
+                    else if(b.indexOf('himself')!=-1)return 'herself';
+                    else if(b.indexOf('she')!=-1)return 'she';
+                }
+                else{
+                    if(b.indexOf('its')!=-1)return 'its';
+                    else if(b.indexOf('itself')!=-1)return 'itself';
+                    else if(b.indexOf('it')!=-1)return 'it';
+                }
+                return a;
+            },
+            _LesseeLength:function (x) {
+                if(this.data.Lessee.AddOneLessee.length<=1)return true;
+                return false;
+            }
+        });
+    </script>
+
+</dom-module>
+</body>
+</html>

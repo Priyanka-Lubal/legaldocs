@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+</head>
+<body>
+<dom-module id="expulsion-of-partner-doc">
+    <style>
+        span{
+            pointer-events: none;
+        }
+
+    </style>
+    <template>
+
+
+
+        <div id="EntireDoc" class="InnerDiv">
+            <p align="center"><strong><u>NOTICE FOR EXPULSION OF PARTNER</u></strong></p><br>
+            <p align="right">
+                <span title="Notice_Date_{{-1}}_Span">{{_Format(data.Notice.*,'DateDDMMYY',-1)}}</span></p>
+
+            <p>To <br>
+
+                <template is="dom-repeat" items="{{data.Addressee.AddOneAddressee}}">
+                    <span title="Addressee_Gender_{{index}}_Span">{{_Format(data.Addressee.*,'Gender',index)}}
+                    </span>
+                    <span title="Addressee_Name_{{index}}_Span">{{_Format(data.Addressee.*,'Name',index)}}</span><br>
+
+                    <div hidden="{{_OptionalDiv(data.Addressee.*,'Address','Residential',index)}}">
+                        {{_Format(data.Addressee.*,'AddresseeAddr',index)}}<br>
+                    </div>
+                    <div hidden="{{_OptionalDiv(data.Addressee.*,'Address','Office',index)}}">
+                        {{_Format(data.Addressee.*,'AddresseeAddr2',index)}}<br>
+                    </div>
+
+                </template>
+
+            <p align="left" >    Subject: Notice of expulsion and show cause for reasons mentioned below</p>
+            <span title="Addressee_Type_{{-1}}_Span">{{_Format(data.Addressee.*,'Type',-1)}}</span>
+            <span hidden="{{!_OneOrMoreInArray(data.Addressee.*,'AddOneAddressee')}}"><span hidden="{{_OptionalDiv(data.Addressee.*,'Gender','Mr')}}">sir</span><span hidden="{{_OptionalDiv(data.Addressee.*,'Gender','Shri')}}">sir</span>
+              <span hidden="{{_OptionalDiv(data.Addressee.*,'Gender','Ms')}}">Mam</span>   <span hidden="{{_OptionalDiv(data.Addressee.*,'Gender','Mrs')}}">Mam</span><span hidden="{{_OptionalDiv(data.Addressee.*,'Gender','Shrimati')}}">Mam</span>
+            </span>  <span hidden="{{_OneOrMoreInArray(data.Addressee.*,'AddOneAddressee')}}">Sir/Mam</span>
+            <br>
+            <span hidden="{{!_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">I</span><span hidden="{{_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">We</span> hereby give you notice that in bona fide exercise of the power and authority vested in
+            <span hidden="{{!_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">me</span><span hidden="{{_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">us</span>  by virtue of Clause &nbsp;<span title="Sender_clause_{{-1}}_Span">{{_Format(data.Sender.*,'Clause',-1)}}</span>  of the Deed of Partnership dated the <span title="Sender_Date_{{-1}}_Span">{{_Format(data.Sender.*,'DateDDMMYY',-1)}}</span> day of <span title="Sender_DateMonthW_{{-1}}_Span">{{_Format(data.Sender.*,'DateMonthW',-1)}}</span> , <span title="Sender_DateYear_{{-1}}_Span">{{_Format(data.Sender.*,'DateYear',-1)}}</span> and Section 33 of the Indian Partnership Act, 1932, <span hidden="{{!_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">I</span><span hidden="{{_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">We</span> the undersigned being the <span hidden="{{!_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}"><span title="Sender_Post_{{-1}}_Span">{{_Format(data.Sender.*,'Post',-1)}}</span></span><span hidden="{{_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">Majority of partners </span>
+            hereby determine the partnership heretofore subsisting between us and yourself as from the <span title="Expulsion_Date_{{-1}}_Span">{{_Format(data.Expulsion.*,'DateDDMMYY',-1)}}</span> day of <span title="Expulsion_DateMonthW_{{-1}}_Span">{{_Format(data.Expulsion.*,'DateMonthW',-1)}}</span> so far as you are concerned and expel you therefrom on the following grounds:<br>
+
+            1.
+            <span title="Expulsion_Reason_{{-1}}_Span">{{_Format(data.Expulsion.*,'Reason',-1)}}</span><br>
+
+            Thus, on the aforementioned grounds <span hidden="{{!_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">I</span><span hidden="{{_OneOrMoreInArray(data.Sender.*,'AddOneSender')}}">We</span> send you this notice of expulsion and ask you to show cause, within
+
+            <span hidden="{{_OptionalDiv(data.Expulsion.*,'Cause','Days',-1)}}">
+                {{_Format(data.Expulsion.*,'ExpulsionAddr',-1)}} days, with an elaborate explanation as to why such an action must not be taken.
+            </span><br><br>
+            <span hidden="{{_OptionalDiv(data.Expulsion.*,'Cause','Months',-1)}}">
+                {{_Format(data.Expulsion.*,'ExpulsionAddr2',-1)}} months, with an elaborate explanation as to why such an action must not be taken.
+            </span><br><br>
+
+            Yours Faithfully,<br>
+            <template is="dom-repeat" items="{{data.Sender.AddOneSender}}">
+
+                <span title="Sender_Name_{{index}}_Span">{{_Format(data.Sender.*,'Name',index)}}</span><br>
+                <span title="Sender_Post_{{index}}_Span">{{_Format(data.Sender.*,'Post',index)}}</span><br>
+
+            </template>
+
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "expulsion-of-partner-doc",
+            behaviors: [SuperBehavior]
+        })
+    </script>
+</dom-module>
+</body>
+</html>
+
+
+
+
+

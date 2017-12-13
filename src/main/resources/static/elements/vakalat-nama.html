@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="import" href="vakalat-nama-doc.html">
+    <link rel="import" href="SuperBehavior.html">
+    <link rel="stylesheet" href="../css/supercss.css">
+    <link rel="stylesheet" href="../css/speech-input.css">
+    <script src="../js/speech-input.js"></script>
+
+</head>
+<body>
+<dom-module id="vakalat-nama">
+    <template>
+        <style>
+            div.InnerDiv{
+                padding: 5% 5% 5% 5%;
+            }
+            paper-fab.blue {
+                --paper-fab-background: var(--paper-indigo-500);
+                --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+            }
+        </style>
+        <div id="OutputDiv" style="float:left;width: 42%;padding-left: 2%;height: 550px;overflow-y: auto">
+            <paper-material elevation="3">
+                <div style="position: relative;margin-left: 92%">
+                    <paper-fab class="blue" icon="add" style="position: fixed;bottom: 19%" on-tap="ZoomIn" mini></paper-fab>
+                    <br><br><br>
+                    <paper-fab class="blue" icon="remove" style="position: fixed;bottom: 10%" on-tap="ZoomOut" mini></paper-fab>
+                </div>
+                <div>
+                    <vakalat-nama-doc data="{{data}}"></vakalat-nama-doc>
+                </div>
+            </paper-material>
+        </div>
+        <div id="InputDiv" style="float:left;width: 42%;padding-left: 1%;height: 550px;overflow-y: auto">
+            <paper-material elevation="3">
+                <div id="Case" class="forIndex">
+                    <div class="InnerDiv">
+
+                        <h1>Case Details</h1>
+
+
+                        <paper-input class="speech-input" name="Case_Name" label="Name of the Court" on-keyup="HandleOnChange"></paper-input>
+                        <paper-input name="Case_jurisdiction" label="Jurisdiction" on-keyup="HandleOnChange"></paper-input>
+                        <label id="Case-reason-events"><b>ADD:&nbsp</b></label><br>
+                        <paper-dropdown-menu area-labeldby="title-label">
+                            <paper-listbox id="Case_Reason_Lb" class="dropdown-content" attr-for-selected="name"  selected="case number">
+                                <paper-item  name="case number">case number</paper-item>
+                                <paper-item  name="suit number ">suit number </paper-item>
+                                <paper-item  name="petition number">Petition number</paper-item>
+                                <paper-item  name="writ petition number">Writ Petition number</paper-item>
+                                <paper-item  name="caveat number">Caveat number</paper-item>
+                                <paper-item  name="complaint number">Complaint number</paper-item>
+                                <paper-item  name="Other">Add any other number</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <div id="Case_Reason_Div" >
+                            <paper-input name="Case_OtherReason" label="Any other reason" on-change="HandleOnChange"></paper-input>
+                        </div>
+                        <paper-input class="speech-input" name="Case_No" label="No" type="number" on-change="HandleOnChange"></paper-input>
+
+                        <br>
+
+
+                        <paper-date-picker-item icon="icons:today" id="Case_Date" date-format="DD-MM-YYYY" on-change="HandleDate"></paper-date-picker-item>
+                        <paper-input name="DatePlace_City" label="City" on-keyup="HandleOnChange"></paper-input>
+                    </div>
+                </div>
+                        <div id="Petitioner" class="forIndex">
+                            <div class="InnerDiv">
+
+                        <h1>Petitioner Details</h1>
+                        <label id="Petitioner-reason-events"><b>Add Case Petitioner:&nbsp</b></label><br>
+                        <paper-dropdown-menu area-labeldby="title-label">
+                            <paper-listbox id="Petitioner_Reason_Lb" class="dropdown-content" attr-for-selected="name"  selected="case number">
+                                <paper-item  name="Petitioner name">Name of the petitioner</paper-item>
+                                <paper-item  name="Name of plaintiff ">Name of the plaintiff </paper-item>
+                                <paper-item  name="Name of Appellant ">Name of Appellantt</paper-item>
+                                <paper-item  name="Name of Complainant ">Name of Complaint</paper-item>
+                                <paper-item  name="Name of Claimant ">Name of Claimant</paper-item>
+                                <paper-item  name="Add any other">Add any other</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                                <paper-input class="speech-input" name="Petitioner_Name" label="name" on-keyup="HandleOnChange"></paper-input>
+                        <paper-input class="speech-input" name="Petitioner_Name1" label="Name of the Attorney" on-keyup="HandleOnChange"></paper-input>
+                            </div>
+                        </div>
+
+                        <div id="Defendant" class="forIndex">
+                            <div class="InnerDiv">
+
+                        <h1>Defendant Details</h1>
+                        <paper-input class="speech-input" name="Defendant_Namedef" label="Name of the Defendant/Respondent" on-keyup="HandleOnChange"></paper-input>
+                        <paper-input class="speech-input" name="Defendant_Nameadv" label="Name of the Attorney/Advocate for Defendant" on-keyup="HandleOnChange"></paper-input>
+                            </div>
+                        </div>
+                        <div id="Granter" class="forIndex">
+                            <div class="InnerDiv">
+                                <template is="dom-repeat" items="{{data.Granter.AddOneGranter}}">
+                                    <div id="Granter_{{index}}" class="forIndex">
+                        <h1>Granter Details {{_EntityNo(index)}}</h1>
+                                                        <label id="remove-Granter-button">Delete Granter</label>
+                                                        <paper-icon-button  id="Granter_OneGranter_{{index}}" icon="delete" area-labeldby="remove-Granter-button" on-tap="RemoveEntity"></paper-icon-button>
+                                                        <br>
+                        <paper-input class="speech-input" name="Granter_Name" label="Name of the Granter" on-keyup="HandleOnChange"></paper-input>
+                        <label id="Granter-reason-events"><b>The Granter is a:&nbsp</b></label><br>
+                        <paper-dropdown-menu area-labeldby="title-label">
+                            <paper-listbox id="Granter_Reason2_Lb" class="dropdown-content" attr-for-selected="name"  selected="case number">
+                                <paper-item  name="A] Petitioner/Complainant/Plaintiff/Claimant/Appellant">A] Petitioner/Complainant/Plaintiff/Claimant/Appellant</paper-item>
+                                <paper-item  name="B] Defendant/Respondent  ">B] Defendant/Respondent  </paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <br><label id="Granter-reason-events"><b>Type of granter:&nbsp</b></label><br>
+                        <paper-dropdown-menu area-labeldby="title-label">
+                            <paper-listbox id="Granter_Reason3_Lb" class="dropdown-content" attr-for-selected="name"  selected="case number">
+                                <paper-item  name="Individual">A] Individual</paper-item>
+                                <paper-item  name="Company">B]Company </paper-item>
+                                <paper-item  name="Firm">c]Firm </paper-item>
+                                <paper-item  name="Sole proprietorship ">D] Sole proprietorship  </paper-item>
+                                <paper-item  name="LLP">E] LLP </paper-item>
+                                <paper-item  name="Add Other">E] Add Other </paper-item>
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <br><label id="Granter-reason-events"><b>Granter is:&nbsp</b></label><br>
+                        <paper-dropdown-menu area-labeldby="title-label">
+                            <paper-listbox id="Granter_Reason4_Lb" class="dropdown-content" attr-for-selected="name"  selected="case number">
+                                <paper-item  name="Managing Director">A] Managing Director or partner</paper-item>
+                                <paper-item  name="CEO">B] CEO </paper-item>
+                                <paper-item  name="Proprietor">c] Proprietor </paper-item>
+                                <paper-item  name="Any other post  ">D] Any other post  </paper-item>
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                                    </div>
+                                                </template>
+                        <br><label id="add-Granter-button">Add Granter</label>
+                        <paper-icon-button id="Granter_AddOneGranter" icon="add-circle" area-labeldby="add-Granter-button" on-tap="AddEntity"></paper-icon-button>
+                        <br><br>
+
+                        <br><label id="Granter-reason-events"><b>Relation Between Granter is:&nbsp</b></label><br>
+                        <paper-dropdown-menu area-labeldby="title-label">
+                            <paper-listbox id="Granter_Reason5_Lb" class="dropdown-content" attr-for-selected="name"  selected="case number">
+                                <paper-item  name="Husband wife">A] husband wife</paper-item>
+                                <paper-item  name="Siblings">B] Siblings </paper-item>
+                                <paper-item  name="Add any other">C] Add any other </paper-item>
+
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                            </div>
+                        </div>
+                        <div id="Attorney" class="forIndex">
+                            <div class="InnerDiv">
+                                <template is="dom-repeat" items="{{data.Attorney.AddOneAttorney}}">
+                                    <div id="Attorney_{{index}}" class="forIndex">
+                        <h1>Attorney Details {{_EntityNo(index)}}</h1>
+                                        <label id="remove-Attorney-button">Delete Attorney</label>
+                                        <paper-icon-button  id="Attorney_OneAttorney_{{index}}" icon="delete" area-labeldby="remove-Attorney-button" on-tap="RemoveEntity"></paper-icon-button>
+                                        <br>
+                        <paper-input class="speech-input" name="Attorney_Name" label="Name of the Attorney" on-keyup="HandleOnChange"></paper-input>
+                        <paper-input class="speech-input" name="Attorney_Enroll" type="number" label="Enrollment no" on-keyup="HandleOnChange"></paper-input>
+                        <paper-input class="speech-input" name="Attorney_Mobile" label="Mobile no" on-keyup="HandleOnChange"></paper-input>
+                                        <br><label id="Attorney-reason-events"><b>Addressee of the vakalatnama:&nbsp</b></label><br>
+                                        <paper-dropdown-menu area-labeldby="title-label">
+                                            <paper-listbox id="Attorney_Reason_Lb" class="dropdown-content" attr-for-selected="name"  selected="case number">
+                                                <paper-item  name="registrar">A] Registrar</paper-item>
+                                                <paper-item  name="prothonotary">B] Prothonotary </paper-item>
+                                                <paper-item  name="any other">C] any other </paper-item>
+
+
+                                            </paper-listbox>
+                                        </paper-dropdown-menu>
+                                    </div>
+                                </template>
+                        <br><label id="add-Attorney-button">Add Attorney</label>
+                                <paper-icon-button id="Attorney_AddOneAttorney" icon="add-circle" area-labeldby="add-Attorney-button" on-tap="AddEntity"></paper-icon-button>
+                        <br><br>
+                                <div hidden="{{_OneOrMoreInArray(data.Attorney.*,'AddOneAttorney')}}"></div>
+                            </div>
+                        </div>>
+
+                        <div id="Undertaking" class="forIndex">
+                            <div class="InnerDiv">
+                         <h1>Undertaking</h1>
+
+                        <label id="Attorney-independent-events">I/We or duly authorized agent will appear in the court on all hearings and will inform the advocate when the case/suit is called</label>
+                        <br><paper-radio-group id="Attorney_Independent_Rb" area-labeld-by="Attorney-independent-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+
+                        <br><label id="Attorney-independent-events">I/We agree to not hold the advocate or the substitute responsible for the result of the said case </label>
+                        <br><paper-radio-group id="Attorney_Independent_Rb" area-labeld-by="Attorney-independent-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+                        <br><label id="Attorney-independent-events">I/We will not be entitled for the refund of the same in any case whatsoever </label>
+                        <br><paper-radio-group id="Attorney_Independent_Rb" area-labeld-by="Attorney-independent-events" selected="Yes" >
+                        <paper-radio-button name="Yes">Yes</paper-radio-button>
+                        <paper-radio-button name="No">No</paper-radio-button>
+                    </paper-radio-group>
+
+                        <br><label id="Undertaking-reason-events">The fees settled will be only for the above case and above court </label>
+                        <br> <br><label id="Undertaking-reason-events">If the case last for more than certain days/months/years, the advocate/s shall be entitled for additional fees
+                        <br> <paper-input class="speech-input" name="Undertaking_Name" label="no of the Days/months/year" on-change="HandleOnChange"></paper-input>
+                                <br><label id="Undertaking-reason-events"><b>Select any one &nbsp</b></label><br>
+                                <paper-dropdown-menu area-labeldby="title-label">
+                                    <paper-listbox id="Undertaking_Reason_Lb" class="dropdown-content" attr-for-selected="name"  selected="case number">
+                                        <paper-item  name="Days">Days</paper-item>
+                                        <paper-item  name="Months">Months </paper-item>
+                                        <paper-item  name="Years">Years </paper-item>
+
+
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                            </label>
+
+
+                            </div>
+                        </div>
+
+            </paper-material>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is:'vakalat-nama',
+            observers:[
+                'DataChange(data.*)'
+            ],
+            listeners:{
+                'iron-select':'HandleIronSelect',
+                'iron-change':'HandleIronChange',
+                'paper-radio-group-changed':'HandleRadioButton'
+            },
+            behaviors:[SuperBehavior],
+            ready:function () {
+                //this.data=JSON.parse(object);
+            }
+
+        })
+    </script>
+</dom-module>
+</body>
+</html>
